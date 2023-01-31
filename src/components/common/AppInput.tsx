@@ -8,19 +8,19 @@ enum ContentType {
 }
 
 interface AppInputProps {
+    value: string
+    setValue: (value: string) => void
     placeholderText: string
     contentType: ContentType
 }
 
-const AppInput = ({ placeholderText, contentType }: AppInputProps): JSX.Element => {
-
-    const [textInputValue, setTextInputValue] = useState<string>('')
+const AppInput = ({ value, setValue, placeholderText, contentType }: AppInputProps): JSX.Element => {
 
     return (
         <TextInput
             style={styles.input}
-            onChangeText={text => setTextInputValue(text)}
-            value={textInputValue}
+            onChangeText={text => setValue(text)}
+            value={value}
             placeholder={placeholderText}
             placeholderTextColor='#5A5A89'
             secureTextEntry={contentType === ContentType.password}
