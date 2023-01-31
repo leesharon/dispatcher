@@ -1,7 +1,7 @@
 import React from 'react'
 import { SafeAreaView, StyleSheet, ScrollView, View, StatusBar } from 'react-native'
 import { LearnMoreLinks, Colors } from 'react-native/Libraries/NewAppScreen'
-import { AppInput } from './src/components/common/AppInput'
+import { AppInput, ContentType } from './src/components/common/AppInput'
 import Header from './src/components/Header'
 import { Counter } from './src/features/counter/Counter'
 
@@ -17,7 +17,7 @@ const App = () => {
           <View style={styles.body}>
             <Counter />
           </View>
-          <AppInput placeholderText='this is a test' isEmail={true} isSecure={true} />
+          <AppInput placeholderText='this is a tesssst' contentType={ContentType.email} />
         </ScrollView>
       </SafeAreaView>
     </>

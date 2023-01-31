@@ -1,13 +1,18 @@
 import { useState } from 'react'
 import { View, TextInput, StyleSheet } from "react-native"
 
-interface AppInputProps {
-    placeholderText: string
-    isSecure?: boolean
-    isEmail?: boolean
+enum ContentType {
+    email = 'emailAddress',
+    password = 'password',
+    text = 'text'
 }
 
-const AppInput = ({ placeholderText, isSecure, isEmail }: AppInputProps): JSX.Element => {
+interface AppInputProps {
+    placeholderText: string
+    contentType: ContentType
+}
+
+const AppInput = ({ placeholderText, contentType }: AppInputProps): JSX.Element => {
 
     const [textInputValue, setTextInputValue] = useState<string>('')
 
@@ -18,8 +23,9 @@ const AppInput = ({ placeholderText, isSecure, isEmail }: AppInputProps): JSX.El
             value={textInputValue}
             placeholder={placeholderText}
             placeholderTextColor='#5A5A89'
-            secureTextEntry={isSecure}
-            keyboardType={isEmail ? "email-address" : "default"}
+            secureTextEntry={contentType === ContentType.password}
+            keyboardType={(contentType === ContentType.email) ? "email-address" : "default"}
+            textContentType={contentType as any}
         />
     )
 }
@@ -42,4 +48,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export { AppInput }
+export { AppInput, ContentType }
