@@ -21,7 +21,6 @@ const App = () => {
               setValue={setValue}
             />
             <LogisterButton bgColor={Colors.blue500} onPress={() => { console.log('I was pressed') }}>Test!</LogisterButton>
-            <Image source={require('./assets/arrow-right.svg')} />
           </View>
         </ScrollView>
       </SafeAreaView>
