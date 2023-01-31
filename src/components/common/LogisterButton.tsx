@@ -1,12 +1,13 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface LogisterButtonProps {
     children: string
     onPress: () => void
     bgColor: string
+    withArrow?: boolean
 }
 
-function LogisterButton({ children, onPress, bgColor }: LogisterButtonProps) {
+function LogisterButton({ children, onPress, bgColor, withArrow }: LogisterButtonProps) {
     return (
         <View style={styles.buttonOuterContainer}>
             <Pressable
@@ -18,6 +19,7 @@ function LogisterButton({ children, onPress, bgColor }: LogisterButtonProps) {
                 }
             >
                 <Text style={styles.buttonText}>{children}</Text>
+                {withArrow && <Image style={styles.arrowImage} source={require('../../../assets/arrow-right.png')} />}
             </Pressable>
         </View>
     )
@@ -33,6 +35,9 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 16,
         elevation: 2,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     buttonText: {
         color: 'white',
@@ -44,6 +49,9 @@ const styles = StyleSheet.create({
     pressed: {
         opacity: 0.85,
     },
+    arrowImage: {
+        marginLeft: 8,
+    }
 })
 
 export default LogisterButton
