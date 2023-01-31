@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { View, TextInput, StyleSheet } from "react-native"
+import { TextInput, StyleSheet } from "react-native"
+import { Colors } from '../../../assets/colors'
 
 enum ContentType {
     email = 'emailAddress',
@@ -22,7 +22,7 @@ const AppInput = ({ value, setValue, placeholderText, contentType }: AppInputPro
             onChangeText={text => setValue(text)}
             value={value}
             placeholder={placeholderText}
-            placeholderTextColor='#5A5A89'
+            placeholderTextColor={Colors.blue400}
             secureTextEntry={contentType === ContentType.password}
             keyboardType={(contentType === ContentType.email) ? "email-address" : "default"}
             textContentType={contentType as any}
@@ -37,6 +37,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         backgroundColor: 'white',
         height: 44,
+        width: '100%',
+        fontFamily: 'Roboto-Regular',
         paddingHorizontal: 16,
         paddingVertical: 12,
         fontSize: 16,

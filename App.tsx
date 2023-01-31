@@ -1,9 +1,8 @@
 import React from 'react'
 import { SafeAreaView, StyleSheet, ScrollView, View, StatusBar } from 'react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
+import { Colors } from './assets/colors'
 import { AppInput, ContentType } from './src/components/common/AppInput'
-import Header from './src/components/Header'
-import { Counter } from './src/features/counter/Counter'
+import LogisterButton from './src/components/common/LogisterButton'
 
 const App = () => {
   const [value, setValue] = React.useState('')
@@ -14,16 +13,15 @@ const App = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
-          <View style={styles.body}>
-            <Counter />
+          <View style={styles.test}>
+            <AppInput
+              placeholderText='this is a test'
+              contentType={ContentType.password}
+              value={value}
+              setValue={setValue}
+            />
+            <LogisterButton bgColor={Colors.blue500} onPress={() => { console.log('I was pressed') }}>Test!</LogisterButton>
           </View>
-          <AppInput
-            placeholderText='this is a test'
-            contentType={ContentType.email}
-            value={value}
-            setValue={setValue}
-          />
         </ScrollView>
       </SafeAreaView>
     </>
@@ -32,11 +30,13 @@ const App = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    width: '90%',
   },
   body: {
-    backgroundColor: Colors.white,
   },
+  test: {
+    width: '90%',
+  }
 })
 
 export default App
