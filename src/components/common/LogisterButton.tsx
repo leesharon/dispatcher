@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface LogisterButtonProps {
     children: string
@@ -19,7 +19,7 @@ function LogisterButton({ children, onPress, bgColor, withArrow }: LogisterButto
                 }
             >
                 <Text style={styles.buttonText}>{children}</Text>
-                {withArrow && <Image style={styles.arrowImage} source={require('../../../assets/arrow-right.png')} />}
+                {/* {withArrow && <Image style={styles.arrowImage} source={require('../../../assets/arrow-right.png')} />} */}
             </Pressable>
         </View>
     )

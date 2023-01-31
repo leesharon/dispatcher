@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { TextInput, StyleSheet, View, Pressable, Image } from "react-native"
 import { Colors } from '../../../assets/colors'
+import Revealed from '../../../assets/revealed.svg'
+import Hidden from '../../../assets/hidden.svg'
 
 enum ContentType {
     email = 'emailAddress',
@@ -18,6 +20,7 @@ interface AppInputProps {
 const AppInput = ({ value, setValue, placeholderText, contentType }: AppInputProps): JSX.Element => {
 
     const [borderColor, setBorderColor] = useState(Colors.gray600)
+    const [isRevealed, setIsRevealed] = useState(false)
 
     return (
         <View>
@@ -33,10 +36,18 @@ const AppInput = ({ value, setValue, placeholderText, contentType }: AppInputPro
                 onFocus={() => setBorderColor(Colors.blue800)}
                 onBlur={() => setBorderColor(Colors.gray600)}
             />
-            <Pressable style={styles.imageContainer} onPress={() => console.log('asd')}>
-                <Image source={require('../../../assets/not-shown.png')} />
-            </Pressable>
-        </View>
+            {
+                (contentType === ContentType.email) && (
+                    <View style={styles.imageContainer}>
+                        <Pressable onPress={() => setIsRevealed(!isRevealed)}>
+                            {isRevealed
+                                ? <Revealed />
+                                : <Hidden />}
+                        </Pressable>
+                    </View>
+                )
+            }
+        </View >
     )
 }
 
@@ -59,11 +70,12 @@ const styles = StyleSheet.create({
         shadowRadius: 64,
     },
     imageContainer: {
-        width: 30,
         position: 'absolute',
-        right: 15,
-        top: '50%',
-        transform: [{ translateY: -15 }],
+        top: 0,
+        right: 16,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 
