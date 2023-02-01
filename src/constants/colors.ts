@@ -4,5 +4,6 @@ export const Colors = {
     blue300: '#6CA4E1',
     blue400: '#5A5A89',
     blue500: '#0058B9',
-    blue800: '#262146'
+    blue800: '#262146',
+    red500: '#FF6B57'
 }

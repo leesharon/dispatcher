@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { TextInput, StyleSheet, View, Pressable, Image } from "react-native"
-import { Colors } from '../../../assets/colors'
+import { Fragment, useState } from 'react'
+import { TextInput, StyleSheet, View, Pressable, Text } from "react-native"
+import { Colors } from '../../constants/colors'
 import Revealed from '../../../assets/revealed.svg'
 import Hidden from '../../../assets/hidden.svg'
 
@@ -15,45 +15,92 @@ interface AppInputProps {
     setValue: (value: string) => void
     placeholderText: string
     contentType: ContentType
+    validate: (value: string) => string | false
 }
 
-const AppInput = ({ value, setValue, placeholderText, contentType }: AppInputProps): JSX.Element => {
+const AppInput = ({ value, setValue, placeholderText, contentType, validate }: AppInputProps): JSX.Element => {
 
     const [borderColor, setBorderColor] = useState(Colors.gray600)
     const [isRevealed, setIsRevealed] = useState(false)
+    const [error, setError] = useState('')
 
-    return (
-        <View>
-            <TextInput
-                style={[styles.input, { borderColor }]}
-                onChangeText={text => setValue(text)}
-                value={value}
-                placeholder={placeholderText}
-                placeholderTextColor={Colors.blue400}
-                secureTextEntry={contentType === ContentType.password}
-                keyboardType={(contentType === ContentType.email) ? "email-address" : "default"}
-                textContentType={contentType as any}
-                onFocus={() => setBorderColor(Colors.blue800)}
-                onBlur={() => setBorderColor(Colors.gray600)}
-            />
-            {
-                (contentType === ContentType.email) && (
-                    <View style={styles.imageContainer}>
-                        <Pressable onPress={() => setIsRevealed(!isRevealed)}>
-                            {isRevealed
-                                ? <Revealed />
-                                : <Hidden />}
-                        </Pressable>
-                    </View>
-                )
-            }
-        </View >
+    const handleChange = (text: string) => {
+        setValue(text)
+        const res = validate(text)
+        if (!res && error) {
+            setError('')
+            setBorderColor(Colors.blue800)
+        }
+    }
+
+    const handleFocus = () => {
+        if (!error)
+            setBorderColor(Colors.blue800)
+    }
+
+    const handleBlur = () => {
+        const res = validate(value)
+        if (res) {
+            setError(res)
+            setBorderColor(Colors.red500)
+        }
+        else {
+            setError('')
+            setBorderColor(Colors.gray600)
+        }
+    }
+
+    if (contentType === ContentType.password) return (
+        <Fragment>
+            <View>
+                <TextInput
+                    style={[styles.input, { borderColor }]}
+                    onChangeText={handleChange}
+                    value={value}
+                    placeholder={placeholderText}
+                    placeholderTextColor={Colors.blue400}
+                    secureTextEntry={contentType === ContentType.password && !isRevealed}
+                    textContentType={contentType as any}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+                <View style={styles.imageContainer}>
+                    <Pressable onPress={() => setIsRevealed(!isRevealed)}>
+                        {isRevealed
+                            ? <Revealed />
+                            : <Hidden />}
+                    </Pressable>
+                </View>
+            </View>
+            {error && <Text style={styles.error}>{error}</Text>}
+        </Fragment>
     )
+
+    else if (contentType === ContentType.email) return (
+        <Fragment>
+            <View>
+                <TextInput
+                    style={[styles.input, { borderColor }]}
+                    onChangeText={handleChange}
+                    value={value}
+                    placeholder={placeholderText}
+                    placeholderTextColor={Colors.blue400}
+                    secureTextEntry={false}
+                    keyboardType="email-address"
+                    textContentType={contentType as any}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+            </View>
+            {error && <Text style={styles.error}>{error}</Text>}
+        </Fragment>
+    )
+
+    else return (<Text>Something went wrong...</Text>)
 }
 
 const styles = StyleSheet.create({
     input: {
-        transition: 'border-color 0.2s ease-in-out',
         borderWidth: 1,
         borderRadius: 4,
         backgroundColor: 'white',
@@ -76,6 +123,13 @@ const styles = StyleSheet.create({
         bottom: 0,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    error: {
+        color: Colors.red500,
+        fontSize: 12,
+        lineHeight: 16,
+        fontFamily: 'Roboto-Regular',
+        marginTop: 4
     }
 })
 
