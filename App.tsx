@@ -4,6 +4,7 @@ import { Colors } from './src/constants/colors'
 import { AppInput, ContentType } from './src/components/common/AppInput'
 import LogisterButton from './src/components/common/LogisterButton'
 import { validateEmail, validatePassword } from './src/utils/functions'
+import ArrowRight from './assets/arrow-right.svg'
 
 const App = () => {
   const [value, setValue] = React.useState('')
@@ -30,8 +31,27 @@ const App = () => {
               setValue={setValue2}
               validate={validateEmail}
             />
-            <LogisterButton bgColor={Colors.blue500} onPress={() => { console.log('I was pressed') }}>Test!</LogisterButton>
-            <LogisterButton bgColor={Colors.blue300} onPress={() => { console.log('I was pressed') }}>Test!</LogisterButton>
+            <LogisterButton
+              onPress={() => { console.log('I was pressed') }}
+              textStyle={styles.login}
+              bgColor={Colors.blue500}>
+              Test!
+            </LogisterButton>
+            <LogisterButton
+              onPress={() => { console.log('I was pressed') }}
+              textStyle={styles.signup}
+              icon={<ArrowRight />}
+              bgColor={Colors.blue300}
+            >
+              Test!
+            </LogisterButton>
+            <LogisterButton
+              onPress={() => { console.log('I was pressed') }}
+              textStyle={styles.secondary}
+              bgColor={Colors.gray500}
+            >
+              Test!
+            </LogisterButton>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -49,6 +69,21 @@ const styles = StyleSheet.create({
     width: '90%',
     justifyContent: 'space-between',
     flex: 1
+  },
+  login: {
+    backgroundColor: Colors.blue500,
+    color: 'white',
+    fontWeight: '500',
+  },
+  signup: {
+    backgroundColor: Colors.blue300,
+    color: 'white',
+    fontWeight: '400',
+  },
+  secondary: {
+    backgroundColor: Colors.gray500,
+    color: 'black',
+    fontWeight: '400',
   }
 })
 

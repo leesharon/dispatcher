@@ -3,11 +3,12 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 interface LogisterButtonProps {
     children: string
     onPress: () => void
-    bgColor: string
-    withArrow?: boolean
+    icon?: any
+    bgColor?: string
+    textStyle: any
 }
 
-function LogisterButton({ children, onPress, bgColor, withArrow }: LogisterButtonProps) {
+function LogisterButton({ children, onPress, textStyle, bgColor, icon }: LogisterButtonProps) {
     return (
         <View style={styles.buttonOuterContainer}>
             <Pressable
@@ -18,8 +19,10 @@ function LogisterButton({ children, onPress, bgColor, withArrow }: LogisterButto
                         : [styles.buttonInnerContainer, { backgroundColor: bgColor }]
                 }
             >
-                <Text style={styles.buttonText}>{children}</Text>
-                {/* {withArrow && <Image style={styles.arrowImage} source={require('../../../assets/arrow-right.png')} />} */}
+                <Text style={[styles.buttonText, textStyle]}>{children}</Text>
+                <View style={styles.arrowImage}>
+                    {icon && icon}
+                </View>
             </Pressable>
         </View>
     )
