@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, ScrollView, View, StatusBar, Image } from 're
 import { Colors } from './src/constants/colors'
 import { AppInput, ContentType } from './src/components/common/AppInput'
 import LogisterButton from './src/components/common/LogisterButton'
-import { validateEmail, validatePassword } from './src/utils/functions'
+import { validateEmail, validatePassword } from './src/utils/validationUtils'
 import ArrowRight from './assets/arrow-right.svg'
 
 const App = () => {

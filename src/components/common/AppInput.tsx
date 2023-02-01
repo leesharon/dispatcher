@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { TextInput, StyleSheet, View, Pressable, Text } from "react-native"
 import { Colors } from '../../constants/colors'
 import Revealed from '../../../assets/revealed.svg'
@@ -54,7 +54,7 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
     }
 
     if (contentType === ContentType.password) return (
-        <Fragment>
+        <View>
             <View>
                 <TextInput
                     style={[styles.input, { borderColor }]}
@@ -76,11 +76,11 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
                 </View>
             </View>
             {error && <Text style={styles.error}>{error}</Text>}
-        </Fragment>
+        </View>
     )
 
     else if (contentType === ContentType.email) return (
-        <Fragment>
+        <View>
             <View>
                 <TextInput
                     style={[styles.input, { borderColor }]}
@@ -96,7 +96,7 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
                 />
             </View>
             {error && <Text style={styles.error}>{error}</Text>}
-        </Fragment>
+        </View>
     )
 
     else return (<Text>Something went wrong...</Text>)
