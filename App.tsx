@@ -5,57 +5,56 @@ import { AppInput, ContentType } from './src/components/common/AppInput'
 import LogisterButton from './src/components/common/LogisterButton'
 import { validateEmail, validatePassword } from './src/utils/validationUtils'
 import ArrowRight from './assets/arrow-right.svg'
+import { emailPlaceholder, passwordPlaceholder } from './src/constants/strings'
 
 const App = () => {
   const [value, setValue] = React.useState('')
   const [value2, setValue2] = React.useState('')
   return (
-    <Fragment>
+    <SafeAreaView>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <View style={styles.test}>
-            <AppInput
-              placeholderText='this is a passowrd'
-              contentType={ContentType.password}
-              value={value}
-              setValue={setValue}
-              validate={validatePassword}
-            />
-            <AppInput
-              placeholderText='this is an email'
-              contentType={ContentType.email}
-              value={value2}
-              setValue={setValue2}
-              validate={validateEmail}
-            />
-            <LogisterButton
-              onPress={() => { console.log('I was pressed') }}
-              textStyle={styles.login}
-              bgColor={Colors.blue500}>
-              Test!
-            </LogisterButton>
-            <LogisterButton
-              onPress={() => { console.log('I was pressed') }}
-              textStyle={styles.signup}
-              icon={<ArrowRight />}
-              bgColor={Colors.blue300}
-            >
-              Test!
-            </LogisterButton>
-            <LogisterButton
-              onPress={() => { console.log('I was pressed') }}
-              textStyle={styles.secondary}
-              bgColor={Colors.gray500}
-            >
-              Test!
-            </LogisterButton>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </Fragment>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={styles.scrollView}>
+        <View style={styles.test}>
+          <AppInput
+            placeholderText={passwordPlaceholder}
+            contentType={ContentType.password}
+            value={value}
+            setValue={setValue}
+            validate={validatePassword}
+          />
+          <AppInput
+            placeholderText={emailPlaceholder}
+            contentType={ContentType.email}
+            value={value2}
+            setValue={setValue2}
+            validate={validateEmail}
+          />
+          <LogisterButton
+            onPress={() => { console.log('I was pressed') }}
+            textStyle={styles.login}
+            bgColor={Colors.BLUE500}>
+            Test!
+          </LogisterButton>
+          <LogisterButton
+            onPress={() => { console.log('I was pressed') }}
+            textStyle={styles.signup}
+            icon={<ArrowRight />}
+            bgColor={Colors.BLUE300}
+          >
+            Test!
+          </LogisterButton>
+          <LogisterButton
+            onPress={() => { console.log('I was pressed') }}
+            textStyle={styles.secondary}
+            bgColor={Colors.GRAY500}
+          >
+            Test!
+          </LogisterButton>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -71,17 +70,17 @@ const styles = StyleSheet.create({
     flex: 1
   },
   login: {
-    backgroundColor: Colors.blue500,
+    backgroundColor: Colors.BLUE500,
     color: 'white',
     fontWeight: '500',
   },
   signup: {
-    backgroundColor: Colors.blue300,
+    backgroundColor: Colors.BLUE300,
     color: 'white',
     fontWeight: '400',
   },
   secondary: {
-    backgroundColor: Colors.gray500,
+    backgroundColor: Colors.GRAY500,
     color: 'black',
     fontWeight: '400',
   }

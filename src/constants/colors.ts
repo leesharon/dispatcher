@@ -1,9 +1,9 @@
 export const Colors = {
-    gray500: '#F1F1F9',
-    gray600: '#D9DBE9',
-    blue300: '#6CA4E1',
-    blue400: '#5A5A89',
-    blue500: '#0058B9',
-    blue800: '#262146',
-    red500: '#FF6B57'
+    GRAY500: '#F1F1F9',
+    GRAY600: '#D9DBE9',
+    BLUE300: '#6CA4E1',
+    BLUE400: '#5A5A89',
+    BLUE500: '#0058B9',
+    BLUE800: '#262146',
+    RED500: '#FF6B57'
 }

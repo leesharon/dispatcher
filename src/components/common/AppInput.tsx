@@ -20,7 +20,7 @@ interface AppInputProps {
 
 const AppInput = ({ value, setValue, placeholderText, contentType, validate }: AppInputProps): JSX.Element => {
 
-    const [borderColor, setBorderColor] = useState(Colors.gray600)
+    const [borderColor, setBorderColor] = useState(Colors.GRAY600)
     const [isRevealed, setIsRevealed] = useState(false)
     const [error, setError] = useState('')
 
@@ -29,27 +29,27 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
         const res = validate(text)
         if (!res && error) {
             setError('')
-            setBorderColor(Colors.blue800)
+            setBorderColor(Colors.BLUE800)
         } else if (res) {
             setError(res)
-            setBorderColor(Colors.red500)
+            setBorderColor(Colors.RED500)
         }
     }
 
     const handleFocus = () => {
         if (!error)
-            setBorderColor(Colors.blue800)
+            setBorderColor(Colors.BLUE800)
     }
 
     const handleBlur = () => {
         const res = validate(value)
         if (res) {
             setError(res)
-            setBorderColor(Colors.red500)
+            setBorderColor(Colors.RED500)
         }
         else {
             setError('')
-            setBorderColor(Colors.gray600)
+            setBorderColor(Colors.GRAY600)
         }
     }
 
@@ -61,7 +61,7 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
                     onChangeText={handleChange}
                     value={value}
                     placeholder={placeholderText}
-                    placeholderTextColor={Colors.blue400}
+                    placeholderTextColor={Colors.BLUE400}
                     secureTextEntry={contentType === ContentType.password && !isRevealed}
                     textContentType={contentType as any}
                     onFocus={handleFocus}
@@ -87,7 +87,7 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
                     onChangeText={handleChange}
                     value={value}
                     placeholder={placeholderText}
-                    placeholderTextColor={Colors.blue400}
+                    placeholderTextColor={Colors.BLUE400}
                     secureTextEntry={false}
                     keyboardType="email-address"
                     textContentType={contentType as any}
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     error: {
-        color: Colors.red500,
+        color: Colors.RED500,
         fontSize: 12,
         lineHeight: 16,
         fontFamily: 'Roboto-Regular',
