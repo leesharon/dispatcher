@@ -4,9 +4,6 @@ export const validatePassword = (password: string): string | false => {
     const regexNumber = /^(?=.*\d).+$/
     const regexLength = /^.{12,}$/
 
-    if (!regexLength.test(password))
-        return 'Password must be at least 12 characters long'
-
     if (!regexLower.test(password))
         return 'Password must contain at least one lowercase letter'
 
@@ -15,6 +12,9 @@ export const validatePassword = (password: string): string | false => {
 
     if (!regexNumber.test(password))
         return 'Password must contain at least one number'
+
+    if (!regexLength.test(password))
+        return 'Password must be at least 12 characters long'
 
     return false
 }

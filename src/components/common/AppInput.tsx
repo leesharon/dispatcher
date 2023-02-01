@@ -30,6 +30,9 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
         if (!res && error) {
             setError('')
             setBorderColor(Colors.blue800)
+        } else if (res) {
+            setError(res)
+            setBorderColor(Colors.red500)
         }
     }
 
