@@ -23,7 +23,7 @@ const App = () => {
       }
 
       console.error(error);
-    });
+    })
 
   return (
     <SafeAreaView>
