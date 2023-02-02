@@ -13,17 +13,21 @@ const App = () => {
   const [value2, setValue2] = React.useState('')
 
   auth()
-    .signInAnonymously()
+    .signInWithEmailAndPassword('test@test.com', 'testtest')
     .then(() => {
-      console.log('User signed in anonymously');
+      console.log('signed in!');
     })
     .catch(error => {
-      if (error.code === 'auth/operation-not-allowed') {
-        console.log('Enable anonymous in your firebase console.');
+      if (error.code === 'auth/email-already-in-use') {
+        console.log('That email address is already in use!');
+      }
+
+      if (error.code === 'auth/invalid-email') {
+        console.log('That email address is invalid!');
       }
 
       console.error(error);
-    })
+    });
 
   return (
     <SafeAreaView>
