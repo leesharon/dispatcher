@@ -6,10 +6,25 @@ import LogisterButton from './src/components/common/LogisterButton'
 import { validateEmail, validatePassword } from './src/utils/validationUtils'
 import ArrowRight from './assets/arrow-right.svg'
 import { emailPlaceholder, passwordPlaceholder } from './src/constants/strings'
+import auth from '@react-native-firebase/auth';
 
 const App = () => {
   const [value, setValue] = React.useState('')
   const [value2, setValue2] = React.useState('')
+
+  auth()
+    .signInAnonymously()
+    .then(() => {
+      console.log('User signed in anonymously');
+    })
+    .catch(error => {
+      if (error.code === 'auth/operation-not-allowed') {
+        console.log('Enable anonymous in your firebase console.');
+      }
+
+      console.error(error);
+    });
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" />
