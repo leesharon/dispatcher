@@ -25,7 +25,6 @@
 		AB6F972ED8264968BB8DFB37 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12C19D486ACC4356A6083EEC /* Roboto-Thin.ttf */; };
 		C0281015C9CA42E28A35C485 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6AFCE90CC64BC6BA81601E /* Roboto-Bold.ttf */; };
 		D383F97C11CE43BB8880DE92 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EFCE70C5BD3345DCBCFFA3E5 /* Roboto-MediumItalic.ttf */; };
-		DBDA0F7F298BBAF400C16457 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBDA0F7E298BBAF400C16457 /* GoogleService-Info.plist */; };
 		E827DCC090C47E8EA623A6F3 /* Pods_dispatcher_dispatcherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C3B438834AE29181B9A3B2 /* Pods_dispatcher_dispatcherTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +64,8 @@
 		B3A2AEA5707A42D091AF8B5A /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		B67498BB199E42319C52CB1F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		D9E5CE4355D242C8A217A43A /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
-		DBDA0F7E298BBAF400C16457 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DBFF21D1298BC58F0094F5CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DBFF21D3298BC58F0094F5CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DD6AFCE90CC64BC6BA81601E /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		E2C3B438834AE29181B9A3B2 /* Pods_dispatcher_dispatcherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dispatcher_dispatcherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -161,7 +161,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				DBDA0F7E298BBAF400C16457 /* GoogleService-Info.plist */,
+				DBFF21CF298BC58F0094F5CB /* Firebase */,
 				13B07FAE1A68108700A75B9A /* dispatcher */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* dispatcherTests */,
@@ -193,6 +193,31 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-dispatcher-dispatcherTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		DBFF21CF298BC58F0094F5CB /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				DBFF21D0298BC58F0094F5CB /* Prod */,
+				DBFF21D2298BC58F0094F5CB /* Dev */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		DBFF21D0298BC58F0094F5CB /* Prod */ = {
+			isa = PBXGroup;
+			children = (
+				DBFF21D1298BC58F0094F5CB /* GoogleService-Info.plist */,
+			);
+			path = Prod;
+			sourceTree = "<group>";
+		};
+		DBFF21D2298BC58F0094F5CB /* Dev */ = {
+			isa = PBXGroup;
+			children = (
+				DBFF21D3298BC58F0094F5CB /* GoogleService-Info.plist */,
+			);
+			path = Dev;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +252,7 @@
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				DBFF21D4298BC6410094F5CB /* Setup Firebase Environment */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
@@ -292,7 +318,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				DBDA0F7F298BBAF400C16457 /* GoogleService-Info.plist in Resources */,
 				5CC63F8EC9EE492EBAA0E9F8 /* Roboto-Black.ttf in Resources */,
 				6CE4AB88B2DA4EE98C0C4DD0 /* Roboto-BlackItalic.ttf in Resources */,
 				C0281015C9CA42E28A35C485 /* Roboto-Bold.ttf in Resources */,
@@ -434,6 +459,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-dispatcher-dispatcherTests/Pods-dispatcher-dispatcherTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		DBFF21D4298BC6410094F5CB /* Setup Firebase Environment */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Setup Firebase Environment";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Name of the resource we're selectively copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\n# Get references to dev and prod versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO_DEV=${PROJECT_DIR}/Firebase/Dev/${GOOGLESERVICE_INFO_PLIST}\nGOOGLESERVICE_INFO_PROD=${PROJECT_DIR}/Firebase/Prod/${GOOGLESERVICE_INFO_PLIST}\n# Make sure the dev version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_DEV}\"\nif [ ! -f $GOOGLESERVICE_INFO_DEV ]\nthen\necho \"No Development GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\nexit 1\nfi\n# Make sure the prod version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_PROD}\"\nif [ ! -f $GOOGLESERVICE_INFO_PROD ]\nthen\necho \"No Production GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\nexit 1\nfi\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\n# Copy over the prod GoogleService-Info.plist for Release builds\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\necho \"Using ${GOOGLESERVICE_INFO_PROD}\"\ncp \"${GOOGLESERVICE_INFO_PROD}\" \"${PLIST_DESTINATION}\"\nelse\necho \"Using ${GOOGLESERVICE_INFO_DEV}\"\ncp \"${GOOGLESERVICE_INFO_DEV}\" \"${PLIST_DESTINATION}\"\nfi\n";
 		};
 		F820733188FA9DBE8CD7916A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -750,7 +793,7 @@
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "dispatcher" */ = {
 			isa = XCConfigurationList;
@@ -759,7 +802,7 @@
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "dispatcher" */ = {
 			isa = XCConfigurationList;
@@ -768,7 +811,7 @@
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
