@@ -5,17 +5,22 @@ import auth from '@react-native-firebase/auth'
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
 import { Colors } from 'constants/colors'
 import { SCREEN_HEIGHT } from 'constants/constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'state/store'
+import { login } from 'features/authentication/reducers/loggedinUserSlice'
+import { useCallback } from 'react'
 
 const App = () => {
+  const user = useSelector(({ loggedinUser }: RootState) => loggedinUser)
+  const dispatch = useDispatch()
 
   const [initializing, setInitializing] = useState(true)
-  const [user, setUser] = useState(null)
 
-  const onAuthStateChanged = (user: any) => {
-    setUser(user)
-    console.log('user: ', user)
+  const onAuthStateChanged = useCallback((user: any) => {
+    user = user.toJSON()
+    dispatch(login(user))
     if (initializing) setInitializing(false)
-  }
+  }, [dispatch, initializing])
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
