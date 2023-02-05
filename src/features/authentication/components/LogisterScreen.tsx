@@ -8,6 +8,7 @@ import { confirmPasswordPlaceholder, emailPlaceholder, passwordPlaceholder } fro
 import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import LogisterButton from 'components/common/LogisterButton'
+import auth from '@react-native-firebase/auth'
 
 interface LogisterScreenProps {
 }
@@ -31,14 +32,51 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('')
 
     const onSignup = () => {
-        if (emailError || passwordError || confirmPasswordError) {
+        if (emailError || passwordError || confirmPasswordError || !email || !password || !confirmPassword) {
             Alert.alert(
                 'Oh oh!',
                 'Please fill out the form correctly.',
                 [{ text: 'Okay', style: 'destructive' }]
             )
         }
-        else console.log('Signup')
+        else {
+            auth()
+                .createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    console.log('User account created & signed in!')
+                })
+                .catch(error => {
+                    if (error.code === 'auth/email-already-in-use')
+                        console.log('That email address is already in use!')
+
+                    if (error.code === 'auth/invalid-email')
+                        console.log('That email address is invalid!')
+
+                    console.error(error)
+                })
+        }
+    }
+
+    const onLogin = () => {
+        if (emailError || passwordError || confirmPasswordError || !email || !password) {
+            Alert.alert(
+                'Oh oh!',
+                'Please fill out the form correctly.',
+                [{ text: 'Okay', style: 'destructive' }]
+            )
+        }
+        else {
+            auth().signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    console.log('User account signed in!')
+                })
+                .catch(error => {
+                    if (error.code === 'auth/invalid-email')
+                        console.log('That email address is invalid!')
+
+                    console.error(error)
+                })
+        }
     }
 
     return (
@@ -70,7 +108,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                             error={passwordError}
                             setError={setPasswordError}
                         />
-                        <AppInput
+                        {(status === Status.Signup) && <AppInput
                             value={confirmPassword}
                             confirmValue={password}
                             setValue={setConfirmPassword}
@@ -79,20 +117,20 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                             confirmValidate={validateConfirmPassword}
                             error={confirmPasswordError}
                             setError={setConfirmPasswordError}
-                        />
+                        />}
                     </View>
                 </View>
                 <HorizontalLine />
                 <View style={styles.buttonsContainer}>
                     <LogisterButton
-                        onPress={onSignup}
-                        bgColor={Colors.BLUE500}
+                        onPress={() => (status === Status.Login) ? onLogin() : onSignup()}
+                        bgColor={(status === Status.Signup) ? Colors.BLUE500 : Colors.BLUE300}
                         containerStyle={{ marginBottom: 24 }}
                         icon={<ArrowRight />}
                     >{status.toUpperCase()}
                     </LogisterButton>
                     <LogisterButton
-                        onPress={() => console.log('Login')}
+                        onPress={() => setStatus((status === Status.Login) ? Status.Signup : Status.Login)}
                         bgColor={Colors.GRAY500}
                         textStyle={styles.secondaryButtonText}
                     >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}

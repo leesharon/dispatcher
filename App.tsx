@@ -1,10 +1,27 @@
+import React, { useEffect, useState } from 'react'
+import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, } from 'react-native'
+import auth from '@react-native-firebase/auth'
+
+import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
 import { Colors } from 'constants/colors'
 import { SCREEN_HEIGHT } from 'constants/constants'
-import React from 'react'
-import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, View, } from 'react-native'
-import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
 
 const App = () => {
+
+  const [initializing, setInitializing] = useState(true)
+  const [user, setUser] = useState(null)
+
+  const onAuthStateChanged = (user: any) => {
+    setUser(user)
+    console.log('user: ', user)
+    if (initializing) setInitializing(false)
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber
+  }, [])
+
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"
@@ -14,7 +31,7 @@ const App = () => {
           <LogisterScreen />
         </SafeAreaView>
       </KeyboardAvoidingView>
-    </ScrollView >
+    </ScrollView>
   )
 }
 
