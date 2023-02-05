@@ -16,9 +16,10 @@ interface AppInputProps {
     placeholderText: string
     contentType: ContentType
     validate: (value: string) => string | false
+    styleProps?: { marginBottom: number }
 }
 
-const AppInput = ({ value, setValue, placeholderText, contentType, validate }: AppInputProps): JSX.Element => {
+const AppInput = ({ value, setValue, placeholderText, contentType, validate, styleProps }: AppInputProps): JSX.Element => {
 
     const [borderColor, setBorderColor] = useState(Colors.GRAY600)
     const [isRevealed, setIsRevealed] = useState(false)
@@ -54,7 +55,7 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
     }
 
     if (contentType === ContentType.password) return (
-        <View>
+        <View style={styleProps}>
             <View>
                 <TextInput
                     style={[styles.input, { borderColor }]}
@@ -80,7 +81,7 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
     )
 
     else if (contentType === ContentType.email) return (
-        <View>
+        <View style={styleProps}>
             <View>
                 <TextInput
                     style={[styles.input, { borderColor }]}
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         lineHeight: 16,
         fontFamily: 'Roboto-Regular',
-        marginTop: 4
+        marginTop: 4,
     }
 })
 
