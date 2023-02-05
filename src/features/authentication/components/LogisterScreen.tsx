@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, Alert } from "react-native"
 import { Colors } from 'constants/colors'
 import Logo from '../assets/logo.svg'
 import ArrowRight from '../../../../assets/arrow-right.svg'
 import { AppInput, ContentType } from 'components/common/AppInput'
 import { confirmPasswordPlaceholder, emailPlaceholder, passwordPlaceholder } from 'constants/strings'
-import { validateEmail, validatePassword } from 'utils/validationUtils'
+import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import LogisterButton from 'components/common/LogisterButton'
 
@@ -20,9 +20,27 @@ enum Status {
 const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
 
     const [status, setStatus] = useState<Status>(Status.Signup)
+
     const [email, setEmail] = useState<string>('')
+    const [emailError, setEmailError] = useState('')
+
     const [password, setPassword] = useState<string>('')
+    const [passwordError, setPasswordError] = useState('')
+
     const [confirmPassword, setConfirmPassword] = useState<string>('')
+    const [confirmPasswordError, setConfirmPasswordError] = useState('')
+
+    const onSignup = () => {
+        if (emailError || passwordError || confirmPasswordError) {
+            Alert.alert(
+                'Oh oh!',
+                'Please fill out the form correctly.',
+                [{ text: 'Okay', style: 'destructive' }]
+            )
+        }
+        else console.log('Signup')
+
+    }
 
     return (
         <View style={styles.rootContainer}>
@@ -40,28 +58,35 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                             contentType={ContentType.email}
                             validate={validateEmail}
                             styleProps={{ marginBottom: 24 }}
+                            error={emailError}
+                            setError={setEmailError}
                         />
                         <AppInput
-                            value={email}
+                            value={password}
                             setValue={setPassword}
                             placeholderText={passwordPlaceholder}
                             contentType={ContentType.password}
                             validate={validatePassword}
                             styleProps={{ marginBottom: 24 }}
+                            error={passwordError}
+                            setError={setPasswordError}
                         />
                         <AppInput
-                            value={email}
+                            value={confirmPassword}
+                            confirmValue={password}
                             setValue={setConfirmPassword}
                             placeholderText={confirmPasswordPlaceholder}
                             contentType={ContentType.password}
-                            validate={validateEmail}
+                            confirmValidate={validateConfirmPassword}
+                            error={confirmPasswordError}
+                            setError={setConfirmPasswordError}
                         />
                     </View>
                 </View>
                 <HorizontalLine />
                 <View style={styles.buttonsContainer}>
                     <LogisterButton
-                        onPress={() => console.log('Login')}
+                        onPress={onSignup}
                         bgColor={Colors.BLUE500}
                         containerStyle={{ marginBottom: 24 }}
                         icon={<ArrowRight />}
