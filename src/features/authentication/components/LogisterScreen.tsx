@@ -39,7 +39,6 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
             )
         }
         else console.log('Signup')
-
     }
 
     return (
@@ -107,6 +106,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
 const styles = StyleSheet.create({
     rootContainer: {
         flex: 1,
+        flexGrow: 1,
         height: '100%',
     },
     logoContainer: {
