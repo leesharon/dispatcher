@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, View, } from 'react-native'
+import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, } from 'react-native'
 import auth from '@react-native-firebase/auth'
 
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
 import { Colors } from 'constants/colors'
-import { SCREEN_HEIGHT } from 'constants/constants'
+import { SCREEN_HEIGHT_WITHOUT_STATUS_BAR } from 'constants/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'state/store'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
@@ -18,7 +18,8 @@ const App = () => {
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((user: any) => {
-    const loggedinUser = {
+    let loggedinUser
+    if (user) loggedinUser = {
       email: user.email,
       uid: user.uid,
     }
@@ -33,7 +34,7 @@ const App = () => {
   }, [])
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.rootContainer}>
       <KeyboardAvoidingView behavior="position" >
         <SafeAreaView style={styles.rootContainer}>
           <LogisterScreen />
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     backgroundColor: Colors.BLUE100,
-    height: SCREEN_HEIGHT,
+    height: SCREEN_HEIGHT_WITHOUT_STATUS_BAR,
   }
 })
 
