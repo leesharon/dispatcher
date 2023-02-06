@@ -7,8 +7,7 @@ import LogisterButton from 'components/common/LogisterButton'
 import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
 import { firebaseLogin, firebaseSignup } from 'utils/firebaseAuthUtils'
 import { showAlertMessage } from 'utils/userMsgsUtils'
-import { Colors } from 'constants/index'
-import { Strings } from 'constants/index'
+import { Colors, Strings } from 'constants/index'
 import Logo from '../assets/logo.svg'
 import ArrowRight from '../../../../assets/arrow-right.svg'
 interface LogisterScreenProps {
@@ -60,7 +59,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                                 placeholderText={Strings.EMAIL_PLACEHOLDER}
                                 contentType={ContentType.email}
                                 validate={validateEmail}
-                                styleProps={{ marginBottom: 24 }}
+                                styleProps={styles.formInput}
                                 error={emailError}
                                 setError={setEmailError}
                             />
@@ -70,7 +69,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                                 placeholderText={Strings.PASSWORD_PLACEHOLDER}
                                 contentType={ContentType.password}
                                 validate={validatePassword}
-                                styleProps={{ marginBottom: 24 }}
+                                styleProps={styles.formInput}
                                 error={passwordError}
                                 setError={setPasswordError}
                             />
@@ -134,6 +133,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Bold',
         paddingLeft: 10,
         paddingBottom: 12,
+    },
+    formInput: {
+        marginBottom: 24,
     },
     buttonsContainer: {
         justifyContent: 'center',

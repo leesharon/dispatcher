@@ -3,8 +3,7 @@ import { StyleSheet, ScrollView, KeyboardAvoidingView, } from 'react-native'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
-import { Colors } from 'constants/index'
-import { SCREEN_HEIGHT_WITHOUT_STATUS_BAR } from 'constants/constants'
+import { Colors, Constants } from 'constants/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'state/store'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     backgroundColor: Colors.BLUE100,
-    height: SCREEN_HEIGHT_WITHOUT_STATUS_BAR,
+    height: Constants.SCREEN_HEIGHT_WITHOUT_STATUS_BAR,
   }
 })
 
