@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, } from 'react-native'
+import { StyleSheet, ScrollView, KeyboardAvoidingView, } from 'react-native'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
-import { Colors } from 'constants/colors'
+import { Colors } from 'constants/index'
 import { SCREEN_HEIGHT_WITHOUT_STATUS_BAR } from 'constants/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'state/store'
