@@ -1,107 +1,28 @@
-import React, { Fragment } from 'react'
-import { SafeAreaView, StyleSheet, ScrollView, View, StatusBar, Image } from 'react-native'
-import { Colors } from './src/constants/colors'
-import { AppInput, ContentType } from './src/components/common/AppInput'
-import LogisterButton from './src/components/common/LogisterButton'
-import { validateEmail, validatePassword } from './src/utils/validationUtils'
-import ArrowRight from './assets/arrow-right.svg'
-import { emailPlaceholder, passwordPlaceholder } from './src/constants/strings'
-import auth from '@react-native-firebase/auth';
+import { Colors } from 'constants/colors'
+import { SCREEN_HEIGHT } from 'constants/constants'
+import React from 'react'
+import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, View, } from 'react-native'
+import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
 
 const App = () => {
-  const [value, setValue] = React.useState('')
-  const [value2, setValue2] = React.useState('')
-
-  auth()
-    .signInWithEmailAndPassword('test@test.com', 'testtest')
-    .then(() => {
-      console.log('signed in!');
-    })
-    .catch(error => {
-      if (error.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
-
-      if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
-
-      console.error(error);
-    });
-
   return (
-    <SafeAreaView>
-      <StatusBar barStyle="dark-content" />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
-        <View style={styles.test}>
-          <AppInput
-            placeholderText={passwordPlaceholder}
-            contentType={ContentType.password}
-            value={value}
-            setValue={setValue}
-            validate={validatePassword}
-          />
-          <AppInput
-            placeholderText={emailPlaceholder}
-            contentType={ContentType.email}
-            value={value2}
-            setValue={setValue2}
-            validate={validateEmail}
-          />
-          <LogisterButton
-            onPress={() => { console.log('I was pressed') }}
-            textStyle={styles.login}
-            bgColor={Colors.BLUE500}>
-            Test!
-          </LogisterButton>
-          <LogisterButton
-            onPress={() => { console.log('I was pressed') }}
-            textStyle={styles.signup}
-            icon={<ArrowRight />}
-            bgColor={Colors.BLUE300}
-          >
-            Test!
-          </LogisterButton>
-          <LogisterButton
-            onPress={() => { console.log('I was pressed') }}
-            textStyle={styles.secondary}
-            bgColor={Colors.GRAY500}
-          >
-            Test!
-          </LogisterButton>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+    >
+      <KeyboardAvoidingView behavior="position">
+        <SafeAreaView style={styles.rootContainer}>
+          <LogisterScreen />
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    </ScrollView >
   )
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    width: '90%',
-  },
-  body: {
-  },
-  test: {
-    width: '90%',
-    justifyContent: 'space-between',
-    flex: 1
-  },
-  login: {
-    backgroundColor: Colors.BLUE500,
-    color: 'white',
-    fontWeight: '500',
-  },
-  signup: {
-    backgroundColor: Colors.BLUE300,
-    color: 'white',
-    fontWeight: '400',
-  },
-  secondary: {
-    backgroundColor: Colors.GRAY500,
-    color: 'black',
-    fontWeight: '400',
+  rootContainer: {
+    flex: 1,
+    backgroundColor: Colors.BLUE100,
+    height: SCREEN_HEIGHT,
   }
 })
 

@@ -12,21 +12,29 @@ enum ContentType {
 
 interface AppInputProps {
     value: string
+    confirmValue?: string
     setValue: (value: string) => void
     placeholderText: string
     contentType: ContentType
-    validate: (value: string) => string | false
+    validate?: (value: string) => string | false
+    confirmValidate?: (value: string, confirmValue: string) => string | false
+    styleProps?: { marginBottom: number }
+    error: string
+    setError: (error: string) => void
 }
 
-const AppInput = ({ value, setValue, placeholderText, contentType, validate }: AppInputProps): JSX.Element => {
+const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType, validate, confirmValidate, styleProps, error, setError }: AppInputProps): JSX.Element => {
 
     const [borderColor, setBorderColor] = useState(Colors.GRAY600)
     const [isRevealed, setIsRevealed] = useState(false)
-    const [error, setError] = useState('')
 
     const handleChange = (text: string) => {
         setValue(text)
-        const res = validate(text)
+
+        let res
+        if (confirmValue && confirmValidate) res = confirmValidate(text, confirmValue)
+        else if (validate) res = validate(text)
+
         if (!res && error) {
             setError('')
             setBorderColor(Colors.BLUE800)
@@ -42,7 +50,10 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
     }
 
     const handleBlur = () => {
-        const res = validate(value)
+        let res
+        if (confirmValue && confirmValidate) res = confirmValidate(value, confirmValue)
+        else if (validate) res = validate(value)
+
         if (res) {
             setError(res)
             setBorderColor(Colors.RED500)
@@ -54,7 +65,7 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
     }
 
     if (contentType === ContentType.password) return (
-        <View>
+        <View style={styleProps}>
             <View>
                 <TextInput
                     style={[styles.input, { borderColor }]}
@@ -80,7 +91,7 @@ const AppInput = ({ value, setValue, placeholderText, contentType, validate }: A
     )
 
     else if (contentType === ContentType.email) return (
-        <View>
+        <View style={styleProps}>
             <View>
                 <TextInput
                     style={[styles.input, { borderColor }]}
@@ -129,10 +140,12 @@ const styles = StyleSheet.create({
     },
     error: {
         color: Colors.RED500,
-        fontSize: 12,
+        fontSize: 10,
         lineHeight: 16,
+        fontWeight: '400',
         fontFamily: 'Roboto-Regular',
-        marginTop: 4
+        position: 'absolute',
+        top: 44,
     }
 })
 

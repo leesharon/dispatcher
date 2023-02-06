@@ -5,12 +5,13 @@ interface LogisterButtonProps {
     onPress: () => void
     icon?: any
     bgColor?: string
-    textStyle: any
+    textStyle?: { color: string, fontWeight: string } | {}
+    containerStyle?: { marginBottom: number }
 }
 
-function LogisterButton({ children, onPress, textStyle, bgColor, icon }: LogisterButtonProps) {
+function LogisterButton({ children, onPress, textStyle = {}, containerStyle, bgColor, icon }: LogisterButtonProps) {
     return (
-        <View style={styles.buttonOuterContainer}>
+        <View style={[styles.buttonOuterContainer, containerStyle]}>
             <Pressable
                 onPress={onPress}
                 style={
