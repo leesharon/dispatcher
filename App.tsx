@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, } from 'react-native'
-import auth from '@react-native-firebase/auth'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
 import { Colors } from 'constants/colors'
@@ -10,6 +10,8 @@ import { RootState } from 'state/store'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
 import { useCallback } from 'react'
 import FlashMessage from "react-native-flash-message"
+import { FirebaseUser } from 'models/firebase-user'
+import firebase from '@react-native-firebase/app'
 
 const App = () => {
   const user = useSelector(({ loggedinUser }: RootState) => loggedinUser)
@@ -18,7 +20,7 @@ const App = () => {
 
   const [initializing, setInitializing] = useState(true)
 
-  const onAuthStateChanged = useCallback((user: any) => {
+  const onAuthStateChanged = useCallback((user: FirebaseAuthTypes.User | null) => {
     let loggedinUser
     if (user) loggedinUser = {
       email: user.email,

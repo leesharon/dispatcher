@@ -8,7 +8,7 @@ import { confirmPasswordPlaceholder, emailPlaceholder, passwordPlaceholder } fro
 import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import LogisterButton from 'components/common/LogisterButton'
-import auth from '@react-native-firebase/auth'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { showMessage } from "react-native-flash-message"
 interface LogisterScreenProps {
 }
@@ -45,7 +45,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                 .then(() => {
                     console.log('User account created & signed in!')
                 })
-                .catch(error => {
+                .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
                     errorHandler(error)
                 })
         }
@@ -64,13 +64,13 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                 .then(() => {
                     console.log('User account signed in!')
                 })
-                .catch(error => {
+                .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
                     errorHandler(error)
                 })
         }
     }
 
-    const errorHandler = (error: any) => {
+    const errorHandler = (error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
         let msg = 'oops! something went wrong'
 
         if (error.code === 'auth/email-already-in-use')
