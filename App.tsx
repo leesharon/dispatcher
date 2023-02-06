@@ -9,17 +9,20 @@ import { HomePageScreen } from './src/features/homepage/components/HomePageScree
 import { Colors, Constants } from 'constants/index'
 import { RootState } from 'state/store'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
+import { firebaseLogin } from 'utils/firebaseAuthUtils'
 
 const App = () => {
-  const loggedinUser = useSelector(({ loggedinUser }: RootState) => loggedinUser)
+  const { loggedinUser } = useSelector((state: RootState) => state.loggedinUser)
   const dispatch = useDispatch()
 
   const [initializing, setInitializing] = useState(true)
 
-  const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
-    dispatch(login(loggedinUser))
+  const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null | any) => {
+    dispatch(login(loggedinUser?.toJSON()))
     if (initializing) setInitializing(false)
   }, [dispatch, initializing])
+
+  // firebaseLogin('lee@lee.com', 'Lol123456789')
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
@@ -31,7 +34,7 @@ const App = () => {
       <KeyboardAvoidingView behavior="position" >
         <SafeAreaProvider style={styles.rootContainer}>
           {/* <LogisterScreen /> */}
-          <HomePageScreen loggedinUser={loggedinUser} />
+          {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
           <FlashMessage position="top" />
         </SafeAreaProvider>
       </KeyboardAvoidingView>

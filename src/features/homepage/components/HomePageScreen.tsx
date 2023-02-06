@@ -40,8 +40,7 @@ const HomePageScreen = ({ loggedinUser }: HomePageScreenProps): JSX.Element => {
             <View style={styles.lastLoginContainer}>
                 <Text style={[styles.lastLoginText, styles.boldText]}>Last Login:</Text>
                 <Text style={styles.lastLoginText}>
-                    {/* 03:50 PM, 09.03.2022 */}
-                    {formatTime(loggedinUser.lastSignInTime)}
+                    {formatTime(loggedinUser.metadata.lastSignInTime)}
                 </Text>
             </View>
         </SafeAreaView>
