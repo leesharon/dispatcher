@@ -10,6 +10,7 @@ import { HorizontalLine } from 'components/common/HorizontalLine'
 import LogisterButton from 'components/common/LogisterButton'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { showMessage } from "react-native-flash-message"
+import { SafeAreaView } from 'react-native-safe-area-context'
 interface LogisterScreenProps {
 }
 
@@ -103,64 +104,66 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
     }
 
     return (
-        <View style={styles.rootContainer}>
-            <View style={styles.logoContainer}>
-                <Logo />
-            </View>
-            <View style={styles.mainContainer}>
-                <View>
-                    <Text style={styles.formTitle}>{status}</Text>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.rootContainer}>
+                <View style={styles.logoContainer}>
+                    <Logo />
+                </View>
+                <View style={styles.mainContainer}>
                     <View>
-                        <AppInput
-                            value={email}
-                            setValue={setEmail}
-                            placeholderText={emailPlaceholder}
-                            contentType={ContentType.email}
-                            validate={validateEmail}
-                            styleProps={{ marginBottom: 24 }}
-                            error={emailError}
-                            setError={setEmailError}
-                        />
-                        <AppInput
-                            value={password}
-                            setValue={setPassword}
-                            placeholderText={passwordPlaceholder}
-                            contentType={ContentType.password}
-                            validate={validatePassword}
-                            styleProps={{ marginBottom: 24 }}
-                            error={passwordError}
-                            setError={setPasswordError}
-                        />
-                        {(status === Status.Signup) && <AppInput
-                            value={confirmPassword}
-                            confirmValue={password}
-                            setValue={setConfirmPassword}
-                            placeholderText={confirmPasswordPlaceholder}
-                            contentType={ContentType.password}
-                            confirmValidate={validateConfirmPassword}
-                            error={confirmPasswordError}
-                            setError={setConfirmPasswordError}
-                        />}
+                        <Text style={styles.formTitle}>{status}</Text>
+                        <View>
+                            <AppInput
+                                value={email}
+                                setValue={setEmail}
+                                placeholderText={emailPlaceholder}
+                                contentType={ContentType.email}
+                                validate={validateEmail}
+                                styleProps={{ marginBottom: 24 }}
+                                error={emailError}
+                                setError={setEmailError}
+                            />
+                            <AppInput
+                                value={password}
+                                setValue={setPassword}
+                                placeholderText={passwordPlaceholder}
+                                contentType={ContentType.password}
+                                validate={validatePassword}
+                                styleProps={{ marginBottom: 24 }}
+                                error={passwordError}
+                                setError={setPasswordError}
+                            />
+                            {(status === Status.Signup) && <AppInput
+                                value={confirmPassword}
+                                confirmValue={password}
+                                setValue={setConfirmPassword}
+                                placeholderText={confirmPasswordPlaceholder}
+                                contentType={ContentType.password}
+                                confirmValidate={validateConfirmPassword}
+                                error={confirmPasswordError}
+                                setError={setConfirmPasswordError}
+                            />}
+                        </View>
+                    </View>
+                    <HorizontalLine />
+                    <View style={styles.buttonsContainer}>
+                        <LogisterButton
+                            onPress={() => (status === Status.Login) ? onLogin() : onSignup()}
+                            bgColor={(status === Status.Signup) ? Colors.BLUE500 : Colors.BLUE300}
+                            containerStyle={{ marginBottom: 24 }}
+                            icon={<ArrowRight />}
+                        >{status.toUpperCase()}
+                        </LogisterButton>
+                        <LogisterButton
+                            onPress={() => setStatus((status === Status.Login) ? Status.Signup : Status.Login)}
+                            bgColor={Colors.GRAY500}
+                            textStyle={styles.secondaryButtonText}
+                        >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}
+                        </LogisterButton>
                     </View>
                 </View>
-                <HorizontalLine />
-                <View style={styles.buttonsContainer}>
-                    <LogisterButton
-                        onPress={() => (status === Status.Login) ? onLogin() : onSignup()}
-                        bgColor={(status === Status.Signup) ? Colors.BLUE500 : Colors.BLUE300}
-                        containerStyle={{ marginBottom: 24 }}
-                        icon={<ArrowRight />}
-                    >{status.toUpperCase()}
-                    </LogisterButton>
-                    <LogisterButton
-                        onPress={() => setStatus((status === Status.Login) ? Status.Signup : Status.Login)}
-                        bgColor={Colors.GRAY500}
-                        textStyle={styles.secondaryButtonText}
-                    >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}
-                    </LogisterButton>
-                </View>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 

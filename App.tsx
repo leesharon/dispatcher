@@ -10,10 +10,10 @@ import { RootState } from 'state/store'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
 import { useCallback } from 'react'
 import FlashMessage from "react-native-flash-message"
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 const App = () => {
   const user = useSelector(({ loggedinUser }: RootState) => loggedinUser)
-  console.log('App ~ user', user)
   const dispatch = useDispatch()
 
   const [initializing, setInitializing] = useState(true)
@@ -37,10 +37,10 @@ const App = () => {
   return (
     <ScrollView style={styles.rootContainer}>
       <KeyboardAvoidingView behavior="position" >
-        <SafeAreaView style={styles.rootContainer}>
+        <SafeAreaProvider style={styles.rootContainer}>
           <LogisterScreen />
           <FlashMessage position="top" />
-        </SafeAreaView>
+        </SafeAreaProvider>
       </KeyboardAvoidingView>
     </ScrollView>
   )
