@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, } from 'react-native'
+import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, View, } from 'react-native'
 import auth from '@react-native-firebase/auth'
 
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
@@ -12,13 +12,18 @@ import { useCallback } from 'react'
 
 const App = () => {
   const user = useSelector(({ loggedinUser }: RootState) => loggedinUser)
+  console.log('App ~ user', user)
   const dispatch = useDispatch()
 
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((user: any) => {
-    user = user.toJSON()
-    dispatch(login(user))
+    const loggedinUser = {
+      email: user.email,
+      uid: user.uid,
+    }
+
+    dispatch(login(loggedinUser))
     if (initializing) setInitializing(false)
   }, [dispatch, initializing])
 
@@ -28,10 +33,8 @@ const App = () => {
   }, [])
 
   return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-    >
-      <KeyboardAvoidingView behavior="position">
+    <ScrollView>
+      <KeyboardAvoidingView behavior="position" >
         <SafeAreaView style={styles.rootContainer}>
           <LogisterScreen />
         </SafeAreaView>
