@@ -44,7 +44,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={styles.rootContainer}>
             <View style={styles.rootContainer}>
                 <View style={styles.logoContainer}>
                     <Logo />
@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
     rootContainer: {
         flex: 1,
         flexGrow: 1,
-        height: '100%',
     },
     logoContainer: {
         height: '35%',

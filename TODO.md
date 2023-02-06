@@ -1,0 +1,1 @@
+- Inside LogisterScreen, refactor colors of the main button
