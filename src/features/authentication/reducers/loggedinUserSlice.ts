@@ -1,7 +1,13 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState: { loggedinUser: FirebaseAuthTypes.User | null } = { loggedinUser: null }
+interface LoggedinUserState {
+    loggedinUser: FirebaseAuthTypes.User | null
+}
+
+const initialState: LoggedinUserState = {
+    loggedinUser: null,
+}
 
 const userSlice = createSlice({
     name: 'loggedinUser',
@@ -15,6 +21,8 @@ const userSlice = createSlice({
         }
     },
 })
+
+export const selectLoggedinUser = (state: { loggedinUser: LoggedinUserState }) => state.loggedinUser.loggedinUser
 
 export const { login, logout } = userSlice.actions
 export default userSlice.reducer

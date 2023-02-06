@@ -7,12 +7,11 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
 import { HomePageScreen } from './src/features/homepage/components/HomePageScreen'
 import { Colors, Constants } from 'constants/index'
-import { RootState } from 'state/store'
-import { login } from 'features/authentication/reducers/loggedinUserSlice'
+import { login, selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { firebaseLogin } from 'utils/firebaseAuthUtils'
 
 const App = () => {
-  const { loggedinUser } = useSelector((state: RootState) => state.loggedinUser)
+  const loggedinUser = useSelector(selectLoggedinUser)
   const dispatch = useDispatch()
 
   const [initializing, setInitializing] = useState(true)
