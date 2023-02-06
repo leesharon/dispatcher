@@ -9,7 +9,7 @@ import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import LogisterButton from 'components/common/LogisterButton'
 import auth from '@react-native-firebase/auth'
-
+import { showMessage } from "react-native-flash-message"
 interface LogisterScreenProps {
 }
 
@@ -46,13 +46,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                     console.log('User account created & signed in!')
                 })
                 .catch(error => {
-                    if (error.code === 'auth/email-already-in-use')
-                        console.log('That email address is already in use!')
-
-                    if (error.code === 'auth/invalid-email')
-                        console.log('That email address is invalid!')
-
-                    console.error(error)
+                    errorHandler(error)
                 })
         }
     }
@@ -71,12 +65,41 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                     console.log('User account signed in!')
                 })
                 .catch(error => {
-                    if (error.code === 'auth/invalid-email')
-                        console.log('That email address is invalid!')
-
-                    console.error(error)
+                    errorHandler(error)
                 })
         }
+    }
+
+    const errorHandler = (error: any) => {
+        let msg = 'oops! something went wrong'
+
+        if (error.code === 'auth/email-already-in-use')
+            msg = 'That email address is already in use!'
+
+        if (error.code === 'auth/invalid-email')
+            msg = 'That email address is invalid!'
+
+        if (error.code === 'auth/user-not-found')
+            msg = 'No user found with that email address!'
+
+        if (error.code === 'auth/wrong-password')
+            msg = 'Wrong password!'
+
+        if (error.code === 'user-disabled')
+            msg = 'That user has been disabled!'
+
+        else msg = error.message
+
+        console.log(msg)
+        console.error(error)
+        showErrorMessage(msg)
+    }
+
+    const showErrorMessage = (msg: string) => {
+        showMessage({
+            message: msg,
+            type: "danger",
+        })
     }
 
     return (

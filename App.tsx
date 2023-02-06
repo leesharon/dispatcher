@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'state/store'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
 import { useCallback } from 'react'
+import FlashMessage from "react-native-flash-message"
 
 const App = () => {
   const user = useSelector(({ loggedinUser }: RootState) => loggedinUser)
@@ -38,6 +39,7 @@ const App = () => {
       <KeyboardAvoidingView behavior="position" >
         <SafeAreaView style={styles.rootContainer}>
           <LogisterScreen />
+          <FlashMessage position="top" />
         </SafeAreaView>
       </KeyboardAvoidingView>
     </ScrollView>
