@@ -1,5 +1,11 @@
-const emailPlaceholder = 'Your Email'
-const passwordPlaceholder = 'Password'
-const confirmPasswordPlaceholder = 'Re-Enter Password'
+const EMAIL_PLACEHOLDER = 'Your Email'
+const PASSWORD_PLACEHOLDER = 'Password'
+const CONFIRM_PASSWORD_PLACEHOLDER = 'Re-Enter Password'
+const INVALID_EMAIL_ADDRESS = 'That email address is invalid!'
 
-export { emailPlaceholder, passwordPlaceholder, confirmPasswordPlaceholder }
+export {
+    EMAIL_PLACEHOLDER,
+    PASSWORD_PLACEHOLDER,
+    CONFIRM_PASSWORD_PLACEHOLDER,
+    INVALID_EMAIL_ADDRESS
+}

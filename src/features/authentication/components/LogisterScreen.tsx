@@ -1,16 +1,16 @@
 import { useState } from 'react'
-import { View, Text, StyleSheet, Alert } from "react-native"
-import { Colors } from 'constants/colors'
-import Logo from '../assets/logo.svg'
-import ArrowRight from '../../../../assets/arrow-right.svg'
+import { View, Text, StyleSheet } from "react-native"
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppInput, ContentType } from 'components/common/AppInput'
-import { confirmPasswordPlaceholder, emailPlaceholder, passwordPlaceholder } from 'constants/strings'
-import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import LogisterButton from 'components/common/LogisterButton'
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
-import { showMessage } from "react-native-flash-message"
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
+import { firebaseLogin, firebaseSignup } from 'utils/firebaseAuthUtils'
+import { showAlertMessage } from 'utils/userMsgsUtils'
+import { Colors } from 'constants/index'
+import { Strings } from 'constants/index'
+import Logo from '../assets/logo.svg'
+import ArrowRight from '../../../../assets/arrow-right.svg'
 interface LogisterScreenProps {
 }
 
@@ -33,74 +33,15 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('')
 
     const onSignup = () => {
-        if (emailError || passwordError || confirmPasswordError || !email || !password || !confirmPassword) {
-            Alert.alert(
-                'Oh oh!',
-                'Please fill out the form correctly.',
-                [{ text: 'Okay', style: 'destructive' }]
-            )
-        }
-        else {
-            auth()
-                .createUserWithEmailAndPassword(email, password)
-                .then(() => {
-                    console.log('User account created & signed in!')
-                })
-                .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
-                    errorHandler(error)
-                })
-        }
+        if (emailError || passwordError || confirmPasswordError || !email || !password || !confirmPassword)
+            showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
+        else firebaseSignup(email, password)
     }
 
     const onLogin = () => {
-        if (emailError || passwordError || confirmPasswordError || !email || !password) {
-            Alert.alert(
-                'Oh oh!',
-                'Please fill out the form correctly.',
-                [{ text: 'Okay', style: 'destructive' }]
-            )
-        }
-        else {
-            auth().signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    console.log('User account signed in!')
-                })
-                .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
-                    errorHandler(error)
-                })
-        }
-    }
-
-    const errorHandler = (error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
-        let msg = 'oops! something went wrong'
-
-        if (error.code === 'auth/email-already-in-use')
-            msg = 'That email address is already in use!'
-
-        if (error.code === 'auth/invalid-email')
-            msg = 'That email address is invalid!'
-
-        if (error.code === 'auth/user-not-found')
-            msg = 'No user found with that email address!'
-
-        if (error.code === 'auth/wrong-password')
-            msg = 'Wrong password!'
-
-        if (error.code === 'user-disabled')
-            msg = 'That user has been disabled!'
-
-        else msg = error.message
-
-        console.log(msg)
-        console.error(error)
-        showErrorMessage(msg)
-    }
-
-    const showErrorMessage = (msg: string) => {
-        showMessage({
-            message: msg,
-            type: "danger",
-        })
+        if (emailError || passwordError || confirmPasswordError || !email || !password)
+            showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
+        else firebaseLogin(email, password)
     }
 
     return (
@@ -116,7 +57,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                             <AppInput
                                 value={email}
                                 setValue={setEmail}
-                                placeholderText={emailPlaceholder}
+                                placeholderText={Strings.EMAIL_PLACEHOLDER}
                                 contentType={ContentType.email}
                                 validate={validateEmail}
                                 styleProps={{ marginBottom: 24 }}
@@ -126,7 +67,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                             <AppInput
                                 value={password}
                                 setValue={setPassword}
-                                placeholderText={passwordPlaceholder}
+                                placeholderText={Strings.PASSWORD_PLACEHOLDER}
                                 contentType={ContentType.password}
                                 validate={validatePassword}
                                 styleProps={{ marginBottom: 24 }}
@@ -137,7 +78,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                                 value={confirmPassword}
                                 confirmValue={password}
                                 setValue={setConfirmPassword}
-                                placeholderText={confirmPasswordPlaceholder}
+                                placeholderText={Strings.CONFIRM_PASSWORD_PLACEHOLDER}
                                 contentType={ContentType.password}
                                 confirmValidate={validateConfirmPassword}
                                 error={confirmPasswordError}
