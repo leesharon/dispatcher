@@ -10,8 +10,6 @@ import { RootState } from 'state/store'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
 import { useCallback } from 'react'
 import FlashMessage from "react-native-flash-message"
-import { FirebaseUser } from 'models/firebase-user'
-import firebase from '@react-native-firebase/app'
 
 const App = () => {
   const user = useSelector(({ loggedinUser }: RootState) => loggedinUser)
