@@ -5,15 +5,23 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { TopBar } from './TopBar'
 import { FilterBar } from './FilterBar'
 import { HeadLinesFeed } from './HeadLinesFeed'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchHeadLines, Status } from '../reducers/headLinesSlice'
+import { AppDispatch, RootState } from 'state/store'
 
 interface HomePageScreenProps {
     loggedinUser: FirebaseAuthTypes.User | null
 }
 
 const HomePageScreen = ({ loggedinUser }: HomePageScreenProps): JSX.Element => {
+    const dispatch = useDispatch<AppDispatch>()
+    const headLinesStatus = useSelector((state: RootState) => state.headLines.status)
+    console.log('HomePageScreen ~ headLinesStatus', headLinesStatus)
 
     useEffect(() => {
-    }, [])
+        if (headLinesStatus === Status.idle)
+            dispatch(fetchHeadLines())
+    }, [headLinesStatus, dispatch])
 
     return (
         <SafeAreaView style={styles.rootContainer}>

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import headLines from '../../../data/news-us.json'
 
 interface headLinesState {
     headLines: [] | null
@@ -20,7 +21,7 @@ const initialState: headLinesState = {
     error: null
 }
 
-const userSlice = createSlice({
+const headLinesSlice = createSlice({
     name: 'headLines',
     initialState,
     reducers: {
@@ -32,31 +33,34 @@ const userSlice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(fetchPosts.fulfilled, (state, action) => {
+        builder.addCase(fetchHeadLines.fulfilled, (state, action) => {
             state.headLines = action.payload
             state.status = Status.succeeded
             state.error = null
         })
-        builder.addCase(fetchPosts.pending, state => {
+        builder.addCase(fetchHeadLines.pending, state => {
             state.status = Status.loading
         })
-        builder.addCase(fetchPosts.rejected, (state, action) => {
+        builder.addCase(fetchHeadLines.rejected, (state, action) => {
             state.error = action.error.message || null
             state.status = Status.failed
         })
     }
 })
 
-export const fetchPosts = createAsyncThunk('headLines/fetchHeadLines', async () => {
-    const url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=4ec6db6a4d684984be71b32e0ae36b91'
-    const res = await axios.get(url)
-    console.log('res.data: ', res.data)
-    return res.data
+const fetchHeadLines = createAsyncThunk('headLines/fetchHeadLines', async () => {
+    if (__DEV__)
+        return Promise.resolve(JSON.parse(JSON.stringify(headLines)))
+    else {
+        const url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=4ec6db6a4d684984be71b32e0ae36b91'
+        const res = await axios.get(url)
+        return res.data
+    }
 })
 
 const selectHeadLines = (state: { headLines: headLinesState }) => state.headLines.headLines
 
-const { login, logout } = userSlice.actions
+const { login, logout } = headLinesSlice.actions
 
-export { selectHeadLines, login, logout }
-export default userSlice.reducer
+export { selectHeadLines, login, logout, fetchHeadLines, Status }
+export default headLinesSlice.reducer
