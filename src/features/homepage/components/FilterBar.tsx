@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import SortByIcon from '../assets/sort-by.svg'
 import FilterIcon from '../assets/filter.svg'
 import { formatDate } from 'utils/dateUtils'
 import { Colors, Layout } from 'constants'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { AppText } from 'components/common/AppText'
 
 interface FilterBarProps {
     loggedinUser: any
@@ -18,10 +19,10 @@ const FilterBar = ({ loggedinUser }: FilterBarProps): JSX.Element => {
                 <FilterIcon />
             </View>
             <View style={styles.lastLoginContainer}>
-                <Text style={[styles.lastLoginText, styles.boldText]}>Last Login:</Text>
-                <Text style={styles.lastLoginText}>
+                <AppText styleProps={styles.lastLoginText}>Last Login:</AppText>
+                <AppText styleProps={styles.lastLoginText}>
                     {formatDate(loggedinUser.metadata.lastSignInTime)}
-                </Text>
+                </AppText>
             </View>
         </View>
     )
@@ -54,10 +55,6 @@ const styles = StyleSheet.create({
     },
     lastLoginText: {
         fontSize: 12,
-        color: Colors.BLUE400,
-        fontFamily: 'Roboto-Regular',
-    },
-    boldText: {
         fontFamily: 'Roboto-Bold',
         marginRight: 3,
     }

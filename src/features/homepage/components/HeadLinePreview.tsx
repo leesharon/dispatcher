@@ -1,10 +1,12 @@
 import AppButton from 'components/common/AppButton'
 import { Colors, Layout } from 'constants'
 import { HeadLine } from 'models/HeadLine'
-import { View, Text, StyleSheet, Image } from "react-native"
+import { View, StyleSheet } from "react-native"
+import FastImage from 'react-native-fast-image'
 import { formatDateLong } from 'utils/dateUtils'
 import FavoriteIcon from '../assets/favorite.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
+import { AppText } from 'components/common/AppText'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
@@ -15,23 +17,21 @@ const HeadLinePreview = ({ headLine }: HeadLinePreviewProps): JSX.Element => {
     return (
         <View style={styles.headLineContainer}>
             <FavoriteIcon style={styles.favoriteIcon} />
-            <Image
+            <FastImage
                 style={styles.image}
-                source={{ uri: headLine.urlToImage }}
-                resizeMode='cover'
+                source={{ uri: headLine.urlToImage, priority: FastImage.priority.normal, }}
             />
             <View style={styles.headLineContent}>
                 <View style={styles.infoLine}>
-                    <Text style={styles.lightText}>{formatDateLong(headLine.publishedAt)}</Text>
+                    <AppText styleProps={styles.lightText}>{formatDateLong(headLine.publishedAt)}</AppText>
                 </View>
-                <Text style={styles.title}>{headLine.title}</Text>
-                <Text style={styles.lightText}>
-                    {headLine.author && headLine.author + ', '}
-                    {headLine.source.name}
-                </Text>
-                <Text style={styles.content}>
+                <AppText styleProps={styles.title}>{headLine.title}</AppText>
+                <AppText styleProps={styles.lightText}>
+                    {headLine.author && headLine.author + ', ' + headLine.source.name}
+                </AppText>
+                <AppText styleProps={styles.content}>
                     {headLine.content && headLine.content.substring(0, headLine.content.length - 13)}
-                </Text>
+                </AppText>
                 <AppButton
                     onPress={() => { console.log('Dispatch!!!'); }}
                     innerContainerStyle={styles.buttonInnerContainer}
@@ -80,10 +80,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     lightText: {
-        fontSize: 14,
-        color: Colors.BLUE400,
         opacity: 0.5,
-        fontFamily: 'Roboto-Regular',
         marginBottom: 10,
     },
     title: {
@@ -94,9 +91,6 @@ const styles = StyleSheet.create({
     },
     content: {
         marginBottom: 20,
-        fontSize: 14,
-        color: Colors.BLUE400,
-        fontFamily: 'Roboto-Regular',
     },
     buttonInnerContainer: {
         borderRadius: 20,

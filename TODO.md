@@ -3,7 +3,6 @@ Todo's
 - Check user type again for the filterbar
 
 Ask About
-- SafeAreaProvider
-- images on android - react-native-fast-image
-- layout & fontsizes constants? how does it look like? - apptext
+- images on android
+- layout constants
 - Why app renders too many times - onstatechange flag bug fix
