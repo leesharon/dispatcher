@@ -1,14 +1,15 @@
 import { useState } from 'react'
-import { View, Text, StyleSheet, Alert } from "react-native"
-import { Colors } from 'constants/colors'
-import Logo from '../assets/logo.svg'
-import ArrowRight from '../../../../assets/arrow-right.svg'
+import { View, Text, StyleSheet } from "react-native"
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppInput, ContentType } from 'components/common/AppInput'
-import { confirmPasswordPlaceholder, emailPlaceholder, passwordPlaceholder } from 'constants/strings'
-import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import LogisterButton from 'components/common/LogisterButton'
-
+import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
+import { firebaseLogin, firebaseSignup } from 'utils/firebaseAuthUtils'
+import { showAlertMessage } from 'utils/userMsgsUtils'
+import { Colors, Strings } from 'constants/index'
+import Logo from '../assets/logo.svg'
+import ArrowRight from '../../../../assets/arrow-right.svg'
 interface LogisterScreenProps {
 }
 
@@ -31,75 +32,78 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('')
 
     const onSignup = () => {
-        if (emailError || passwordError || confirmPasswordError) {
-            Alert.alert(
-                'Oh oh!',
-                'Please fill out the form correctly.',
-                [{ text: 'Okay', style: 'destructive' }]
-            )
-        }
-        else console.log('Signup')
+        if (emailError || passwordError || confirmPasswordError || !email || !password || !confirmPassword)
+            showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
+        else firebaseSignup(email, password)
+    }
+
+    const onLogin = () => {
+        if (emailError || passwordError || confirmPasswordError || !email || !password)
+            showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
+        else firebaseLogin(email, password)
     }
 
     return (
-        <View style={styles.rootContainer}>
-            <View style={styles.logoContainer}>
-                <Logo />
-            </View>
-            <View style={styles.mainContainer}>
-                <View>
-                    <Text style={styles.formTitle}>{status}</Text>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.rootContainer}>
+                <View style={styles.logoContainer}>
+                    <Logo />
+                </View>
+                <View style={styles.mainContainer}>
                     <View>
-                        <AppInput
-                            value={email}
-                            setValue={setEmail}
-                            placeholderText={emailPlaceholder}
-                            contentType={ContentType.email}
-                            validate={validateEmail}
-                            styleProps={{ marginBottom: 24 }}
-                            error={emailError}
-                            setError={setEmailError}
-                        />
-                        <AppInput
-                            value={password}
-                            setValue={setPassword}
-                            placeholderText={passwordPlaceholder}
-                            contentType={ContentType.password}
-                            validate={validatePassword}
-                            styleProps={{ marginBottom: 24 }}
-                            error={passwordError}
-                            setError={setPasswordError}
-                        />
-                        <AppInput
-                            value={confirmPassword}
-                            confirmValue={password}
-                            setValue={setConfirmPassword}
-                            placeholderText={confirmPasswordPlaceholder}
-                            contentType={ContentType.password}
-                            confirmValidate={validateConfirmPassword}
-                            error={confirmPasswordError}
-                            setError={setConfirmPasswordError}
-                        />
+                        <Text style={styles.formTitle}>{status}</Text>
+                        <View>
+                            <AppInput
+                                value={email}
+                                setValue={setEmail}
+                                placeholderText={Strings.EMAIL_PLACEHOLDER}
+                                contentType={ContentType.email}
+                                validate={validateEmail}
+                                styleProps={styles.formInput}
+                                error={emailError}
+                                setError={setEmailError}
+                            />
+                            <AppInput
+                                value={password}
+                                setValue={setPassword}
+                                placeholderText={Strings.PASSWORD_PLACEHOLDER}
+                                contentType={ContentType.password}
+                                validate={validatePassword}
+                                styleProps={styles.formInput}
+                                error={passwordError}
+                                setError={setPasswordError}
+                            />
+                            {(status === Status.Signup) && <AppInput
+                                value={confirmPassword}
+                                confirmValue={password}
+                                setValue={setConfirmPassword}
+                                placeholderText={Strings.CONFIRM_PASSWORD_PLACEHOLDER}
+                                contentType={ContentType.password}
+                                confirmValidate={validateConfirmPassword}
+                                error={confirmPasswordError}
+                                setError={setConfirmPasswordError}
+                            />}
+                        </View>
+                    </View>
+                    <HorizontalLine />
+                    <View style={styles.buttonsContainer}>
+                        <LogisterButton
+                            onPress={() => (status === Status.Login) ? onLogin() : onSignup()}
+                            bgColor={(status === Status.Signup) ? Colors.BLUE500 : Colors.BLUE300}
+                            containerStyle={{ marginBottom: 24 }}
+                            icon={<ArrowRight />}
+                        >{status.toUpperCase()}
+                        </LogisterButton>
+                        <LogisterButton
+                            onPress={() => setStatus((status === Status.Login) ? Status.Signup : Status.Login)}
+                            bgColor={Colors.GRAY500}
+                            textStyle={styles.secondaryButtonText}
+                        >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}
+                        </LogisterButton>
                     </View>
                 </View>
-                <HorizontalLine />
-                <View style={styles.buttonsContainer}>
-                    <LogisterButton
-                        onPress={onSignup}
-                        bgColor={Colors.BLUE500}
-                        containerStyle={{ marginBottom: 24 }}
-                        icon={<ArrowRight />}
-                    >{status.toUpperCase()}
-                    </LogisterButton>
-                    <LogisterButton
-                        onPress={() => console.log('Login')}
-                        bgColor={Colors.GRAY500}
-                        textStyle={styles.secondaryButtonText}
-                    >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}
-                    </LogisterButton>
-                </View>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -129,6 +133,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Bold',
         paddingLeft: 10,
         paddingBottom: 12,
+    },
+    formInput: {
+        marginBottom: 24,
     },
     buttonsContainer: {
         justifyContent: 'center',

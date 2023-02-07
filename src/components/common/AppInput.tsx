@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { TextInput, StyleSheet, View, Pressable, Text } from "react-native"
-import { Colors } from '../../constants/colors'
+import { Colors } from 'constants/index'
 import Revealed from '../../../assets/revealed.svg'
 import Hidden from '../../../assets/hidden.svg'
 

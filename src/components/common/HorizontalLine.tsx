@@ -1,4 +1,4 @@
-import { Colors } from 'constants/colors'
+import { Colors } from 'constants/index'
 import { View, Text, StyleSheet } from "react-native"
 
 interface HorizontalLineProps {

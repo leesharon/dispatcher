@@ -1,4 +1,11 @@
-import { Dimensions } from 'react-native'
+import { Dimensions, Platform, StatusBar } from 'react-native'
 
-export const SCREEN_HEIGHT = Dimensions.get('window').height
-export const SCREEN_WIDTH = Dimensions.get('window').width
+const window = Dimensions.get('window')
+const statusBarHeight = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight
+
+const SCREEN_HEIGHT = window.height
+const SCREEN_WIDTH = window.width
+const IS_IOS = Platform.OS === 'ios'
+const SCREEN_HEIGHT_WITHOUT_STATUS_BAR = window.height - (statusBarHeight || 0)
+
+export { SCREEN_HEIGHT, SCREEN_WIDTH, IS_IOS, SCREEN_HEIGHT_WITHOUT_STATUS_BAR }

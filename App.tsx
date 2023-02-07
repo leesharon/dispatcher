@@ -1,20 +1,47 @@
-import { Colors } from 'constants/colors'
-import { SCREEN_HEIGHT } from 'constants/constants'
-import React from 'react'
-import { SafeAreaView, StyleSheet, ScrollView, KeyboardAvoidingView, View, } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, ScrollView, KeyboardAvoidingView, } from 'react-native'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
+import { Colors, Constants } from 'constants/index'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'state/store'
+import { login } from 'features/authentication/reducers/loggedinUserSlice'
+import { useCallback } from 'react'
+import FlashMessage from "react-native-flash-message"
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 const App = () => {
+  const user = useSelector(({ loggedinUser }: RootState) => loggedinUser)
+  const dispatch = useDispatch()
+
+  const [initializing, setInitializing] = useState(true)
+
+  const onAuthStateChanged = useCallback((user: FirebaseAuthTypes.User | null) => {
+    let loggedinUser
+    if (user) loggedinUser = {
+      email: user.email,
+      uid: user.uid,
+    }
+
+    dispatch(login(loggedinUser))
+    if (initializing) setInitializing(false)
+  }, [dispatch, initializing])
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber
+  }, [])
+
   return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-    >
-      <KeyboardAvoidingView behavior="position">
-        <SafeAreaView style={styles.rootContainer}>
+    <ScrollView style={styles.rootContainer}>
+      <KeyboardAvoidingView behavior="position" >
+        <SafeAreaProvider style={styles.rootContainer}>
           <LogisterScreen />
-        </SafeAreaView>
+          <FlashMessage position="top" />
+        </SafeAreaProvider>
       </KeyboardAvoidingView>
-    </ScrollView >
+    </ScrollView>
   )
 }
 
@@ -22,7 +49,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     backgroundColor: Colors.BLUE100,
-    height: SCREEN_HEIGHT,
+    height: Constants.SCREEN_HEIGHT_WITHOUT_STATUS_BAR,
   }
 })
 

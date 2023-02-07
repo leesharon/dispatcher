@@ -1,19 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import counterReducer from '../features/counter/counterSlice'
-// import { reactotron } from '../../reactotron'
-
-// const middlewares = []
-
-// if (__DEV__) {
-//   const reactotronMiddleware = reactotron.createEnhancer()
-//   middlewares.push(reactotronMiddleware)
-// }
+import loggedinUserReducer from 'features/authentication/reducers/loggedinUserSlice'
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    loggedinUser: loggedinUserReducer,
   },
-  // middleware: middlewares,
 })
 
 export type RootState = ReturnType<typeof store.getState>
