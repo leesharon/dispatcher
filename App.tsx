@@ -29,15 +29,14 @@ const App = () => {
   }, [])
 
   return (
-    <ScrollView style={styles.rootContainer}>
-      <KeyboardAvoidingView behavior="position" >
-        <SafeAreaProvider style={styles.rootContainer}>
-          <LogisterScreen />
-          {/* {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />} */}
-          <FlashMessage position="top" />
-        </SafeAreaProvider>
-      </KeyboardAvoidingView>
-    </ScrollView>
+    <SafeAreaProvider style={styles.rootContainer}>
+      {/* <ScrollView style={styles.rootContainer}> */}
+      {/* <LogisterScreen /> */}
+      {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
+      <FlashMessage position="top" />
+
+      {/* </ScrollView> */}
+    </SafeAreaProvider>
   )
 }
 

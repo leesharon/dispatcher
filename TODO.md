@@ -1,13 +1,11 @@
 Todo's
 
-- Inside LogisterScreen, refactor colors of the main button
 - Check user type again for the filterbar
-- Login button color grayed out
-
+-flat list
 
 Ask About
-- headline topics?
-- Why app renders too many times
+- SafeAreaProvider
+- images on android - react-native-fast-image
+- layout & fontsizes constants? how does it look like? - apptext
+- Why app renders too many times - onstatechange flag bug fix
 - how to avoid state user.user
-- layout & fontsizes constants? how does it look like?
-- images on android

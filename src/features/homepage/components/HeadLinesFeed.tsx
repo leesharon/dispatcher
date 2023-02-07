@@ -1,6 +1,6 @@
 import { Colors, Layout } from 'constants'
 import { HeadLine } from 'models/HeadLine'
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, FlatList } from "react-native"
 import { HeadLinePreview } from './HeadLinePreview'
 
 interface HeadLinesFeedProps {
@@ -14,9 +14,10 @@ const HeadLinesFeed = ({ headLines }: HeadLinesFeedProps): JSX.Element => {
             <Text style={styles.title}>
                 Top Headlines in Israel
             </Text>
-            {headLines.map((headLine, index) => (
-                <HeadLinePreview headLine={headLine} key={index} />
-            ))}
+            <FlatList
+                data={headLines}
+                renderItem={({ item }) => <HeadLinePreview headLine={item} />}
+            />
         </View>
     )
 }

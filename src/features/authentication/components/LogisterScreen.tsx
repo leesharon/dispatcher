@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView } from "react-native"
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppInput, ContentType } from 'components/common/AppInput'
 import { HorizontalLine } from 'components/common/HorizontalLine'
@@ -50,11 +50,12 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
 
     return (
         <SafeAreaView style={styles.rootContainer}>
-            <View style={styles.rootContainer}>
-                <View style={styles.logoContainer}>
-                    <Logo />
-                </View>
-                <View style={styles.mainContainer}>
+            {/* <View style={styles.rootContainer}> */}
+            <View style={styles.logoContainer}>
+                <Logo />
+            </View>
+            <View style={styles.mainContainer}>
+                <KeyboardAvoidingView behavior="position" style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}>
                     <View>
                         <Text style={styles.formTitle}>{status}</Text>
                         <View>
@@ -106,16 +107,17 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                         >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}
                         </AppButton>
                     </View>
-                </View>
+                </KeyboardAvoidingView>
             </View>
-        </SafeAreaView>
+            {/* </View> */}
+        </SafeAreaView >
     )
 }
 
 const styles = StyleSheet.create({
     rootContainer: {
         flex: 1,
-        flexGrow: 1,
+        // flexGrow: 1,
     },
     logoContainer: {
         height: '35%',
