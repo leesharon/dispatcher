@@ -4,5 +4,4 @@ Todo's
 
 Ask About
 - images on android
-- layout constants
 - Why app renders too many times - onstatechange flag bug fix

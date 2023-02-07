@@ -56,14 +56,14 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 32 },
         shadowOpacity: 1,
         shadowRadius: 64,
-        marginBottom: 20,
+        marginBottom: Layout.MARGIN_BOTTOM_LARGE,
         paddingBottom: 12,
     },
     image: {
         height: 150,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        marginBottom: 10,
+        marginBottom: Layout.MARGIN_BOTTOM_SMALL,
     },
     favoriteIcon: {
         position: 'absolute',
@@ -81,16 +81,16 @@ const styles = StyleSheet.create({
     },
     lightText: {
         opacity: 0.5,
-        marginBottom: 10,
+        marginBottom: Layout.MARGIN_BOTTOM_SMALL,
     },
     title: {
         fontSize: 18,
         fontFamily: 'Roboto-Bold',
-        marginBottom: 10,
+        marginBottom: Layout.MARGIN_BOTTOM_SMALL,
         color: Colors.BLUE1000,
     },
     content: {
-        marginBottom: 20,
+        marginBottom: Layout.MARGIN_BOTTOM_LARGE,
     },
     buttonInnerContainer: {
         borderRadius: 20,
