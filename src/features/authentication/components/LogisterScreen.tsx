@@ -32,15 +32,20 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('')
 
     const onSignup = () => {
-        if (emailError || passwordError || confirmPasswordError || !email || !password || !confirmPassword)
+        if (!isFormValid())
             showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
         else firebaseSignup(email, password)
     }
 
     const onLogin = () => {
-        if (emailError || passwordError || confirmPasswordError || !email || !password)
+        if (!isFormValid())
             showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
         else firebaseLogin(email, password)
+    }
+
+    const isFormValid = () => {
+        if (status === Status.Login) return email && password && !emailError && !passwordError
+        else return email && password && confirmPassword && !emailError && !passwordError && !confirmPasswordError
     }
 
     return (
@@ -89,7 +94,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                     <View style={styles.buttonsContainer}>
                         <AppButton
                             onPress={() => (status === Status.Login) ? onLogin() : onSignup()}
-                            innerContainerStyle={{ backgroundColor: (status === Status.Signup) ? Colors.BLUE500 : Colors.BLUE300 }}
+                            innerContainerStyle={{ backgroundColor: (isFormValid()) ? Colors.BLUE500 : Colors.BLUE300 }}
                             outerContainerStyle={{ marginBottom: 24 }}
                             icon={<ArrowRight />}
                         >{status.toUpperCase()}

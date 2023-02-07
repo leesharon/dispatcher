@@ -32,8 +32,8 @@ const App = () => {
     <ScrollView style={styles.rootContainer}>
       <KeyboardAvoidingView behavior="position" >
         <SafeAreaProvider style={styles.rootContainer}>
-          {/* <LogisterScreen /> */}
-          {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
+          <LogisterScreen />
+          {/* {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />} */}
           <FlashMessage position="top" />
         </SafeAreaProvider>
       </KeyboardAvoidingView>

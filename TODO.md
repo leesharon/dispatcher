@@ -10,3 +10,4 @@ Ask About
 - Why app renders too many times
 - how to avoid state user.user
 - layout & fontsizes constants? how does it look like?
+- images on android
