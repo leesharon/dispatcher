@@ -1,4 +1,4 @@
-const formatTime = (timestamp: number) => {
+const formatDate = (timestamp: number) => {
     const date = new Date(timestamp)
     const options: Intl.DateTimeFormatOptions = {
         weekday: "long",
@@ -12,4 +12,14 @@ const formatTime = (timestamp: number) => {
     return date.toLocaleString("en-US", options)
 }
 
-export { formatTime }
+const formatDateLong = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    })
+}
+
+export { formatDate, formatDateLong }

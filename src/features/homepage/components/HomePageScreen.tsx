@@ -6,7 +6,7 @@ import { TopBar } from './TopBar'
 import { FilterBar } from './FilterBar'
 import { HeadLinesFeed } from './HeadLinesFeed'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchHeadLines, Status } from '../reducers/headLinesSlice'
+import { fetchHeadLines, selectHeadLines, Status } from '../reducers/headLinesSlice'
 import { AppDispatch, RootState } from 'state/store'
 
 interface HomePageScreenProps {
@@ -16,7 +16,7 @@ interface HomePageScreenProps {
 const HomePageScreen = ({ loggedinUser }: HomePageScreenProps): JSX.Element => {
     const dispatch = useDispatch<AppDispatch>()
     const headLinesStatus = useSelector((state: RootState) => state.headLines.status)
-    console.log('HomePageScreen ~ headLinesStatus', headLinesStatus)
+    const headLines = useSelector(selectHeadLines)
 
     useEffect(() => {
         if (headLinesStatus === Status.idle)
@@ -27,7 +27,7 @@ const HomePageScreen = ({ loggedinUser }: HomePageScreenProps): JSX.Element => {
         <SafeAreaView style={styles.rootContainer}>
             <TopBar />
             <FilterBar loggedinUser={loggedinUser} />
-            <HeadLinesFeed />
+            {headLines && <HeadLinesFeed headLines={headLines} />}
         </SafeAreaView>
     )
 }

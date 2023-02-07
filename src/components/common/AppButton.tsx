@@ -1,23 +1,24 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
-interface LogisterButtonProps {
+interface AppButtonProps {
     children: string
     onPress: () => void
     icon?: any
     bgColor?: string
     textStyle?: { color: string, fontWeight: string } | {}
-    containerStyle?: { marginBottom: number }
+    innerContainerStyle?: { backgroundColor: string } | {}
+    outerContainerStyle?: { marginBottom: number, borderRadius: number } | {}
 }
 
-function LogisterButton({ children, onPress, textStyle = {}, containerStyle, bgColor, icon }: LogisterButtonProps) {
+function AppButton({ children, onPress, textStyle = {}, outerContainerStyle, innerContainerStyle, bgColor, icon }: AppButtonProps) {
     return (
-        <View style={[styles.buttonOuterContainer, containerStyle]}>
+        <View style={[styles.buttonOuterContainer, outerContainerStyle]}>
             <Pressable
                 onPress={onPress}
                 style={
                     ({ pressed }) => pressed
-                        ? [styles.pressed, styles.buttonInnerContainer, { backgroundColor: bgColor }]
-                        : [styles.buttonInnerContainer, { backgroundColor: bgColor }]
+                        ? [styles.pressed, styles.buttonInnerContainer, innerContainerStyle]
+                        : [styles.buttonInnerContainer, innerContainerStyle]
                 }
             >
                 <Text style={[styles.buttonText, textStyle]}>{children}</Text>
@@ -58,4 +59,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default LogisterButton
+export default AppButton

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native"
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppInput, ContentType } from 'components/common/AppInput'
 import { HorizontalLine } from 'components/common/HorizontalLine'
-import LogisterButton from 'components/common/LogisterButton'
+import AppButton from 'components/common/AppButton'
 import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
 import { firebaseLogin, firebaseSignup } from 'utils/firebaseAuthUtils'
 import { showAlertMessage } from 'utils/userMsgsUtils'
@@ -87,19 +87,19 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                     </View>
                     <HorizontalLine />
                     <View style={styles.buttonsContainer}>
-                        <LogisterButton
+                        <AppButton
                             onPress={() => (status === Status.Login) ? onLogin() : onSignup()}
-                            bgColor={(status === Status.Signup) ? Colors.BLUE500 : Colors.BLUE300}
-                            containerStyle={{ marginBottom: 24 }}
+                            innerContainerStyle={{ backgroundColor: (status === Status.Signup) ? Colors.BLUE500 : Colors.BLUE300 }}
+                            outerContainerStyle={{ marginBottom: 24 }}
                             icon={<ArrowRight />}
                         >{status.toUpperCase()}
-                        </LogisterButton>
-                        <LogisterButton
+                        </AppButton>
+                        <AppButton
                             onPress={() => setStatus((status === Status.Login) ? Status.Signup : Status.Login)}
-                            bgColor={Colors.GRAY500}
+                            innerContainerStyle={{ backgroundColor: Colors.GRAY500 }}
                             textStyle={styles.secondaryButtonText}
                         >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}
-                        </LogisterButton>
+                        </AppButton>
                     </View>
                 </View>
             </View>
