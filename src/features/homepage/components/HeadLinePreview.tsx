@@ -4,6 +4,7 @@ import { HeadLine } from 'models/HeadLine'
 import { View, Text, StyleSheet, Image } from "react-native"
 import { formatDateLong } from 'utils/dateUtils'
 import FavoriteIcon from '../assets/favorite.svg'
+import ArrowRightIcon from '../assets/arrow-right.svg'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
@@ -32,9 +33,11 @@ const HeadLinePreview = ({ headLine }: HeadLinePreviewProps): JSX.Element => {
                     {headLine.content && headLine.content.substring(0, headLine.content.length - 13)}
                 </Text>
                 <AppButton
-                    bgColor={Colors.BLUE500}
                     onPress={() => { console.log('Dispatch!!!'); }}
                     innerContainerStyle={styles.buttonInnerContainer}
+                    icon={<ArrowRightIcon />}
+                    iconStyle={{ position: 'absolute', right: 30 }}
+                    textStyle={{ position: 'relative', right: 15 }}
                 >
                     NAVIGATE TO DISPATCH
                 </AppButton>

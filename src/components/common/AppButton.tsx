@@ -4,13 +4,13 @@ interface AppButtonProps {
     children: string
     onPress: () => void
     icon?: any
-    bgColor?: string
     textStyle?: { color: string, fontWeight: string } | {}
     innerContainerStyle?: { backgroundColor: string } | {}
     outerContainerStyle?: { marginBottom: number, borderRadius: number } | {}
+    iconStyle?: { color: string } | {}
 }
 
-function AppButton({ children, onPress, textStyle = {}, outerContainerStyle, innerContainerStyle, bgColor, icon }: AppButtonProps) {
+function AppButton({ children, onPress, textStyle, outerContainerStyle, innerContainerStyle, icon, iconStyle }: AppButtonProps) {
     return (
         <View style={[styles.buttonOuterContainer, outerContainerStyle]}>
             <Pressable
@@ -22,7 +22,7 @@ function AppButton({ children, onPress, textStyle = {}, outerContainerStyle, inn
                 }
             >
                 <Text style={[styles.buttonText, textStyle]}>{children}</Text>
-                <View style={styles.arrowImage}>
+                <View style={[styles.arrowImage, iconStyle]}>
                     {icon && icon}
                 </View>
             </Pressable>
