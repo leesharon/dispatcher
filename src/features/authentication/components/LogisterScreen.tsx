@@ -50,66 +50,64 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
 
     return (
         <SafeAreaView style={styles.rootContainer}>
-            {/* <View style={styles.rootContainer}> */}
             <View style={styles.logoContainer}>
                 <Logo />
             </View>
             <View style={styles.mainContainer}>
-                <KeyboardAvoidingView behavior="position" style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}>
+                {/* <KeyboardAvoidingView behavior="position" style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}> */}
+                <View>
+                    <Text style={styles.formTitle}>{status}</Text>
                     <View>
-                        <Text style={styles.formTitle}>{status}</Text>
-                        <View>
-                            <AppInput
-                                value={email}
-                                setValue={setEmail}
-                                placeholderText={Strings.EMAIL_PLACEHOLDER}
-                                contentType={ContentType.email}
-                                validate={validateEmail}
-                                styleProps={styles.formInput}
-                                error={emailError}
-                                setError={setEmailError}
-                            />
-                            <AppInput
-                                value={password}
-                                setValue={setPassword}
-                                placeholderText={Strings.PASSWORD_PLACEHOLDER}
-                                contentType={ContentType.password}
-                                validate={validatePassword}
-                                styleProps={styles.formInput}
-                                error={passwordError}
-                                setError={setPasswordError}
-                            />
-                            {(status === Status.Signup) && <AppInput
-                                value={confirmPassword}
-                                confirmValue={password}
-                                setValue={setConfirmPassword}
-                                placeholderText={Strings.CONFIRM_PASSWORD_PLACEHOLDER}
-                                contentType={ContentType.password}
-                                confirmValidate={validateConfirmPassword}
-                                error={confirmPasswordError}
-                                setError={setConfirmPasswordError}
-                            />}
-                        </View>
+                        <AppInput
+                            value={email}
+                            setValue={setEmail}
+                            placeholderText={Strings.EMAIL_PLACEHOLDER}
+                            contentType={ContentType.email}
+                            validate={validateEmail}
+                            styleProps={styles.formInput}
+                            error={emailError}
+                            setError={setEmailError}
+                        />
+                        <AppInput
+                            value={password}
+                            setValue={setPassword}
+                            placeholderText={Strings.PASSWORD_PLACEHOLDER}
+                            contentType={ContentType.password}
+                            validate={validatePassword}
+                            styleProps={styles.formInput}
+                            error={passwordError}
+                            setError={setPasswordError}
+                        />
+                        {(status === Status.Signup) && <AppInput
+                            value={confirmPassword}
+                            confirmValue={password}
+                            setValue={setConfirmPassword}
+                            placeholderText={Strings.CONFIRM_PASSWORD_PLACEHOLDER}
+                            contentType={ContentType.password}
+                            confirmValidate={validateConfirmPassword}
+                            error={confirmPasswordError}
+                            setError={setConfirmPasswordError}
+                        />}
                     </View>
-                    <HorizontalLine />
-                    <View style={styles.buttonsContainer}>
-                        <AppButton
-                            onPress={() => (status === Status.Login) ? onLogin() : onSignup()}
-                            innerContainerStyle={{ backgroundColor: (isFormValid()) ? Colors.BLUE500 : Colors.BLUE300 }}
-                            outerContainerStyle={{ marginBottom: 24 }}
-                            icon={<ArrowRight />}
-                        >{status.toUpperCase()}
-                        </AppButton>
-                        <AppButton
-                            onPress={() => setStatus((status === Status.Login) ? Status.Signup : Status.Login)}
-                            innerContainerStyle={{ backgroundColor: Colors.GRAY500 }}
-                            textStyle={styles.secondaryButtonText}
-                        >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}
-                        </AppButton>
-                    </View>
-                </KeyboardAvoidingView>
+                </View>
+                <HorizontalLine />
+                <View style={styles.buttonsContainer}>
+                    <AppButton
+                        onPress={() => (status === Status.Login) ? onLogin() : onSignup()}
+                        innerContainerStyle={{ backgroundColor: (isFormValid()) ? Colors.BLUE500 : Colors.BLUE300 }}
+                        outerContainerStyle={{ marginBottom: 24 }}
+                        icon={<ArrowRight />}
+                    >{status.toUpperCase()}
+                    </AppButton>
+                    <AppButton
+                        onPress={() => setStatus((status === Status.Login) ? Status.Signup : Status.Login)}
+                        innerContainerStyle={{ backgroundColor: Colors.GRAY500 }}
+                        textStyle={styles.secondaryButtonText}
+                    >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}
+                    </AppButton>
+                </View>
+                {/* </KeyboardAvoidingView> */}
             </View>
-            {/* </View> */}
         </SafeAreaView >
     )
 }
