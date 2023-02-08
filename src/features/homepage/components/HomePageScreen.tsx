@@ -1,27 +1,38 @@
-import { useEffect } from 'react'
 import { StyleSheet } from "react-native"
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TopBar } from './TopBar'
 import { FilterBar } from './FilterBar'
 import { HeadLinesFeed } from './HeadLinesFeed'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchHeadLines, selectHeadLines, Status } from '../reducers/headLinesSlice'
-import { AppDispatch, RootState } from 'state/store'
+import { useGetHeadLinesQuery } from 'features/api/apiSlice'
+import { HeadLine } from 'models/HeadLine'
+import headLinesJSON from 'data/news-us.json'
+import { useEffect, useState } from 'react'
 
 interface HomePageScreenProps {
     loggedinUser: FirebaseAuthTypes.User | null
 }
 
+const headLinesFromJSON = headLinesJSON.articles.map((article) => ({
+    ...article,
+    id: Math.random().toString(36).substring(2, 13)
+}))
+
 const HomePageScreen = ({ loggedinUser }: HomePageScreenProps): JSX.Element => {
-    const dispatch = useDispatch<AppDispatch>()
-    const headLinesStatus = useSelector((state: RootState) => state.headLines.status)
-    const headLines = useSelector(selectHeadLines)
+    const [headLines, setHeadLines] = useState<HeadLine[] | null>(null)
 
     useEffect(() => {
-        if (headLinesStatus === Status.idle)
-            dispatch(fetchHeadLines())
-    }, [headLinesStatus, dispatch])
+        if (__DEV__) {
+            const headLinesFromJSON = headLinesJSON.articles.map((article) => ({
+                ...article,
+                id: Math.random().toString(36).substring(2, 13)
+            }))
+            setHeadLines(headLinesFromJSON as HeadLine[])
+        } else {
+            const { data, isLoading, isSuccess, isError, error } = useGetHeadLinesQuery(null)
+            setHeadLines(data.articles)
+        }
+    }, [])
 
     return (
         <SafeAreaView style={styles.rootContainer}>
