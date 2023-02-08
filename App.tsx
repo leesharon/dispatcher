@@ -29,14 +29,11 @@ const App = () => {
   }, [])
 
   return (
-    <>
-      <StatusBar />
-      <SafeAreaProvider style={styles.rootContainer}>
-        {/* <LogisterScreen /> */}
-        {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
-        <FlashMessage position="top" />
-      </SafeAreaProvider>
-    </>
+    <SafeAreaProvider style={styles.rootContainer}>
+      {/* <LogisterScreen /> */}
+      {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
+      <FlashMessage position="top" />
+    </SafeAreaProvider>
   )
 }
 
@@ -48,7 +45,7 @@ const styles = StyleSheet.create({
   },
   statusBar: {
     backgroundColor: Colors.BLUE800,
-  }
+  },
 })
 
 export default App

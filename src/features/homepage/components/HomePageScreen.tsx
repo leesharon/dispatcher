@@ -1,4 +1,4 @@
-import { Animated, Pressable, StyleSheet, View } from "react-native"
+import { Pressable, StyleSheet, View } from "react-native"
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TopBar } from './TopBar'
@@ -7,8 +7,7 @@ import { HeadLinesFeed } from './HeadLinesFeed'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
 import { HeadLine } from 'models/HeadLine'
 import headLinesJSON from 'data/news-us.json'
-import { useEffect, useRef, useState } from 'react'
-import { FilterMenu } from './FilterMenu'
+import { useEffect, useState } from 'react'
 
 interface HomePageScreenProps {
     loggedinUser: FirebaseAuthTypes.User | null
@@ -50,10 +49,6 @@ const HomePageScreen = ({ loggedinUser }: HomePageScreenProps): JSX.Element => {
                 setIsFilterMenuOpen={setIsFilterMenuOpen}
             />
             {headLines && <HeadLinesFeed headLines={headLines} />}
-            {isFilterMenuOpen && <FilterMenu
-                setIsFilterMenuOpen={setIsFilterMenuOpen}
-                isOpen={isFilterMenuOpen}
-            />}
         </SafeAreaView>
     )
 }
