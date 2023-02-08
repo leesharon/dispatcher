@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexGrow: 1,
         position: 'relative',
+        paddingBottom: 200
     },
     backdrop: {
         position: 'absolute',
