@@ -10,7 +10,7 @@ import headLinesJSON from 'data/news-us.json'
 import { useEffect, useState } from 'react'
 
 interface HomePageScreenProps {
-    loggedinUser: FirebaseAuthTypes.User | null
+    loggedinUser: FirebaseAuthTypes.User
 }
 
 const headLinesFromJSON = headLinesJSON.articles.map((article) => ({

@@ -7,7 +7,7 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { AppText } from 'components/common/AppText'
 
 interface FilterBarProps {
-    loggedinUser: any
+    loggedinUser: FirebaseAuthTypes.User
     setIsFilterMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -23,9 +23,9 @@ const FilterBar = ({ loggedinUser, setIsFilterMenuOpen }: FilterBarProps): JSX.E
             </View>
             <View style={styles.lastLoginContainer}>
                 <AppText styleProps={styles.lastLoginText}>Last Login:</AppText>
-                <AppText styleProps={styles.lastLoginText}>
+                {loggedinUser.metadata.lastSignInTime && <AppText styleProps={styles.lastLoginText}>
                     {formatDate(loggedinUser.metadata.lastSignInTime)}
-                </AppText>
+                </AppText>}
             </View>
         </View>
     )

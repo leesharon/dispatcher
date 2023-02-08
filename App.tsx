@@ -16,7 +16,7 @@ const App = () => {
 
   const [initializing, setInitializing] = useState(true)
 
-  const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null | any) => {
+  const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
     dispatch(login(loggedinUser?.toJSON()))
     if (initializing) setInitializing(false)
   }, [dispatch, initializing])

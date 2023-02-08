@@ -1,5 +1,5 @@
-const formatDate = (timestamp: number) => {
-    const date = new Date(timestamp)
+const formatDate = (timestamp: string) => {
+    const date = new Date(+timestamp)
     const options: Intl.DateTimeFormatOptions = {
         weekday: "long",
         year: "numeric",
