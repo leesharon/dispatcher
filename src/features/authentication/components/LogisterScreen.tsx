@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView } from "react-native"
+import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native"
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppInput, ContentType } from 'components/common/AppInput'
 import { HorizontalLine } from 'components/common/HorizontalLine'
@@ -14,13 +14,13 @@ interface LogisterScreenProps {
 }
 
 enum Status {
-    Login = 'Login',
-    Signup = 'Signup',
+    LOGIN = 'Login',
+    SIGNUP = 'Signup',
 }
 
 const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
 
-    const [status, setStatus] = useState<Status>(Status.Signup)
+    const [status, setStatus] = useState<Status>(Status.SIGNUP)
 
     const [email, setEmail] = useState<string>('')
     const [emailError, setEmailError] = useState('')
@@ -44,9 +44,11 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
     }
 
     const isFormValid = () => {
-        if (status === Status.Login) return email && password && !emailError && !passwordError
+        if (status === Status.LOGIN) return email && password && !emailError && !passwordError
         else return email && password && confirmPassword && !emailError && !passwordError && !confirmPasswordError
     }
+
+    const btnInnerContainerStyle = { backgroundColor: (isFormValid()) ? Colors.BLUE500 : Colors.BLUE300 }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -66,7 +68,7 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                                 value={email}
                                 setValue={setEmail}
                                 placeholderText={Strings.EMAIL_PLACEHOLDER}
-                                contentType={ContentType.email}
+                                contentType={ContentType.EMAIL}
                                 validate={validateEmail}
                                 styleProps={styles.formInput}
                                 error={emailError}
@@ -76,18 +78,18 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                                 value={password}
                                 setValue={setPassword}
                                 placeholderText={Strings.PASSWORD_PLACEHOLDER}
-                                contentType={ContentType.password}
+                                contentType={ContentType.PASSWORD}
                                 validate={validatePassword}
                                 styleProps={styles.formInput}
                                 error={passwordError}
                                 setError={setPasswordError}
                             />
-                            {(status === Status.Signup) && <AppInput
+                            {(status === Status.SIGNUP) && <AppInput
                                 value={confirmPassword}
                                 confirmValue={password}
                                 setValue={setConfirmPassword}
                                 placeholderText={Strings.CONFIRM_PASSWORD_PLACEHOLDER}
-                                contentType={ContentType.password}
+                                contentType={ContentType.PASSWORD}
                                 confirmValidate={validateConfirmPassword}
                                 error={confirmPasswordError}
                                 setError={setConfirmPasswordError}
@@ -97,17 +99,17 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
                     <HorizontalLine />
                     <View style={styles.buttonsContainer}>
                         <AppButton
-                            onPress={() => (status === Status.Login) ? onLogin() : onSignup()}
-                            innerContainerStyle={{ backgroundColor: (isFormValid()) ? Colors.BLUE500 : Colors.BLUE300 }}
-                            outerContainerStyle={{ marginBottom: 24 }}
+                            onPress={() => (status === Status.LOGIN) ? onLogin() : onSignup()}
+                            innerContainerStyle={btnInnerContainerStyle}
+                            outerContainerStyle={styles.btnOuterContainer}
                             icon={<ArrowRight />}
                         >{status.toUpperCase()}
                         </AppButton>
                         <AppButton
-                            onPress={() => setStatus((status === Status.Login) ? Status.Signup : Status.Login)}
-                            innerContainerStyle={{ backgroundColor: Colors.GRAY500 }}
+                            onPress={() => setStatus((status === Status.LOGIN) ? Status.SIGNUP : Status.LOGIN)}
+                            innerContainerStyle={styles.secondaryBtnInnerContainer}
                             textStyle={styles.secondaryButtonText}
-                        >{(status === Status.Login) ? Status.Signup.toUpperCase() : Status.Login.toUpperCase()}
+                        >{(status === Status.LOGIN) ? Status.SIGNUP.toUpperCase() : Status.LOGIN.toUpperCase()}
                         </AppButton>
                     </View>
                 </View>
@@ -146,6 +148,12 @@ const styles = StyleSheet.create({
     },
     buttonsContainer: {
         justifyContent: 'center',
+    },
+    btnOuterContainer: {
+        marginBottom: 24
+    },
+    secondaryBtnInnerContainer: {
+        backgroundColor: Colors.GRAY500
     },
     secondaryButtonText: {
         color: Colors.BLUE400,

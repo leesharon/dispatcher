@@ -11,16 +11,16 @@ interface headLinesState {
 }
 
 enum Status {
-    idle = 'idle',
-    loading = 'loading',
-    succeeded = 'succeeded',
-    failed = 'failed'
+    IDLE = 'idle',
+    LOADING = 'loading',
+    SUCCEEDED = 'succeeded',
+    FAILED = 'failed'
 }
 
 // REDUX SLICE
 const initialState: headLinesState = {
     headLines: null,
-    status: Status.idle,
+    status: Status.IDLE,
     error: null
 }
 
@@ -31,15 +31,15 @@ const headLinesSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(fetchHeadLines.fulfilled, (state, action) => {
             state.headLines = action.payload
-            state.status = Status.succeeded
+            state.status = Status.SUCCEEDED
             state.error = null
         })
         builder.addCase(fetchHeadLines.pending, state => {
-            state.status = Status.loading
+            state.status = Status.LOADING
         })
         builder.addCase(fetchHeadLines.rejected, (state, action) => {
             state.error = action.error.message || null
-            state.status = Status.failed
+            state.status = Status.FAILED
         })
     }
 })

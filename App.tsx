@@ -21,8 +21,6 @@ const App = () => {
     if (initializing) setInitializing(false)
   }, [dispatch, initializing])
 
-  // firebaseLogin('lee@lee.com', 'Lol123456789')
-
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
     return subscriber
@@ -30,8 +28,8 @@ const App = () => {
 
   return (
     <SafeAreaProvider style={styles.rootContainer}>
-      {/* <LogisterScreen /> */}
-      {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
+      <LogisterScreen />
+      {/* {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />} */}
       <FlashMessage position="top" />
     </SafeAreaProvider>
   )

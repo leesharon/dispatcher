@@ -1,5 +1,5 @@
 import { View, StyleSheet, FlatList } from "react-native"
-import { Colors, Layout } from 'constants'
+import { Colors, Layout, Strings } from 'constants'
 import { AppText } from 'components/common/AppText'
 import { HeadLine } from 'models/HeadLine'
 import { HeadLinePreview } from './HeadLinePreview'
@@ -13,7 +13,7 @@ const HeadLinesFeed = ({ headLines }: HeadLinesFeedProps): JSX.Element => {
     return (
         <View style={styles.container}>
             <AppText styleProps={styles.title}>
-                Top Headlines in Israel
+                {Strings.HEADLINES_FEED_TITLE}
             </AppText>
             <FlatList
                 data={headLines}

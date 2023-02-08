@@ -1,9 +1,11 @@
+import { ReactNode } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { SvgProps } from 'react-native-svg'
 
 interface AppButtonProps {
     children: string
     onPress: () => void
-    icon?: any
+    icon?: ReactNode
     textStyle?: { color: string, fontWeight: string } | {}
     innerContainerStyle?: { backgroundColor: string } | {}
     outerContainerStyle?: { marginBottom: number, borderRadius: number } | {}
