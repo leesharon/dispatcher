@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Pressable, Animated } from "react-native"
 import SortByIcon from '../assets/sort-by.svg'
 import FilterIcon from '../assets/filter.svg'
 import { formatDate } from 'utils/dateUtils'
@@ -8,15 +8,18 @@ import { AppText } from 'components/common/AppText'
 
 interface FilterBarProps {
     loggedinUser: any
+    setIsFilterMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const FilterBar = ({ loggedinUser }: FilterBarProps): JSX.Element => {
+const FilterBar = ({ loggedinUser, setIsFilterMenuOpen }: FilterBarProps): JSX.Element => {
 
     return (
         <View>
             <View style={styles.filterBarContainer}>
                 <SortByIcon />
-                <FilterIcon />
+                <Pressable onPress={() => { setIsFilterMenuOpen(true) }}>
+                    <FilterIcon />
+                </Pressable>
             </View>
             <View style={styles.lastLoginContainer}>
                 <AppText styleProps={styles.lastLoginText}>Last Login:</AppText>

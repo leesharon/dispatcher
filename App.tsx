@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { StyleSheet, ScrollView, KeyboardAvoidingView, } from 'react-native'
+import { StatusBar, StyleSheet } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import FlashMessage from "react-native-flash-message"
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,11 +29,14 @@ const App = () => {
   }, [])
 
   return (
-    <SafeAreaProvider style={styles.rootContainer}>
-      {/* <LogisterScreen /> */}
-      {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
-      <FlashMessage position="top" />
-    </SafeAreaProvider>
+    <>
+      <StatusBar />
+      <SafeAreaProvider style={styles.rootContainer}>
+        {/* <LogisterScreen /> */}
+        {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
+        <FlashMessage position="top" />
+      </SafeAreaProvider>
+    </>
   )
 }
 
@@ -42,6 +45,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.BLUE100,
     height: Constants.SCREEN_HEIGHT_WITHOUT_STATUS_BAR,
+  },
+  statusBar: {
+    backgroundColor: Colors.BLUE800,
   }
 })
 
