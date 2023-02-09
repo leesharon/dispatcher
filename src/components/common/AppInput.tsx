@@ -5,9 +5,9 @@ import Revealed from '../../../assets/revealed.svg'
 import Hidden from '../../../assets/hidden.svg'
 
 enum ContentType {
-    email = 'emailAddress',
-    password = 'password',
-    text = 'text'
+    EMAIL = 'emailAddress',
+    PASSWORD = 'password',
+    TEXT = 'text'
 }
 
 interface AppInputProps {
@@ -64,7 +64,7 @@ const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType,
         }
     }
 
-    if (contentType === ContentType.password) return (
+    if (contentType === ContentType.PASSWORD) return (
         <View style={styleProps}>
             <View>
                 <TextInput
@@ -73,7 +73,7 @@ const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType,
                     value={value}
                     placeholder={placeholderText}
                     placeholderTextColor={Colors.BLUE400}
-                    secureTextEntry={contentType === ContentType.password && !isRevealed}
+                    secureTextEntry={contentType === ContentType.PASSWORD && !isRevealed}
                     textContentType={contentType as any}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
@@ -90,7 +90,7 @@ const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType,
         </View>
     )
 
-    else if (contentType === ContentType.email) return (
+    else if (contentType === ContentType.EMAIL) return (
         <View style={styleProps}>
             <View>
                 <TextInput

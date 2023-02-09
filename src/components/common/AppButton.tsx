@@ -1,27 +1,30 @@
+import { ReactNode } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { SvgProps } from 'react-native-svg'
 
-interface LogisterButtonProps {
+interface AppButtonProps {
     children: string
     onPress: () => void
-    icon?: any
-    bgColor?: string
+    icon?: ReactNode
     textStyle?: { color: string, fontWeight: string } | {}
-    containerStyle?: { marginBottom: number }
+    innerContainerStyle?: { backgroundColor: string } | {}
+    outerContainerStyle?: { marginBottom: number, borderRadius: number } | {}
+    iconStyle?: { color: string } | {}
 }
 
-function LogisterButton({ children, onPress, textStyle = {}, containerStyle, bgColor, icon }: LogisterButtonProps) {
+function AppButton({ children, onPress, textStyle, outerContainerStyle, innerContainerStyle, icon, iconStyle }: AppButtonProps) {
     return (
-        <View style={[styles.buttonOuterContainer, containerStyle]}>
+        <View style={[styles.buttonOuterContainer, outerContainerStyle]}>
             <Pressable
                 onPress={onPress}
                 style={
                     ({ pressed }) => pressed
-                        ? [styles.pressed, styles.buttonInnerContainer, { backgroundColor: bgColor }]
-                        : [styles.buttonInnerContainer, { backgroundColor: bgColor }]
+                        ? [styles.pressed, styles.buttonInnerContainer, innerContainerStyle]
+                        : [styles.buttonInnerContainer, innerContainerStyle]
                 }
             >
                 <Text style={[styles.buttonText, textStyle]}>{children}</Text>
-                <View style={styles.arrowImage}>
+                <View style={[styles.arrowImage, iconStyle]}>
                     {icon && icon}
                 </View>
             </Pressable>
@@ -58,4 +61,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default LogisterButton
+export default AppButton
