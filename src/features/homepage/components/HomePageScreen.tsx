@@ -8,6 +8,7 @@ import { useGetHeadLinesQuery } from 'features/api/apiSlice'
 import { HeadLine } from 'models/HeadLine'
 import headLinesJSON from 'data/news-us.json'
 import { useEffect, useState } from 'react'
+import { Colors } from 'constants'
 
 interface HomePageScreenProps {
     loggedinUser: FirebaseAuthTypes.User
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexGrow: 1,
         position: 'relative',
-        paddingBottom: 200
+        paddingBottom: 200,
     },
     backdrop: {
         position: 'absolute',
