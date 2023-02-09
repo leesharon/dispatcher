@@ -14,33 +14,49 @@ interface HeadLinePreviewProps {
 
 const HeadLinePreview = ({ headLine }: HeadLinePreviewProps): JSX.Element => {
 
-    return (
-        <View style={styles.headLineContainer}>
+    const renderHeader = () => (
+        <>
             <FavoriteIcon style={styles.favoriteIcon} />
             <FastImage
                 style={styles.image}
                 source={{ uri: headLine.urlToImage, priority: FastImage.priority.normal, }}
             />
+        </>
+    )
+
+    const renderContent = () => (
+        <>
+            <View style={styles.infoLine}>
+                <AppText styleProps={styles.lightText}>{formatDateLong(headLine.publishedAt)}</AppText>
+            </View>
+            <AppText styleProps={styles.title}>{headLine.title}</AppText>
+            <AppText styleProps={styles.lightText}>
+                {headLine.author && headLine.author + ', ' + headLine.source.name}
+            </AppText>
+            <AppText styleProps={styles.content}>
+                {headLine.content && headLine.content.substring(0, headLine.content.length - 13)}
+            </AppText>
+        </>
+    )
+
+    const renderButton = () => (
+        <AppButton
+            onPress={() => { console.log('Dispatch!!!'); }}
+            innerContainerStyle={styles.buttonInnerContainer}
+            icon={<ArrowRightIcon />}
+            iconStyle={{ position: 'absolute', right: 30 }}
+            textStyle={{ position: 'relative', right: 15 }}
+        >
+            NAVIGATE TO DISPATCH
+        </AppButton>
+    )
+
+    return (
+        <View style={styles.headLineContainer}>
+            {renderHeader()}
             <View style={styles.headLineContent}>
-                <View style={styles.infoLine}>
-                    <AppText styleProps={styles.lightText}>{formatDateLong(headLine.publishedAt)}</AppText>
-                </View>
-                <AppText styleProps={styles.title}>{headLine.title}</AppText>
-                <AppText styleProps={styles.lightText}>
-                    {headLine.author && headLine.author + ', ' + headLine.source.name}
-                </AppText>
-                <AppText styleProps={styles.content}>
-                    {headLine.content && headLine.content.substring(0, headLine.content.length - 13)}
-                </AppText>
-                <AppButton
-                    onPress={() => { console.log('Dispatch!!!'); }}
-                    innerContainerStyle={styles.buttonInnerContainer}
-                    icon={<ArrowRightIcon />}
-                    iconStyle={{ position: 'absolute', right: 30 }}
-                    textStyle={{ position: 'relative', right: 15 }}
-                >
-                    NAVIGATE TO DISPATCH
-                </AppButton>
+                {renderContent()}
+                {renderButton()}
             </View>
         </View>
     )

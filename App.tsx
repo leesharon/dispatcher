@@ -28,8 +28,8 @@ const App = () => {
 
   return (
     <SafeAreaProvider style={styles.rootContainer}>
-      <LogisterScreen />
-      {/* {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />} */}
+      {/* <LogisterScreen /> */}
+      {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
       <FlashMessage position="top" />
     </SafeAreaProvider>
   )
