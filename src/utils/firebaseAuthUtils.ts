@@ -11,7 +11,7 @@ const firebaseSignup = (email: string, password: string, navigation: any) => {
             navigation.navigate(Screens.HOMEPAGE)
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'Homepage' }],
+                routes: [{ name: 'MainTabNavigation' }],
             })
         })
         .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
@@ -26,7 +26,7 @@ const firebaseLogin = (email: string, password: string, navigation: any) => {
             navigation.navigate(Screens.HOMEPAGE)
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'Homepage' }],
+                routes: [{ name: 'MainTabNavigation' }],
             })
         })
         .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {

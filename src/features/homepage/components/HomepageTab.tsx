@@ -8,13 +8,11 @@ import { useGetHeadLinesQuery } from 'features/api/apiSlice'
 import { HeadLine } from 'models/HeadLine'
 import headLinesJSON from 'data/news-us.json'
 import { useEffect, useState } from 'react'
-import { Colors } from 'constants'
 import { useSelector } from 'react-redux'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
-import { MainTabNavigation } from './MainTabNavigation'
 import { AppText } from 'components/common/AppText'
 
-interface HomePageScreenProps {
+interface HomepageTabProps {
 }
 
 const headLinesFromJSON = headLinesJSON.articles.map((article) => ({
@@ -22,7 +20,7 @@ const headLinesFromJSON = headLinesJSON.articles.map((article) => ({
     id: Math.random().toString(36).substring(2, 13)
 }))
 
-const HomePageScreen = ({ }: HomePageScreenProps): JSX.Element => {
+const HomepageTab = () => {
     const loggedinUser = useSelector(selectLoggedinUser)
 
     const [headLines, setHeadLines] = useState<HeadLine[] | null>(null)
@@ -50,7 +48,8 @@ const HomePageScreen = ({ }: HomePageScreenProps): JSX.Element => {
             {isFilterMenuOpen &&
                 <Pressable
                     style={styles.backdrop}
-                    onPress={() => { setIsFilterMenuOpen(false) }}>
+                    onPress={() => { setIsFilterMenuOpen(false) }}
+                >
                 </Pressable>
             }
             <TopBar />
@@ -59,7 +58,6 @@ const HomePageScreen = ({ }: HomePageScreenProps): JSX.Element => {
                 setIsFilterMenuOpen={setIsFilterMenuOpen}
             />
             <HeadLinesFeed headLines={headLines} />
-            <MainTabNavigation />
         </SafeAreaView>
     )
 }
@@ -84,4 +82,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export { HomePageScreen }
+export { HomepageTab }

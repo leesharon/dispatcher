@@ -1,29 +1,24 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { StatusBar, StyleSheet } from 'react-native'
+import { StatusBar, StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import FlashMessage from "react-native-flash-message"
-import { useDispatch, useSelector } from 'react-redux'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
-import { HomePageScreen } from './src/features/homepage/components/HomePageScreen'
-import { Colors, Constants } from 'constants/index'
-import { login, selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
-import { firebaseLogin } from 'utils/firebaseAuthUtils'
-
-enum InitialRoute {
-  LOGISTER = 'Logister',
-  HOMEPAGE = 'Homepage'
-}
+import { Colors, Constants, Screens } from 'constants/index'
+import { login } from 'features/authentication/reducers/loggedinUserSlice'
+import { MainTabNavigation } from 'navigation/MainTabNavigation'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { MainStack } from 'constants/screens'
 
 const App = () => {
   const Stack = createStackNavigator()
 
-  const loggedinUser = useSelector(selectLoggedinUser)
-  const dispatch = useDispatch()
+  const loggedinUser = useAppSelector(state => state.loggedinUser)
+  const dispatch = useAppDispatch()
 
-  const [initialRouteName, setIntialRouteName] = useState<InitialRoute>(InitialRoute.LOGISTER)
+  const [initialRouteName, setIntialRouteName] = useState<MainStack>(Screens.MAIN_STACK.LOGISTER as MainStack)
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
@@ -38,15 +33,30 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if (loggedinUser) setIntialRouteName(InitialRoute.HOMEPAGE)
+    if (loggedinUser) setIntialRouteName(Screens.MAIN_STACK.MAIN_TAB_NAVIGATION as MainStack)
   })
 
   return (
     <NavigationContainer>
+      <View style={styles.statusBar}>
+        <StatusBar barStyle="light-content" backgroundColor={Colors.BLUE800} />
+      </View>
       <SafeAreaProvider style={styles.rootContainer}>
         <Stack.Navigator initialRouteName={initialRouteName}>
-          <Stack.Screen name={InitialRoute.LOGISTER} component={LogisterScreen} />
-          <Stack.Screen name={InitialRoute.HOMEPAGE} component={HomePageScreen} />
+          <Stack.Screen
+            name={Screens.MAIN_STACK.LOGISTER}
+            component={LogisterScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={Screens.MAIN_STACK.MAIN_TAB_NAVIGATION}
+            component={MainTabNavigation}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
         <FlashMessage position="top" />
       </SafeAreaProvider>
@@ -62,6 +72,7 @@ const styles = StyleSheet.create({
   },
   statusBar: {
     backgroundColor: Colors.BLUE800,
+    height: Constants.STATUS_BAR_HEIGHT,
   },
 })
 

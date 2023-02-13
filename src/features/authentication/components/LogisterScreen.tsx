@@ -15,8 +15,6 @@ interface LogisterScreenProps {
     navigation: any
 }
 
-// type Props = StackScreenProps<RootStackParamList, 'Profile', 'MyStack'>
-
 enum Status {
     LOGIN = 'Login',
     SIGNUP = 'Signup',
