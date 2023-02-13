@@ -11,16 +11,18 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { AppText } from 'components/common/AppText'
-
-interface HomepageTabProps {
-}
+import { Navigation } from 'constants/screens'
 
 const headLinesFromJSON = headLinesJSON.articles.map((article) => ({
     ...article,
     id: Math.random().toString(36).substring(2, 13)
 }))
 
-const HomepageTab = () => {
+interface HomepageProps {
+    navigation: Navigation
+}
+
+const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
     const loggedinUser = useSelector(selectLoggedinUser)
 
     const [headLines, setHeadLines] = useState<HeadLine[] | null>(null)
@@ -57,7 +59,7 @@ const HomepageTab = () => {
                 loggedinUser={loggedinUser}
                 setIsFilterMenuOpen={setIsFilterMenuOpen}
             />
-            <HeadLinesFeed headLines={headLines} />
+            <HeadLinesFeed headLines={headLines} navigation={navigation} />
         </SafeAreaView>
     )
 }
@@ -82,4 +84,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export { HomepageTab }
+export { Homepage }

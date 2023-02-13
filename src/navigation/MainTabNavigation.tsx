@@ -1,7 +1,5 @@
-import { View, StyleSheet } from "react-native"
+import { StyleSheet } from "react-native"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { AppText } from 'components/common/AppText'
-import { HomepageTab } from 'features/homepage/components/HomepageTab'
 import HomeFocusedIcon from 'navigation/assets/home-focused.svg'
 import HomeIcon from 'navigation/assets/home.svg'
 import ProfileIcon from 'navigation/assets/profile.svg'
@@ -9,6 +7,9 @@ import ProfileFocusedIcon from 'navigation/assets/profile-focused.svg'
 import FavoritesIcon from 'navigation/assets/favorites.svg'
 import FavoritesFocusedIcon from 'navigation/assets/favorites-focused.svg'
 import { Colors, Screens } from 'constants'
+import { ProfileTab } from 'features/profile/components/ProfileTab'
+import { FavortiesTab } from 'features/favorites/components/FavoritesTab'
+import { HomepageStackNavigation } from 'features/homepage/components/HomepageStackNavigation'
 
 
 interface MainTabNavigationProps {
@@ -24,11 +25,11 @@ const MainTabNavigation = ({ }: MainTabNavigationProps): JSX.Element => {
                 tabBarShowLabel: false,
                 headerShown: false
             }}
-            initialRouteName={Screens.MAIN_TAB_NAVIGATION.HOMEPAGE}
+            initialRouteName={Screens.MAIN_TAB_NAVIGATION.HOMEPAGE_STACK_NAVIGATION}
         >
             <Tab.Screen
                 name={Screens.MAIN_TAB_NAVIGATION.PROFILE}
-                component={() => <AppText>This is your Profile</AppText>}
+                component={ProfileTab}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return focused ? <ProfileFocusedIcon /> : <ProfileIcon />
@@ -36,8 +37,8 @@ const MainTabNavigation = ({ }: MainTabNavigationProps): JSX.Element => {
                 }}
             />
             <Tab.Screen
-                name={Screens.MAIN_TAB_NAVIGATION.HOMEPAGE}
-                component={HomepageTab}
+                name={Screens.MAIN_TAB_NAVIGATION.HOMEPAGE_STACK_NAVIGATION}
+                component={HomepageStackNavigation}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return focused ? <HomeFocusedIcon /> : <HomeIcon />
@@ -46,7 +47,7 @@ const MainTabNavigation = ({ }: MainTabNavigationProps): JSX.Element => {
             />
             <Tab.Screen
                 name={Screens.MAIN_TAB_NAVIGATION.FAVORITES}
-                component={() => <AppText>This is your Favorites</AppText>}
+                component={FavortiesTab}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return focused ? <FavoritesFocusedIcon /> : <FavoritesIcon />

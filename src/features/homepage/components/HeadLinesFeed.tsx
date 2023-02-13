@@ -3,12 +3,14 @@ import { Colors, Layout, Strings } from 'constants'
 import { AppText } from 'components/common/AppText'
 import { HeadLine } from 'models/HeadLine'
 import { HeadLinePreview } from './HeadLinePreview'
+import { Navigation } from 'constants/screens'
 
 interface HeadLinesFeedProps {
     headLines: HeadLine[]
+    navigation: Navigation
 }
 
-const HeadLinesFeed = ({ headLines }: HeadLinesFeedProps): JSX.Element => {
+const HeadLinesFeed = ({ headLines, navigation }: HeadLinesFeedProps): JSX.Element => {
 
     return (
         <View style={styles.container}>
@@ -17,7 +19,7 @@ const HeadLinesFeed = ({ headLines }: HeadLinesFeedProps): JSX.Element => {
             </AppText>
             <FlatList
                 data={headLines}
-                renderItem={({ item }) => <HeadLinePreview headLine={item} />}
+                renderItem={({ item }) => <HeadLinePreview headLine={item} navigation={navigation} />}
             />
         </View>
     )

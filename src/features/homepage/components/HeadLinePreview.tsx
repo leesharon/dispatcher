@@ -1,18 +1,20 @@
 import AppButton from 'components/common/AppButton'
-import { Colors, Layout } from 'constants'
+import { Colors, Layout, Screens } from 'constants'
 import { HeadLine } from 'models/HeadLine'
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Pressable } from "react-native"
 import FastImage from 'react-native-fast-image'
 import { formatDateLong } from 'utils/dateUtils'
 import FavoriteIcon from '../assets/favorite.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
 import { AppText } from 'components/common/AppText'
+import { Navigation } from 'constants/screens'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
+    navigation: Navigation
 }
 
-const HeadLinePreview = ({ headLine }: HeadLinePreviewProps): JSX.Element => {
+const HeadLinePreview = ({ headLine, navigation }: HeadLinePreviewProps): JSX.Element => {
 
     const renderHeader = () => (
         <>
@@ -41,7 +43,7 @@ const HeadLinePreview = ({ headLine }: HeadLinePreviewProps): JSX.Element => {
 
     const renderButton = () => (
         <AppButton
-            onPress={() => { console.log('Dispatch!!!'); }}
+            onPress={() => { navigation.navigate(Screens.HOMEPAGE_STACK_NAVIGATION.HEADLINE_DETAILS, { id: headLine.id }) }}
             innerContainerStyle={styles.buttonInnerContainer}
             icon={<ArrowRightIcon />}
             iconStyle={{ position: 'absolute', right: 30 }}
