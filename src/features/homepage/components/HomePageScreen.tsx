@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react'
 import { Colors } from 'constants'
 import { useSelector } from 'react-redux'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
+import { MainTabNavigation } from './MainTabNavigation'
+import { AppText } from 'components/common/AppText'
 
 interface HomePageScreenProps {
 }
@@ -39,23 +41,26 @@ const HomePageScreen = ({ }: HomePageScreenProps): JSX.Element => {
         }
     }, [])
 
+    if (!loggedinUser) return <AppText>You must be logged in to view this page</AppText>
+
+    if (!headLines) return <AppText>Loading...</AppText>
+
     return (
-        <>
-            {loggedinUser && <SafeAreaView style={styles.rootContainer}>
-                {isFilterMenuOpen &&
-                    <Pressable
-                        style={styles.backdrop}
-                        onPress={() => { setIsFilterMenuOpen(false) }}>
-                    </Pressable>
-                }
-                <TopBar />
-                <FilterBar
-                    loggedinUser={loggedinUser}
-                    setIsFilterMenuOpen={setIsFilterMenuOpen}
-                />
-                {headLines && <HeadLinesFeed headLines={headLines} />}
-            </SafeAreaView>}
-        </>
+        <SafeAreaView style={styles.rootContainer}>
+            {isFilterMenuOpen &&
+                <Pressable
+                    style={styles.backdrop}
+                    onPress={() => { setIsFilterMenuOpen(false) }}>
+                </Pressable>
+            }
+            <TopBar />
+            <FilterBar
+                loggedinUser={loggedinUser}
+                setIsFilterMenuOpen={setIsFilterMenuOpen}
+            />
+            <HeadLinesFeed headLines={headLines} />
+            <MainTabNavigation />
+        </SafeAreaView>
     )
 }
 

@@ -12,12 +12,18 @@ import { Colors, Constants } from 'constants/index'
 import { login, selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { firebaseLogin } from 'utils/firebaseAuthUtils'
 
+enum InitialRoute {
+  LOGISTER = 'Logister',
+  HOMEPAGE = 'Homepage'
+}
+
 const App = () => {
   const Stack = createStackNavigator()
 
   const loggedinUser = useSelector(selectLoggedinUser)
   const dispatch = useDispatch()
 
+  const [initialRouteName, setIntialRouteName] = useState<InitialRoute>(InitialRoute.LOGISTER)
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
@@ -25,17 +31,22 @@ const App = () => {
     if (initializing) setInitializing(false)
   }, [dispatch, initializing])
 
+
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
     return subscriber
   }, [])
 
+  useEffect(() => {
+    if (loggedinUser) setIntialRouteName(InitialRoute.HOMEPAGE)
+  })
+
   return (
     <NavigationContainer>
       <SafeAreaProvider style={styles.rootContainer}>
-        <Stack.Navigator initialRouteName='Logister'>
-          <Stack.Screen name="Logister" component={LogisterScreen} />
-          <Stack.Screen name="HomePage" component={HomePageScreen} />
+        <Stack.Navigator initialRouteName={initialRouteName}>
+          <Stack.Screen name={InitialRoute.LOGISTER} component={LogisterScreen} />
+          <Stack.Screen name={InitialRoute.HOMEPAGE} component={HomePageScreen} />
         </Stack.Navigator>
         <FlashMessage position="top" />
       </SafeAreaProvider>

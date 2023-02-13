@@ -6,3 +6,4 @@ Todo's
 Ask About
 
  - passing props to stack screens
+ - navigation type
