@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native"
+import { StackScreenProps } from '@react-navigation/stack'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppInput, ContentType } from 'components/common/AppInput'
 import { HorizontalLine } from 'components/common/HorizontalLine'
@@ -11,14 +12,17 @@ import { Colors, Constants, Strings } from 'constants/index'
 import Logo from '../assets/logo.svg'
 import ArrowRight from '../../../../assets/arrow-right.svg'
 interface LogisterScreenProps {
+    navigation: any
 }
+
+// type Props = StackScreenProps<RootStackParamList, 'Profile', 'MyStack'>
 
 enum Status {
     LOGIN = 'Login',
     SIGNUP = 'Signup',
 }
 
-const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
+const LogisterScreen = ({ navigation }: LogisterScreenProps): JSX.Element => {
 
     const [status, setStatus] = useState<Status>(Status.SIGNUP)
 

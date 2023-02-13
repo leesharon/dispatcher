@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { StatusBar, StyleSheet } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import FlashMessage from "react-native-flash-message"
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +13,8 @@ import { login, selectLoggedinUser } from 'features/authentication/reducers/logg
 import { firebaseLogin } from 'utils/firebaseAuthUtils'
 
 const App = () => {
+  const Stack = createStackNavigator()
+
   const loggedinUser = useSelector(selectLoggedinUser)
   const dispatch = useDispatch()
 
@@ -27,11 +31,15 @@ const App = () => {
   }, [])
 
   return (
-    <SafeAreaProvider style={styles.rootContainer}>
-      {/* <LogisterScreen /> */}
-      {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
-      <FlashMessage position="top" />
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <SafeAreaProvider style={styles.rootContainer}>
+        <Stack.Navigator initialRouteName='Logister'>
+          <Stack.Screen name="Logister" component={LogisterScreen} />
+          <Stack.Screen name="HomePage" component={HomePageScreen} />
+        </Stack.Navigator>
+        <FlashMessage position="top" />
+      </SafeAreaProvider>
+    </NavigationContainer>
   )
 }
 

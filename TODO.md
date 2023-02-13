@@ -5,4 +5,4 @@ Todo's
 
 Ask About
 
-design patterns
+ - passing props to stack screens

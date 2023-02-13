@@ -9,9 +9,10 @@ import { HeadLine } from 'models/HeadLine'
 import headLinesJSON from 'data/news-us.json'
 import { useEffect, useState } from 'react'
 import { Colors } from 'constants'
+import { useSelector } from 'react-redux'
+import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 
 interface HomePageScreenProps {
-    loggedinUser: FirebaseAuthTypes.User
 }
 
 const headLinesFromJSON = headLinesJSON.articles.map((article) => ({
@@ -19,7 +20,9 @@ const headLinesFromJSON = headLinesJSON.articles.map((article) => ({
     id: Math.random().toString(36).substring(2, 13)
 }))
 
-const HomePageScreen = ({ loggedinUser }: HomePageScreenProps): JSX.Element => {
+const HomePageScreen = ({ }: HomePageScreenProps): JSX.Element => {
+    const loggedinUser = useSelector(selectLoggedinUser)
+
     const [headLines, setHeadLines] = useState<HeadLine[] | null>(null)
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
 
@@ -37,20 +40,22 @@ const HomePageScreen = ({ loggedinUser }: HomePageScreenProps): JSX.Element => {
     }, [])
 
     return (
-        <SafeAreaView style={styles.rootContainer}>
-            {isFilterMenuOpen &&
-                <Pressable
-                    style={styles.backdrop}
-                    onPress={() => { setIsFilterMenuOpen(false) }}>
-                </Pressable>
-            }
-            <TopBar />
-            <FilterBar
-                loggedinUser={loggedinUser}
-                setIsFilterMenuOpen={setIsFilterMenuOpen}
-            />
-            {headLines && <HeadLinesFeed headLines={headLines} />}
-        </SafeAreaView>
+        <>
+            {loggedinUser && <SafeAreaView style={styles.rootContainer}>
+                {isFilterMenuOpen &&
+                    <Pressable
+                        style={styles.backdrop}
+                        onPress={() => { setIsFilterMenuOpen(false) }}>
+                    </Pressable>
+                }
+                <TopBar />
+                <FilterBar
+                    loggedinUser={loggedinUser}
+                    setIsFilterMenuOpen={setIsFilterMenuOpen}
+                />
+                {headLines && <HeadLinesFeed headLines={headLines} />}
+            </SafeAreaView>}
+        </>
     )
 }
 
