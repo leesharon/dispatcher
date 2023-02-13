@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native"
-import { StackScreenProps } from '@react-navigation/stack'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppInput, ContentType } from 'components/common/AppInput'
 import { HorizontalLine } from 'components/common/HorizontalLine'
@@ -11,8 +11,9 @@ import { showAlertMessage } from 'utils/userMsgsUtils'
 import { Colors, Constants, Strings } from 'constants/index'
 import Logo from '../assets/logo.svg'
 import ArrowRight from '../../../../assets/arrow-right.svg'
+import { ParamListBase } from '@react-navigation/native'
 interface LogisterScreenProps {
-    navigation: any
+    navigation: StackNavigationProp<ParamListBase>
 }
 
 enum Status {
