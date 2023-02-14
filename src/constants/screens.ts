@@ -15,6 +15,7 @@ const MAIN_TAB_NAVIGATION = {
 const HOMEPAGE_STACK_NAVIGATION = {
     HOMEPAGE: 'Homepage',
     HEADLINE_DETAILS: 'HeadlineDetails',
+    NOTFICATIONS: 'Notifications',
 }
 
 export type MainStack = 'Logister' | 'MainTabNavigation'

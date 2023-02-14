@@ -6,3 +6,4 @@ Todo's
 - main tab bar height
 
 Ask About
+- no tab bar on notification view?

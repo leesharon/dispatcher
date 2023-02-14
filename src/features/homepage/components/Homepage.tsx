@@ -50,7 +50,9 @@ const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
                         <SearchIcon />
                     </View>
                     <View>
-                        <NotificationsIcon />
+                        <Pressable onPress={() => { navigation.navigate('Notifications') }}>
+                            <NotificationsIcon />
+                        </Pressable>
                         <View style={styles.redDotContainer}>
                             {isUnreadNotifications && <RedDotIcon />}
                         </View>

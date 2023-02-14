@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { Screens } from 'constants'
 import { Homepage } from './Homepage'
 import { HeadLineDetails } from './HeadLineDetails'
+import { Notifications } from './Notifications'
 
 interface HomepageStackNavigationProps {
 }
@@ -22,6 +23,10 @@ const HomepageStackNavigation = ({ }: HomepageStackNavigationProps): JSX.Element
             <Stack.Screen
                 name={Screens.HOMEPAGE_STACK_NAVIGATION.HEADLINE_DETAILS}
                 component={HeadLineDetails}
+            />
+            <Stack.Screen
+                name={Screens.HOMEPAGE_STACK_NAVIGATION.NOTFICATIONS}
+                component={Notifications}
             />
         </Stack.Navigator>
     )
