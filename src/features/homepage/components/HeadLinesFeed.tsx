@@ -19,7 +19,12 @@ const HeadLinesFeed = ({ headLines, navigation }: HeadLinesFeedProps): JSX.Eleme
             </AppText>
             <FlatList
                 data={headLines}
-                renderItem={({ item }) => <HeadLinePreview headLine={item} navigation={navigation} />}
+                renderItem={({ item }) => <HeadLinePreview
+                    headLine={item}
+                    navigation={navigation}
+                    containerStyle={styles.headLineContainer}
+                    imageStyle={styles.headLineImage}
+                />}
             />
         </View>
     )
@@ -35,6 +40,19 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         paddingTop: 12,
         paddingBottom: 20,
+    },
+    headLineContainer: {
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: Colors.GRAY600,
+        shadowColor: 'rgba(0, 0, 0, 0.05)',
+        shadowOffset: { width: 0, height: 32 },
+        shadowOpacity: 1,
+        shadowRadius: 64,
+    },
+    headLineImage: {
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     }
 })
 
