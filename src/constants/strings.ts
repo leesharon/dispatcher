@@ -12,6 +12,7 @@ const EMAIL_ALREADY_IN_USE = 'That email address is already in use!'
 const WEAK_PASSWORD = 'Password should be at least 6 characters'
 const OPERATION_NOT_ALLOWED = 'Signing in with Email and Password is not enabled.'
 const INVALID_CREDENTIALS = 'The supplied auth credential is malformed or has expired.'
+const GENERAL_ERROR = 'Oops! Something went wrong...'
 
 // GENERAL
 const HEADLINES_FEED_TITLE = 'Top Headlines in Israel'
@@ -28,5 +29,6 @@ export {
     WEAK_PASSWORD,
     OPERATION_NOT_ALLOWED,
     INVALID_CREDENTIALS,
-    HEADLINES_FEED_TITLE
+    HEADLINES_FEED_TITLE,
+    GENERAL_ERROR
 }

@@ -11,10 +11,14 @@ import { Navigation } from 'constants/screens'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
-    navigation: Navigation
+    navigation?: Navigation
 }
 
 const HeadLinePreview = ({ headLine, navigation }: HeadLinePreviewProps): JSX.Element => {
+
+    const onPressDispatch = () => {
+        navigation && navigation.navigate(Screens.HOMEPAGE_STACK_NAVIGATION.HEADLINE_DETAILS, { id: headLine.id })
+    }
 
     const renderHeader = () => (
         <>
@@ -43,7 +47,7 @@ const HeadLinePreview = ({ headLine, navigation }: HeadLinePreviewProps): JSX.El
 
     const renderButton = () => (
         <AppButton
-            onPress={() => { navigation.navigate(Screens.HOMEPAGE_STACK_NAVIGATION.HEADLINE_DETAILS, { id: headLine.id }) }}
+            onPress={onPressDispatch}
             innerContainerStyle={styles.buttonInnerContainer}
             icon={<ArrowRightIcon />}
             iconStyle={{ position: 'absolute', right: 30 }}

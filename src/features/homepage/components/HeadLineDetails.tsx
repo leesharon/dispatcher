@@ -1,12 +1,15 @@
 import { AppText } from 'components/common/AppText'
 import { TopBar } from 'components/common/TopBar'
-import { Colors } from 'constants'
+import { Colors, Strings } from 'constants'
 import { Navigation } from 'constants/screens'
 import { useEffect } from 'react'
 import { View, StyleSheet, Pressable } from "react-native"
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import DropDownIcon from '../../../../assets/dropdown.svg'
 import headLinesJSON from 'data/news-us.json'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { HeadLinePreview } from './HeadLinePreview'
+import { HeadLine } from 'models/HeadLine'
 
 interface HeadLineDetailsProps {
     navigation: Navigation
@@ -16,7 +19,7 @@ interface HeadLineDetailsProps {
 const HeadLineDetails = ({ route: { params: { id } }, navigation }: HeadLineDetailsProps): JSX.Element => {
     console.log(id)
     // const headLine = useAppSelector((state) => state.api.queries.)
-    const headLine = headLinesJSON.articles.find((article) => article.id === id)
+    const headLine = headLinesJSON.articles.find((article) => article.id === id) as HeadLine
     console.log('headLine: ', headLine)
 
     useEffect(() => {
@@ -24,7 +27,7 @@ const HeadLineDetails = ({ route: { params: { id } }, navigation }: HeadLineDeta
     }, [])
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <TopBar>
                 <Pressable
                     style={styles.iconsContainer}
@@ -34,7 +37,10 @@ const HeadLineDetails = ({ route: { params: { id } }, navigation }: HeadLineDeta
                     <AppText styleProps={styles.goBack}>Back</AppText>
                 </Pressable>
             </TopBar>
-        </View>
+            {headLine
+                ? <HeadLinePreview headLine={headLine} />
+                : <AppText>{Strings.GENERAL_ERROR}</AppText>}
+        </SafeAreaView>
     )
 }
 
