@@ -1,8 +1,8 @@
+import { View, StyleSheet } from "react-native"
+import FastImage from 'react-native-fast-image'
 import AppButton from 'components/common/AppButton'
 import { Colors, Layout, Screens } from 'constants'
 import { HeadLine } from 'models/HeadLine'
-import { View, StyleSheet, Pressable } from "react-native"
-import FastImage from 'react-native-fast-image'
 import { formatDateLong } from 'utils/dateUtils'
 import FavoriteIcon from '../assets/favorite.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
@@ -57,7 +57,11 @@ const HeadLinePreview = ({ headLine, navigation, isDetails, containerStyle = {},
                     {headLine.author && headLine.author + ', ' + headLine.source.name}
                 </AppText>
                 <AppText styleProps={styles.content}>
-                    {headLine.content && headLine.content.substring(0, headLine.content.length - 13)
+                    {headLine.content &&
+                        (isDetails
+                            ? (headLine.content.substring(0, headLine.content.length - 13)).repeat(10)
+                            : headLine.content.substring(0, headLine.content.length - 13)
+                        )
                     }
                 </AppText>
 

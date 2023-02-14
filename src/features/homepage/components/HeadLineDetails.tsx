@@ -2,14 +2,11 @@ import { AppText } from 'components/common/AppText'
 import { TopBar } from 'components/common/TopBar'
 import { Colors, Strings } from 'constants'
 import { Navigation } from 'constants/screens'
-import { useEffect } from 'react'
 import { StyleSheet, Pressable } from "react-native"
-import { useAppDispatch, useAppSelector } from 'state/hooks'
 import DropDownIcon from '../../../../assets/dropdown.svg'
-import headLinesJSON from 'data/news-us.json'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { HeadLinePreview } from './HeadLinePreview'
-import { HeadLine } from 'models/HeadLine'
+import { useGetHeadLinesQuery } from 'features/api/apiSlice'
 
 interface HeadLineDetailsProps {
     navigation: Navigation
@@ -17,18 +14,8 @@ interface HeadLineDetailsProps {
 }
 
 const HeadLineDetails = ({ route: { params: { id } }, navigation }: HeadLineDetailsProps): JSX.Element => {
-    console.log(id)
-    // const headLine = useAppSelector((state) => state.api.queries.)
-    const headLine = headLinesJSON.articles.find((article) => article.id === id) as HeadLine
-
-    // async function fetchArticle(url: string) {
-    //     const response = await axios.get(url)
-    //     const html = response.data
-    //     const $ = load(html)
-    //     const content = $('article').html()
-    //     console.log('fetchArticle ~ content', content)
-    //     return content
-    // }
+    const { data: headLines } = useGetHeadLinesQuery()
+    const headLine = headLines?.find((article) => article.id === id)
 
     return (
         <SafeAreaView style={styles.container}>

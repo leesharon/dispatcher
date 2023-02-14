@@ -1,13 +1,10 @@
 import { Pressable, StyleSheet, View } from "react-native"
-import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TopBar } from '../../../components/common/TopBar'
 import { FilterBar } from './FilterBar'
 import { HeadLinesFeed } from './HeadLinesFeed'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
-import { HeadLine } from 'models/HeadLine'
-import headLinesJSON from 'data/news-us.json'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { AppText } from 'components/common/AppText'
@@ -24,17 +21,16 @@ interface HomepageProps {
 const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
     const loggedinUser = useSelector(selectLoggedinUser)
 
-    const [headLines, setHeadLines] = useState<HeadLine[] | null>(null)
+    // const [headLines, setHeadLines] = useState<HeadLine[] | null>(null)
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
 
-    // const { data, isLoading, isSuccess, isError, error } = useGetHeadLinesQuery(null)
-    // const headLines = data?.articles
+    const { data: headLines, isLoading, isSuccess, isError, error } = useGetHeadLinesQuery()
 
-    useEffect(() => {
-        if (__DEV__) {
-            setHeadLines(JSON.parse(JSON.stringify(headLinesJSON.articles)))
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (__DEV__) {
+    //         setHeadLines(JSON.parse(JSON.stringify(headLinesJSON.articles)))
+    //     }
+    // }, [])
 
     if (!loggedinUser) return <AppText>You must be logged in to view this page</AppText>
 
