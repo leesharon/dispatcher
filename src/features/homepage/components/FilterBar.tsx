@@ -1,13 +1,13 @@
-import { View, StyleSheet, Pressable, Animated } from "react-native"
+import { View, StyleSheet, Pressable } from "react-native"
 import SortByIcon from '../assets/sort-by.svg'
 import FilterIcon from '../assets/filter.svg'
 import { formatDate } from 'utils/dateUtils'
 import { Colors, Layout } from 'constants'
-import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { AppText } from 'components/common/AppText'
+import { User } from 'models/user'
 
 interface FilterBarProps {
-    loggedinUser: FirebaseAuthTypes.User
+    loggedinUser: User
     setIsFilterMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 

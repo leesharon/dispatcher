@@ -1,13 +1,17 @@
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Pressable } from "react-native"
 import FastImage from 'react-native-fast-image'
 import AppButton from 'components/common/AppButton'
 import { Colors, Layout, Screens } from 'constants'
 import { HeadLine } from 'models/HeadLine'
 import { formatDateLong } from 'utils/dateUtils'
 import FavoriteIcon from '../assets/favorite.svg'
+import FavoriteStarredIcon from '../assets/favorite-starred.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
 import { AppText } from 'components/common/AppText'
 import { Navigation } from 'constants/screens'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
+import { useMemo } from 'react'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
@@ -35,14 +39,30 @@ interface HeadLinePreviewProps {
 }
 
 const HeadLinePreview = ({ headLine, navigation, isDetails, containerStyle = {}, imageStyle = {} }: HeadLinePreviewProps): JSX.Element => {
+    const dispatch = useAppDispatch()
+    const loggedInUser = useAppSelector(selectLoggedinUser)
 
     const onPressDispatch = () => {
         navigation && navigation.navigate(Screens.HOMEPAGE_STACK_NAVIGATION.HEADLINE_DETAILS, { id: headLine.id })
     }
 
+    const onToggleFavorite = () => {
+        if (!isStarred)
+            dispatch({ type: 'loggedinUser/addFavoriteHeadline', payload: headLine.id })
+        else
+            dispatch({ type: 'loggedinUser/removeFavoriteHeadline', payload: headLine.id })
+    }
+
+    const isStarred = useMemo(
+        () => loggedInUser?.favoriteHeadLineIds?.includes(headLine.id),
+        [loggedInUser?.favoriteHeadLineIds]
+    )
+
     return (
         <View style={[styles.headLineContainer, containerStyle]}>
-            <FavoriteIcon style={styles.favoriteIcon} />
+            <Pressable style={styles.favoriteIcon} onPress={onToggleFavorite}>
+                {isStarred ? <FavoriteStarredIcon /> : <FavoriteIcon />}
+            </Pressable>
             <FastImage
                 style={[styles.image, imageStyle]}
                 source={{ uri: headLine.urlToImage, priority: FastImage.priority.normal, }}
