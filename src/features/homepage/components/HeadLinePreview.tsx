@@ -47,8 +47,9 @@ const HeadLinePreview = ({ headLine, navigation, isDetails, containerStyle = {},
     }
 
     const onToggleFavorite = () => {
-        if (!isStarred)
+        if (!isStarred) {
             dispatch({ type: 'loggedinUser/addFavoriteHeadline', payload: headLine.id })
+        }
         else
             dispatch({ type: 'loggedinUser/removeFavoriteHeadline', payload: headLine.id })
     }

@@ -17,6 +17,9 @@ const GENERAL_ERROR = 'Oops! Something went wrong...'
 // GENERAL
 const HEADLINES_FEED_TITLE = 'Top Headlines in Israel'
 
+// NOTIFICATIONS
+const NOTIFICATION_MSG = 'Notification text about a new article from a tag you liked, two lines of text.'
+
 export {
     EMAIL_PLACEHOLDER,
     PASSWORD_PLACEHOLDER,
@@ -30,5 +33,6 @@ export {
     OPERATION_NOT_ALLOWED,
     INVALID_CREDENTIALS,
     HEADLINES_FEED_TITLE,
-    GENERAL_ERROR
+    GENERAL_ERROR,
+    NOTIFICATION_MSG
 }

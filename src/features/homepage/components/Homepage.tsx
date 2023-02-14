@@ -4,7 +4,7 @@ import { TopBar } from '../../../components/common/TopBar'
 import { FilterBar } from './FilterBar'
 import { HeadLinesFeed } from './HeadLinesFeed'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { AppText } from 'components/common/AppText'
@@ -21,16 +21,14 @@ interface HomepageProps {
 const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
     const loggedinUser = useSelector(selectLoggedinUser)
 
-    // const [headLines, setHeadLines] = useState<HeadLine[] | null>(null)
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
 
     const { data: headLines, isLoading, isSuccess, isError, error } = useGetHeadLinesQuery()
 
-    // useEffect(() => {
-    //     if (__DEV__) {
-    //         setHeadLines(JSON.parse(JSON.stringify(headLinesJSON.articles)))
-    //     }
-    // }, [])
+    const isUnreadNotifications = useMemo(() => {
+        if (!loggedinUser || !loggedinUser.notifications.length) return false
+        return loggedinUser.notifications.some(notification => notification.isUnread)
+    }, [loggedinUser?.notifications])
 
     if (!loggedinUser) return <AppText>You must be logged in to view this page</AppText>
 
@@ -54,7 +52,7 @@ const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
                     <View>
                         <NotificationsIcon />
                         <View style={styles.redDotContainer}>
-                            <RedDotIcon />
+                            {isUnreadNotifications && <RedDotIcon />}
                         </View>
                     </View>
                 </View>
