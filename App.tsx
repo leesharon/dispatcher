@@ -42,20 +42,17 @@ const App = () => {
         <StatusBar barStyle="light-content" backgroundColor={Colors.BLUE800} />
       </View>
       <SafeAreaProvider style={styles.rootContainer}>
-        <Stack.Navigator initialRouteName={initialRouteName}>
+        <Stack.Navigator
+          initialRouteName={initialRouteName}
+          screenOptions={{ headerShown: false }}
+        >
           <Stack.Screen
             name={Screens.MAIN_STACK.LOGISTER}
             component={LogisterScreen}
-            options={{
-              headerShown: false,
-            }}
           />
           <Stack.Screen
             name={Screens.MAIN_STACK.MAIN_TAB_NAVIGATION}
             component={MainTabNavigation}
-            options={{
-              headerShown: false,
-            }}
           />
         </Stack.Navigator>
         <FlashMessage position="top" />

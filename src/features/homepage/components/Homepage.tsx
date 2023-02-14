@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, View } from "react-native"
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { TopBar } from './TopBar'
+import { TopBar } from '../../../components/common/TopBar'
 import { FilterBar } from './FilterBar'
 import { HeadLinesFeed } from './HeadLinesFeed'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
@@ -12,11 +12,10 @@ import { useSelector } from 'react-redux'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { AppText } from 'components/common/AppText'
 import { Navigation } from 'constants/screens'
-
-const headLinesFromJSON = headLinesJSON.articles.map((article) => ({
-    ...article,
-    id: Math.random().toString(36).substring(2, 13)
-}))
+import Logo from '../assets/logo.svg'
+import SearchIcon from '../assets/search.svg'
+import RedDotIcon from '../assets/red-dot.svg'
+import NotificationsIcon from '../assets/notifications.svg'
 
 interface HomepageProps {
     navigation: Navigation
@@ -33,11 +32,7 @@ const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
 
     useEffect(() => {
         if (__DEV__) {
-            const headLinesFromJSON = headLinesJSON.articles.map((article) => ({
-                ...article,
-                id: Math.random().toString(36).substring(2, 13)
-            }))
-            setHeadLines(headLinesFromJSON as HeadLine[])
+            setHeadLines(JSON.parse(JSON.stringify(headLinesJSON.articles)))
         }
     }, [])
 
@@ -54,7 +49,20 @@ const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
                 >
                 </Pressable>
             }
-            <TopBar />
+            <TopBar>
+                <Logo />
+                <View style={styles.iconsContainer}>
+                    <View style={styles.iconContainer}>
+                        <SearchIcon />
+                    </View>
+                    <View>
+                        <NotificationsIcon />
+                        <View style={styles.redDotContainer}>
+                            <RedDotIcon />
+                        </View>
+                    </View>
+                </View>
+            </TopBar>
             <FilterBar
                 loggedinUser={loggedinUser}
                 setIsFilterMenuOpen={setIsFilterMenuOpen}
@@ -81,7 +89,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         opacity: 0.5,
         zIndex: 5
-    }
+    },
+    iconsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    iconContainer: {
+        marginRight: 20,
+    },
+    redDotContainer: {
+        position: 'absolute',
+        top: -3,
+        right: -1,
+    },
 })
 
 export { Homepage }

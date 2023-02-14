@@ -11,20 +11,17 @@ const HomepageStackNavigation = ({ }: HomepageStackNavigationProps): JSX.Element
     const Stack = createStackNavigator()
 
     return (
-        <Stack.Navigator initialRouteName={Screens.HOMEPAGE_STACK_NAVIGATION.HOMEPAGE}>
+        <Stack.Navigator
+            initialRouteName={Screens.HOMEPAGE_STACK_NAVIGATION.HOMEPAGE}
+            screenOptions={{ headerShown: false }}
+        >
             <Stack.Screen
                 name={Screens.HOMEPAGE_STACK_NAVIGATION.HOMEPAGE}
                 component={Homepage}
-                options={{
-                    headerShown: false,
-                }}
             />
             <Stack.Screen
                 name={Screens.HOMEPAGE_STACK_NAVIGATION.HEADLINE_DETAILS}
                 component={HeadLineDetails}
-                options={{
-                    headerShown: false,
-                }}
             />
         </Stack.Navigator>
     )
