@@ -1,12 +1,12 @@
 import { AppText } from 'components/common/AppText'
 import { TopBar } from 'components/common/TopBar'
-import { Colors, Strings } from 'constants'
+import { Strings } from 'constants'
 import { Navigation } from 'constants/screens'
-import { StyleSheet, Pressable } from "react-native"
-import DropDownIcon from '../../../../assets/dropdown.svg'
+import { StyleSheet } from "react-native"
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { HeadLinePreview } from './HeadLinePreview'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
+import { GoBackButton } from 'components/common/GoBackButton'
 
 interface HeadLineDetailsProps {
     navigation: Navigation
@@ -20,18 +20,11 @@ const HeadLineDetails = ({ route: { params: { id } }, navigation }: HeadLineDeta
     return (
         <SafeAreaView style={styles.container}>
             <TopBar>
-                <Pressable
-                    style={styles.iconsContainer}
-                    onPress={() => navigation.pop()}
-                >
-                    <DropDownIcon />
-                    <AppText styleProps={styles.goBack}>Back</AppText>
-                </Pressable>
+                <GoBackButton navigation={navigation} />
             </TopBar>
             {headLine
                 ? <HeadLinePreview
                     headLine={headLine}
-                    containerStyle={styles.headLineContainer}
                     isDetails={true}
                 />
                 : <AppText>{Strings.GENERAL_ERROR}</AppText>}
@@ -43,18 +36,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white'
-    },
-    iconsContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    goBack: {
-        color: Colors.GRAY700,
-        fontSize: 16,
-        marginLeft: 8,
-    },
-    headLineContainer: {
-        // flex: 1
     },
 })
 
