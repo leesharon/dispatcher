@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { HeadLinePreview } from './HeadLinePreview'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
 import { GoBackButton } from 'components/common/GoBackButton'
+import { ScrollView } from 'react-native-gesture-handler'
 
 interface HeadLineDetailsProps {
     navigation: Navigation
@@ -19,15 +20,17 @@ const HeadLineDetails = ({ route: { params: { id } }, navigation }: HeadLineDeta
 
     return (
         <SafeAreaView style={styles.container}>
-            <TopBar>
-                <GoBackButton navigation={navigation} />
-            </TopBar>
-            {headLine
-                ? <HeadLinePreview
-                    headLine={headLine}
-                    isDetails={true}
-                />
-                : <AppText>{Strings.GENERAL_ERROR}</AppText>}
+            <ScrollView>
+                <TopBar>
+                    <GoBackButton navigation={navigation} />
+                </TopBar>
+                {headLine
+                    ? <HeadLinePreview
+                        headLine={headLine}
+                        isDetails={true}
+                    />
+                    : <AppText>{Strings.GENERAL_ERROR}</AppText>}
+            </ScrollView>
         </SafeAreaView>
     )
 }

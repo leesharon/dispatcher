@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 32 },
         shadowOpacity: 1,
         shadowRadius: 64,
+        marginBottom: Layout.MARGIN_BOTTOM_LARGE,
     },
     headLineImage: {
         borderTopLeftRadius: 20,

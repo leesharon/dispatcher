@@ -103,7 +103,6 @@ const HeadLinePreview = ({ headLine, navigation, isDetails, containerStyle = {},
 const styles = StyleSheet.create({
     headLineContainer: {
         backgroundColor: 'white',
-        marginBottom: Layout.MARGIN_BOTTOM_LARGE,
         paddingBottom: 12,
         flex: 1
     },
