@@ -35,7 +35,7 @@ const LogisterScreen = ({ navigation }: LogisterScreenProps): JSX.Element => {
 
     const onSignup = () => {
         if (!isFormValid())
-            showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
+            showAlertMessage(Strings.OH_OH, Strings.FORM_ERROR)
         else {
             firebaseSignup(email, password, navigation)
         }
@@ -43,7 +43,7 @@ const LogisterScreen = ({ navigation }: LogisterScreenProps): JSX.Element => {
 
     const onLogin = () => {
         if (!isFormValid())
-            showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
+            showAlertMessage(Strings.OH_OH, Strings.FORM_ERROR)
         else {
             firebaseLogin(email, password, navigation)
         }

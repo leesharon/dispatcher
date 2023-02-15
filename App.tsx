@@ -18,7 +18,8 @@ const App = () => {
   const loggedinUser = useAppSelector(state => state.loggedinUser)
   const dispatch = useAppDispatch()
 
-  const [initialRouteName, setIntialRouteName] = useState<MainStack>(Screens.MAIN_STACK.LOGISTER as MainStack)
+  const [initialRouteName, setIntialRouteName] =
+    useState<MainStack>(Screens.MAIN_STACK.LOGISTER as MainStack)
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {

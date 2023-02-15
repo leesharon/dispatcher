@@ -13,6 +13,7 @@ import Logo from '../assets/logo.svg'
 import SearchIcon from '../assets/search.svg'
 import RedDotIcon from '../assets/red-dot.svg'
 import NotificationsIcon from '../assets/notifications.svg'
+import { Screens, Strings } from 'constants'
 
 interface HomepageProps {
     navigation: Navigation
@@ -30,9 +31,9 @@ const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
         return loggedinUser.notifications.some(notification => notification.isUnread)
     }, [loggedinUser?.notifications])
 
-    if (!loggedinUser) return <AppText>You must be logged in to view this page</AppText>
+    if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
 
-    if (!headLines) return <AppText>Loading...</AppText>
+    if (!headLines) return <AppText>{Strings.LOADING_TEXT}</AppText>
 
     return (
         <SafeAreaView style={styles.rootContainer}>
@@ -50,7 +51,7 @@ const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
                         <SearchIcon />
                     </View>
                     <View>
-                        <Pressable onPress={() => { navigation.navigate('Notifications') }}>
+                        <Pressable onPress={() => { navigation.navigate(Screens.HOMEPAGE_STACK_NAVIGATION.NOTFICATIONS) }}>
                             <NotificationsIcon />
                         </Pressable>
                         <View style={styles.redDotContainer}>
