@@ -1,5 +1,5 @@
 import { Colors } from 'constants'
-import { fontWeight } from 'models/fontWeight'
+import { fontWeight } from 'models/font-weight'
 import { Text, StyleSheet } from "react-native"
 
 interface AppTextProps {
@@ -10,6 +10,8 @@ interface AppTextProps {
         fontFamily?: string
         fontWeight?: fontWeight
         marginBottom?: number
+        paddingLeft?: number
+        maxWidth?: number | string
     }
 }
 

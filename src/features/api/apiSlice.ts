@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { HeadLine } from 'models/HeadLine'
+import { HeadLine } from 'models/headline'
 import { makeId } from 'utils/generalUtils'
 
 export const apiSlice = createApi({

@@ -2,7 +2,7 @@ import { View, StyleSheet, Pressable } from "react-native"
 import FastImage from 'react-native-fast-image'
 import AppButton from 'components/common/AppButton'
 import { Colors, Layout, Screens } from 'constants'
-import { HeadLine } from 'models/HeadLine'
+import { HeadLine } from 'models/headline'
 import { formatDateLong } from 'utils/dateUtils'
 import FavoriteIcon from '../assets/favorite.svg'
 import FavoriteStarredIcon from '../assets/favorite-starred.svg'

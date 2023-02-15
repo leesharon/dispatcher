@@ -1,7 +1,7 @@
 import { View, StyleSheet, FlatList } from "react-native"
 import { Colors, Layout, Strings } from 'constants'
 import { AppText } from 'components/common/AppText'
-import { HeadLine } from 'models/HeadLine'
+import { HeadLine } from 'models/headline'
 import { HeadLinePreview } from './HeadLinePreview'
 import { Navigation } from 'constants/screens'
 
