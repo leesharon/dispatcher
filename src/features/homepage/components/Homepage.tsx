@@ -34,7 +34,7 @@ const Homepage = (): JSX.Element => {
     if (!headLines) return <AppText>{Strings.LOADING_TEXT}</AppText>
 
     return (
-        <SafeAreaView style={styles.rootContainer} edges={['left', 'right', 'top']}>
+        <SafeAreaView style={styles.rootContainer}>
             {isFilterMenuOpen &&
                 <Pressable
                     style={styles.backdrop}
@@ -58,11 +58,8 @@ const Homepage = (): JSX.Element => {
                     </View>
                 </View>
             </TopBar>
-            <FilterBar
-                loggedinUser={loggedinUser}
-                setIsFilterMenuOpen={setIsFilterMenuOpen}
-            />
-            <HeadLinesFeed headLines={headLines} />
+            <FilterBar setIsFilterMenuOpen={setIsFilterMenuOpen} />
+            <HeadLinesFeed headLines={headLines} loggedinUser={loggedinUser} />
         </SafeAreaView>
     )
 }
@@ -72,7 +69,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexGrow: 1,
         position: 'relative',
-        paddingBottom: 200,
+        paddingBottom: 80,
     },
     backdrop: {
         position: 'absolute',
