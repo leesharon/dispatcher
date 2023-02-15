@@ -3,4 +3,5 @@ export interface Notification {
     text: string
     isUnread: boolean
     createdAt: number
+    headLineId: string
 }

@@ -8,3 +8,5 @@ Todo's
 Ask About
 - no tab bar on notification view?
 - should notifications be part of the homepage feature
+- what is the typescript root.ts for??
+- is the right place for notifications on the user?
