@@ -34,7 +34,7 @@ const Homepage = (): JSX.Element => {
     if (!headLines) return <AppText>{Strings.LOADING_TEXT}</AppText>
 
     return (
-        <SafeAreaView style={styles.rootContainer}>
+        <SafeAreaView style={styles.rootContainer} edges={['left', 'right', 'top']}>
             {isFilterMenuOpen &&
                 <Pressable
                     style={styles.backdrop}

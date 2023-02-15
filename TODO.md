@@ -1,6 +1,7 @@
 Todo's
 - Why app renders too many times - onstatechange flag bug fix
 - main tab bar height
+- change app icon
 
 Ask About
 - keyboard logister sreen android bug
