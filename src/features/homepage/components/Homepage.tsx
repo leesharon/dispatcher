@@ -15,6 +15,7 @@ import { Strings } from 'constants'
 import { navigate } from 'navigation/RootNavigation'
 import { useAppSelector } from 'state/hooks'
 import { selectNotifications } from 'features/notifications/reducers/notificationsSlice'
+import { Loader } from 'components/common/Loader'
 
 const Homepage = (): JSX.Element => {
     const loggedinUser = useAppSelector(selectLoggedinUser)
@@ -31,7 +32,7 @@ const Homepage = (): JSX.Element => {
 
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
 
-    if (!headLines) return <AppText>{Strings.LOADING_TEXT}</AppText>
+    if (!headLines) return <Loader />
 
     return (
         <SafeAreaView style={styles.rootContainer}>
