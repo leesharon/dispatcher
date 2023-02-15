@@ -19,7 +19,7 @@ const NotificationPreview = ({ notification, navigation }: NotificationPreviewPr
     const onNotificationClick = () => {
         notification.isUnread &&
             dispath({ type: 'loggedinUser/markNotificationAsRead', payload: notification.id })
-        navigation.push(Screens.HOMEPAGE_STACK_NAVIGATION.HEADLINE_DETAILS, { id: notification.headLineId })
+        navigation.push(Screens.HOMEPAGE_STACK.HEADLINE_DETAILS, { id: notification.headLineId })
     }
 
     const backgroundColor = notification.isUnread ? Colors.PURPLE200 : Colors.GRAY100

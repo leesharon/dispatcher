@@ -27,9 +27,9 @@ const HeadLineDetails = ({ route: { params: { id } }, navigation }: HeadLineDeta
                 {headLine
                     ? <HeadLinePreview
                         headLine={headLine}
-                        isDetails={true}
-                    />
-                    : <AppText>{Strings.GENERAL_ERROR}</AppText>}
+                        isDetails={true} />
+                    : <AppText>{Strings.GENERAL_ERROR}</AppText>
+                }
             </ScrollView>
         </SafeAreaView>
     )

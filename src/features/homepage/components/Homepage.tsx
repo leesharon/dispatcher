@@ -51,7 +51,7 @@ const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
                         <SearchIcon />
                     </View>
                     <View>
-                        <Pressable onPress={() => { navigation.navigate(Screens.HOMEPAGE_STACK_NAVIGATION.NOTFICATIONS) }}>
+                        <Pressable onPress={() => { navigation.navigate(Screens.HOMEPAGE_STACK.NOTFICATIONS) }}>
                             <NotificationsIcon />
                         </Pressable>
                         <View style={styles.redDotContainer}>

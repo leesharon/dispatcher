@@ -5,27 +5,24 @@ import { Homepage } from './Homepage'
 import { HeadLineDetails } from './HeadLineDetails'
 import { Notifications } from './Notifications'
 
-interface HomepageStackNavigationProps {
-}
-
-const HomepageStackNavigation = ({ }: HomepageStackNavigationProps): JSX.Element => {
+const HomepageStack = (): JSX.Element => {
     const Stack = createStackNavigator()
 
     return (
         <Stack.Navigator
-            initialRouteName={Screens.HOMEPAGE_STACK_NAVIGATION.HOMEPAGE}
+            initialRouteName={Screens.HOMEPAGE_STACK.HOMEPAGE}
             screenOptions={{ headerShown: false }}
         >
             <Stack.Screen
-                name={Screens.HOMEPAGE_STACK_NAVIGATION.HOMEPAGE}
+                name={Screens.HOMEPAGE_STACK.HOMEPAGE}
                 component={Homepage}
             />
             <Stack.Screen
-                name={Screens.HOMEPAGE_STACK_NAVIGATION.HEADLINE_DETAILS}
+                name={Screens.HOMEPAGE_STACK.HEADLINE_DETAILS}
                 component={HeadLineDetails}
             />
             <Stack.Screen
-                name={Screens.HOMEPAGE_STACK_NAVIGATION.NOTFICATIONS}
+                name={Screens.HOMEPAGE_STACK.NOTFICATIONS}
                 component={Notifications}
             />
         </Stack.Navigator>
@@ -36,4 +33,4 @@ const styles = StyleSheet.create({
 
 })
 
-export { HomepageStackNavigation }
+export { HomepageStack }

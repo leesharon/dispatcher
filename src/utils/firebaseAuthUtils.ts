@@ -8,10 +8,10 @@ const firebaseSignup = (email: string, password: string, navigation: any) => {
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
             console.log('User account created & signed in!')
-            navigation.navigate(Screens.MAIN_TAB_NAVIGATION.HOMEPAGE_STACK_NAVIGATION)
+            navigation.navigate(Screens.MAIN_TAB.HOMEPAGE_STACK)
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'MainTabNavigation' }],
+                routes: [{ name: 'MainTab' }],
             })
         })
         .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
@@ -23,10 +23,10 @@ const firebaseLogin = (email: string, password: string, navigation: any) => {
     auth().signInWithEmailAndPassword(email, password)
         .then(() => {
             console.log('User account signed in!')
-            navigation.navigate(Screens.MAIN_TAB_NAVIGATION.HOMEPAGE_STACK_NAVIGATION)
+            navigation.navigate(Screens.MAIN_TAB.HOMEPAGE_STACK)
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'MainTabNavigation' }],
+                routes: [{ name: 'MainTab' }],
             })
         })
         .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {

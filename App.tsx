@@ -11,7 +11,6 @@ import { login } from 'features/authentication/reducers/loggedinUserSlice'
 import { MainTabNavigation } from 'navigation/MainTabNavigation'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { MainStack } from 'constants/screens'
-import { RootStackParamList } from 'models/navigation'
 import { navigationRef } from 'navigation/RootNavigation'
 
 const App = () => {
@@ -36,7 +35,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if (loggedinUser) setIntialRouteName(Screens.MAIN_STACK.MAIN_TAB_NAVIGATION as MainStack)
+    if (loggedinUser) setIntialRouteName(Screens.MAIN_STACK.MAIN_TAB as MainStack)
   })
 
   return (
@@ -54,7 +53,7 @@ const App = () => {
             component={LogisterScreen}
           />
           <Stack.Screen
-            name={Screens.MAIN_STACK.MAIN_TAB_NAVIGATION}
+            name={Screens.MAIN_STACK.MAIN_TAB}
             component={MainTabNavigation}
           />
         </Stack.Navigator>

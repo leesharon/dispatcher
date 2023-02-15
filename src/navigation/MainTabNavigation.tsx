@@ -9,8 +9,7 @@ import FavoritesFocusedIcon from 'navigation/assets/favorites-focused.svg'
 import { Colors, Screens } from 'constants'
 import { ProfileTab } from 'features/profile/components/ProfileTab'
 import { FavortiesTab } from 'features/favorites/components/FavoritesTab'
-import { HomepageStackNavigation } from 'features/homepage/components/HomepageStackNavigation'
-
+import { HomepageStack } from 'features/homepage/components/HomepageStack'
 
 interface MainTabNavigationProps {
 }
@@ -25,10 +24,10 @@ const MainTabNavigation = ({ }: MainTabNavigationProps): JSX.Element => {
                 tabBarShowLabel: false,
                 headerShown: false
             }}
-            initialRouteName={Screens.MAIN_TAB_NAVIGATION.HOMEPAGE_STACK_NAVIGATION}
+            initialRouteName={Screens.MAIN_TAB.HOMEPAGE_STACK}
         >
             <Tab.Screen
-                name={Screens.MAIN_TAB_NAVIGATION.PROFILE}
+                name={Screens.MAIN_TAB.PROFILE}
                 component={ProfileTab}
                 options={{
                     tabBarIcon: ({ focused }) => {
@@ -37,8 +36,8 @@ const MainTabNavigation = ({ }: MainTabNavigationProps): JSX.Element => {
                 }}
             />
             <Tab.Screen
-                name={Screens.MAIN_TAB_NAVIGATION.HOMEPAGE_STACK_NAVIGATION}
-                component={HomepageStackNavigation}
+                name={Screens.MAIN_TAB.HOMEPAGE_STACK}
+                component={HomepageStack}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return focused ? <HomeFocusedIcon /> : <HomeIcon />
@@ -46,7 +45,7 @@ const MainTabNavigation = ({ }: MainTabNavigationProps): JSX.Element => {
                 }}
             />
             <Tab.Screen
-                name={Screens.MAIN_TAB_NAVIGATION.FAVORITES}
+                name={Screens.MAIN_TAB.FAVORITES}
                 component={FavortiesTab}
                 options={{
                     tabBarIcon: ({ focused }) => {

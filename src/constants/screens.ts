@@ -3,27 +3,39 @@ import { StackNavigationProp } from '@react-navigation/stack'
 
 const MAIN_STACK = {
     LOGISTER: 'Logister',
-    MAIN_TAB_NAVIGATION: 'MainTabNavigation',
+    MAIN_TAB: 'MainTab',
 }
 
-const MAIN_TAB_NAVIGATION = {
-    HOMEPAGE_STACK_NAVIGATION: 'HomepageStackNavigation',
+const MAIN_TAB = {
+    HOMEPAGE_STACK: 'HomepageStack',
     PROFILE: 'Profile',
     FAVORITES: 'Favorites',
 }
 
-const HOMEPAGE_STACK_NAVIGATION = {
+const HOMEPAGE_STACK = {
     HOMEPAGE: 'Homepage',
     HEADLINE_DETAILS: 'HeadlineDetails',
     NOTFICATIONS: 'Notifications',
 }
 
-export type MainStack = 'Logister' | 'MainTabNavigation'
-export type MainTabNavigation = 'Homepage' | 'Profile' | 'Favorites'
-export interface HomepageStackNavigation {
+type MainStack = 'Logister' | 'MainTab'
+type MainTab = 'Homepage' | 'Profile' | 'Favorites'
+type Navigation = StackNavigationProp<ParamListBase>
+interface RootStackParamList {
+    Logister: undefined
+    MainTab: undefined
+}
+
+interface MainTabsParamsList {
+    HomepageStack: undefined
+    Profile: undefined
+    Favorites: undefined
+}
+interface HomepageStackParamList {
     Homepage: undefined
     HeadlineDetails: { id: string }
+    Notifications: undefined
 }
-export type Navigation = StackNavigationProp<ParamListBase>
 
-export { MAIN_STACK, MAIN_TAB_NAVIGATION, HOMEPAGE_STACK_NAVIGATION }
+export { MAIN_STACK, MAIN_TAB, HOMEPAGE_STACK }
+export type { MainStack, MainTab, HomepageStackParamList, MainTabsParamsList, Navigation, RootStackParamList }

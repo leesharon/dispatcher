@@ -43,7 +43,7 @@ const HeadLinePreview = ({ headLine, navigation, isDetails, containerStyle = {},
     const loggedInUser = useAppSelector(selectLoggedinUser)
 
     const onPressDispatch = () => {
-        navigation && navigation.navigate(Screens.HOMEPAGE_STACK_NAVIGATION.HEADLINE_DETAILS, { id: headLine.id })
+        navigation && navigation.navigate(Screens.HOMEPAGE_STACK.HEADLINE_DETAILS, { id: headLine.id })
     }
 
     const onToggleFavorite = () => {

@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { StackActions } from '@react-navigation/native'
-// import {
-//     MainTabsParamsList,
-//     ProductsParamList,
-//     RestaurantStackScreen,
-//     RootStackParamList,
-// } from 'constant/screens'
+import {
+    MainTabsParamsList,
+    HomepageStackParamList,
+    RootStackParamList,
+} from 'constants/screens'
 
 class NavigationReadiness {
     isReady = false
@@ -14,9 +13,7 @@ class NavigationReadiness {
     }
     listener?: () => void
     setIsReady = (isReady: boolean) => {
-        if (this.listener) {
-            this.listener()
-        }
+        (this.listener) && this.listener()
         this.isReady = isReady
     }
 }
@@ -38,18 +35,17 @@ export const pop = (): void => {
     }
 }
 
-// export const navigate = (
-//     name:
-//         | keyof RootStackParamList
-//         | keyof MainTabsParamsList
-//         | keyof RestaurantStackScreen
-//         | keyof ProductsParamList,
-//     params: Record<string, unknown> | undefined = undefined,
-// ): void => {
-//     if (navigationReadiness.isReady && navigationRef.current) {
-//         navigationRef.current?.navigate(name, params)
-//     }
-// }
+export const navigate = (
+    name:
+        | keyof RootStackParamList
+        | keyof MainTabsParamsList
+        | keyof HomepageStackParamList,
+    params: Record<string, unknown> | undefined = undefined,
+): void => {
+    if (navigationReadiness.isReady && navigationRef.current) {
+        navigationRef.current?.navigate(name, params)
+    }
+}
 
 export const resetTo = (screen: string): void => {
     if (navigationReadiness.isReady && navigationRef.current) {

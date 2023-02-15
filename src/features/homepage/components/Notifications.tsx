@@ -36,7 +36,7 @@ const Notifications = ({ navigation }: NotificationsProps): JSX.Element => {
 
 const styles = StyleSheet.create({
     container: {
-
+        flex: 1,
     },
     header: {
         fontSize: 24,
