@@ -25,12 +25,12 @@ export const push = (
     name: string,
     params: Record<string, unknown> | undefined = undefined,
 ): void => {
-    if (navigationReadiness.isReady && navigationRef.current) {
+    if (navigationRef.current) {
         navigationRef.current?.dispatch(StackActions.push(name, params))
     }
 }
 export const pop = (): void => {
-    if (navigationReadiness.isReady && navigationRef.current) {
+    if (navigationRef.current) {
         navigationRef.current?.dispatch(StackActions.pop())
     }
 }
@@ -42,13 +42,12 @@ export const navigate = (
         | keyof HomepageStackParamList,
     params: Record<string, unknown> | undefined = undefined,
 ): void => {
-    if (navigationReadiness.isReady && navigationRef.current) {
+    if (navigationRef.current)
         navigationRef.current?.navigate(name, params)
-    }
 }
 
 export const resetTo = (screen: string): void => {
-    if (navigationReadiness.isReady && navigationRef.current) {
+    if (navigationRef.current) {
         navigationRef.current?.reset({
             index: 0,
             routes: [{ name: screen.toString() }],

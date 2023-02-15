@@ -19,15 +19,13 @@ const App = () => {
   const loggedinUser = useAppSelector(state => state.loggedinUser)
   const dispatch = useAppDispatch()
 
-  const [initialRouteName, setIntialRouteName] =
-    useState<MainStack>(Screens.MAIN_STACK.LOGISTER as MainStack)
+  const [initialRouteName, setIntialRouteName] = useState<MainStack>(Screens.ROOT_STACK.LOGISTER as MainStack)
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
-    dispatch(login(loggedinUser?.toJSON()))
+    loggedinUser && dispatch(login(loggedinUser.toJSON()))
     if (initializing) setInitializing(false)
   }, [dispatch, initializing])
-
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
@@ -35,11 +33,11 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if (loggedinUser) setIntialRouteName(Screens.MAIN_STACK.MAIN_TAB as MainStack)
-  })
+    loggedinUser.loggedinUser && setIntialRouteName(Screens.ROOT_STACK.MAIN_TAB as MainStack)
+  }, [loggedinUser])
 
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer ref={navigationRef} >
       <View style={styles.statusBar}>
         <StatusBar barStyle="light-content" backgroundColor={Colors.BLUE800} />
       </View>
@@ -49,11 +47,11 @@ const App = () => {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen
-            name={Screens.MAIN_STACK.LOGISTER}
+            name={Screens.ROOT_STACK.LOGISTER}
             component={LogisterScreen}
           />
           <Stack.Screen
-            name={Screens.MAIN_STACK.MAIN_TAB}
+            name={Screens.ROOT_STACK.MAIN_TAB}
             component={MainTabNavigation}
           />
         </Stack.Navigator>

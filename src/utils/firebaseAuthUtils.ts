@@ -1,33 +1,26 @@
-import { pop } from './../navigation/RootNavigation';
+import { navigate, resetTo } from './../navigation/RootNavigation'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
-import { Screens } from 'constants'
 import { authErrorHandler } from './errorHandlerUtils'
 
-const firebaseSignup = (email: string, password: string, navigation: any) => {
+const firebaseSignup = (email: string, password: string) => {
     auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
             console.log('User account created & signed in!')
-            navigation.navigate(Screens.MAIN_TAB.HOMEPAGE_STACK)
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'MainTab' }],
-            })
+            navigate('MainTab')
+            resetTo('MainTab')
         })
         .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
             authErrorHandler(error)
         })
 }
 
-const firebaseLogin = (email: string, password: string, navigation: any) => {
+const firebaseLogin = (email: string, password: string) => {
     auth().signInWithEmailAndPassword(email, password)
         .then(() => {
             console.log('User account signed in!')
-            navigation.navigate(Screens.MAIN_TAB.HOMEPAGE_STACK)
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'MainTab' }],
-            })
+            navigate('MainTab')
+            resetTo('MainTab')
         })
         .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
             authErrorHandler(error)

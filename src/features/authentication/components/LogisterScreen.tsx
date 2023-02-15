@@ -36,22 +36,22 @@ const LogisterScreen = ({ navigation }: LogisterScreenProps): JSX.Element => {
     const onSignup = () => {
         if (!isFormValid())
             showAlertMessage(Strings.OH_OH, Strings.FORM_ERROR)
-        else {
-            firebaseSignup(email, password, navigation)
-        }
+        else
+            firebaseSignup(email, password)
     }
 
     const onLogin = () => {
         if (!isFormValid())
             showAlertMessage(Strings.OH_OH, Strings.FORM_ERROR)
-        else {
-            firebaseLogin(email, password, navigation)
-        }
+        else
+            firebaseLogin(email, password)
     }
 
     const isFormValid = () => {
-        if (status === Status.LOGIN) return email && password && !emailError && !passwordError
-        else return email && password && confirmPassword && !emailError && !passwordError && !confirmPasswordError
+        if (status === Status.LOGIN)
+            return email && password && !emailError && !passwordError
+        else
+            return email && password && confirmPassword && !emailError && !passwordError && !confirmPasswordError
     }
 
     const btnInnerContainerStyle = { backgroundColor: (isFormValid()) ? Colors.BLUE500 : Colors.BLUE300 }

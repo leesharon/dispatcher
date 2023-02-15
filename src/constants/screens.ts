@@ -1,7 +1,7 @@
 import { ParamListBase } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 
-const MAIN_STACK = {
+const ROOT_STACK = {
     LOGISTER: 'Logister',
     MAIN_TAB: 'MainTab',
 }
@@ -37,5 +37,5 @@ interface HomepageStackParamList {
     Notifications: undefined
 }
 
-export { MAIN_STACK, MAIN_TAB, HOMEPAGE_STACK }
+export { ROOT_STACK, MAIN_TAB, HOMEPAGE_STACK }
 export type { MainStack, MainTab, HomepageStackParamList, MainTabsParamsList, Navigation, RootStackParamList }
