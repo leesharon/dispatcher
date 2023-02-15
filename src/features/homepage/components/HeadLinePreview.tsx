@@ -9,9 +9,10 @@ import FavoriteStarredIcon from '../assets/favorite-starred.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
 import { AppText } from 'components/common/AppText'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
+import { addFavoriteHeadline, removeFavoriteHeadline, selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { useMemo } from 'react'
 import { navigate } from 'navigation/RootNavigation'
+import { addNotification } from 'features/notifications/reducers/notificationsSlice'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
@@ -47,10 +48,11 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
 
     const onToggleFavorite = () => {
         if (!isStarred) {
-            dispatch({ type: 'loggedinUser/addFavoriteHeadline', payload: headLine.id })
+            dispatch(addFavoriteHeadline(headLine.id))
+            dispatch(addNotification(headLine.id))
         }
         else
-            dispatch({ type: 'loggedinUser/removeFavoriteHeadline', payload: headLine.id })
+            dispatch(removeFavoriteHeadline(headLine.id))
     }
 
     const isStarred = useMemo(

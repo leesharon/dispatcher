@@ -7,6 +7,7 @@ import RectangleGrayIcon from '../assets/rectangle-gray.svg'
 import ForwardIcon from '../assets/forward.svg'
 import { useAppDispatch } from 'state/hooks'
 import { push } from 'navigation/RootNavigation'
+import { markNotificationAsRead } from '../reducers/notificationsSlice'
 
 interface NotificationPreviewProps {
     notification: Notification
@@ -16,8 +17,7 @@ const NotificationPreview = ({ notification }: NotificationPreviewProps): JSX.El
     const dispath = useAppDispatch()
 
     const onNotificationClick = () => {
-        notification.isUnread &&
-            dispath({ type: 'loggedinUser/markNotificationAsRead', payload: notification.id })
+        notification.isUnread && dispath(markNotificationAsRead(notification.id))
         push('HeadlineDetails', { id: notification.headLineId })
     }
 

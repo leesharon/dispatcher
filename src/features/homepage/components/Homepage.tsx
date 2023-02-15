@@ -5,7 +5,6 @@ import { FilterBar } from './FilterBar'
 import { HeadLinesFeed } from './HeadLinesFeed'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
 import { useMemo, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { AppText } from 'components/common/AppText'
 import Logo from '../assets/logo.svg'
@@ -14,18 +13,21 @@ import RedDotIcon from '../assets/red-dot.svg'
 import NotificationsIcon from '../assets/notifications.svg'
 import { Strings } from 'constants'
 import { navigate } from 'navigation/RootNavigation'
+import { useAppSelector } from 'state/hooks'
+import { selectNotifications } from 'features/notifications/reducers/notificationsSlice'
 
 const Homepage = (): JSX.Element => {
-    const loggedinUser = useSelector(selectLoggedinUser)
+    const loggedinUser = useAppSelector(selectLoggedinUser)
+    const notifications = useAppSelector(selectNotifications)
 
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
 
     const { data: headLines, isLoading, isSuccess, isError, error } = useGetHeadLinesQuery()
 
     const isUnreadNotifications = useMemo(() => {
-        if (!loggedinUser || !loggedinUser.notifications.length) return false
-        return loggedinUser.notifications.some(notification => notification.isUnread)
-    }, [loggedinUser?.notifications])
+        if (!notifications.length) return false
+        return notifications.some(notification => notification.isUnread)
+    }, [notifications])
 
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
 

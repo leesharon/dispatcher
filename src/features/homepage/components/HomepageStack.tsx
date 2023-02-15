@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native"
 import { createStackNavigator } from '@react-navigation/stack'
 import { Homepage } from './Homepage'
 import { HeadLineDetails } from './HeadLineDetails'
-import { Notifications } from './Notifications'
+import { Notifications } from '../../notifications/components/Notifications'
 import { HomepageStackParamList } from 'constants/screens'
 
 const HomepageStack = (): JSX.Element => {
