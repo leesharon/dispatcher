@@ -7,12 +7,12 @@ import { HeadLinePreview } from './HeadLinePreview'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
 import { GoBackButton } from 'components/common/GoBackButton'
 import { ScrollView } from 'react-native-gesture-handler'
+import type { StackScreenProps } from '@react-navigation/stack'
+import { HomepageStackParamList } from 'constants/screens'
 
-interface HeadLineDetailsProps {
-    route: any
-}
+type Props = StackScreenProps<HomepageStackParamList, 'HeadlineDetails'>
 
-const HeadLineDetails = ({ route: { params: { id } } }: HeadLineDetailsProps): JSX.Element => {
+const HeadLineDetails = ({ route: { params: { id } } }: Props): JSX.Element => {
     const { data: headLines } = useGetHeadLinesQuery()
     const headLine = headLines?.find((article) => article.id === id)
 
