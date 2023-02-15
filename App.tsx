@@ -12,9 +12,10 @@ import { MainTabNavigation } from 'navigation/MainTabNavigation'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { MainStack } from 'constants/screens'
 import { navigationRef } from 'navigation/RootNavigation'
+import { RootStackParamList } from 'constants/screens'
 
 const App = () => {
-  const Stack = createStackNavigator()
+  const Stack = createStackNavigator<RootStackParamList>()
 
   const loggedinUser = useAppSelector(state => state.loggedinUser)
   const dispatch = useAppDispatch()
@@ -47,11 +48,11 @@ const App = () => {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen
-            name={Screens.ROOT_STACK.LOGISTER}
+            name={'Logister'}
             component={LogisterScreen}
           />
           <Stack.Screen
-            name={Screens.ROOT_STACK.MAIN_TAB}
+            name={'MainTab'}
             component={MainTabNavigation}
           />
         </Stack.Navigator>

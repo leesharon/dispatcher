@@ -10,9 +10,10 @@ import { Colors, Screens } from 'constants'
 import { ProfileTab } from 'features/profile/components/ProfileTab'
 import { FavortiesTab } from 'features/favorites/components/FavoritesTab'
 import { HomepageStack } from 'features/homepage/components/HomepageStack'
+import { MainTabsParamsList } from 'constants/screens'
 
 const MainTabNavigation = (): JSX.Element => {
-    const Tab = createBottomTabNavigator()
+    const Tab = createBottomTabNavigator<MainTabsParamsList>()
 
     return (
         <Tab.Navigator
@@ -21,10 +22,10 @@ const MainTabNavigation = (): JSX.Element => {
                 tabBarShowLabel: false,
                 headerShown: false
             }}
-            initialRouteName={Screens.MAIN_TAB.HOMEPAGE_STACK}
+            initialRouteName={'HomepageStack'}
         >
             <Tab.Screen
-                name={Screens.MAIN_TAB.PROFILE}
+                name={'Profile'}
                 component={ProfileTab}
                 options={{
                     tabBarIcon: ({ focused }) => {
@@ -33,7 +34,7 @@ const MainTabNavigation = (): JSX.Element => {
                 }}
             />
             <Tab.Screen
-                name={Screens.MAIN_TAB.HOMEPAGE_STACK}
+                name={'HomepageStack'}
                 component={HomepageStack}
                 options={{
                     tabBarIcon: ({ focused }) => {
@@ -42,7 +43,7 @@ const MainTabNavigation = (): JSX.Element => {
                 }}
             />
             <Tab.Screen
-                name={Screens.MAIN_TAB.FAVORITES}
+                name={'Favorites'}
                 component={FavortiesTab}
                 options={{
                     tabBarIcon: ({ focused }) => {

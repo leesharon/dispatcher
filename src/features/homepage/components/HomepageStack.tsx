@@ -1,28 +1,28 @@
 import { StyleSheet } from "react-native"
 import { createStackNavigator } from '@react-navigation/stack'
-import { Screens } from 'constants'
 import { Homepage } from './Homepage'
 import { HeadLineDetails } from './HeadLineDetails'
 import { Notifications } from './Notifications'
+import { HomepageStackParamList } from 'constants/screens'
 
 const HomepageStack = (): JSX.Element => {
-    const Stack = createStackNavigator()
+    const Stack = createStackNavigator<HomepageStackParamList>()
 
     return (
         <Stack.Navigator
-            initialRouteName={Screens.HOMEPAGE_STACK.HOMEPAGE}
+            initialRouteName={'Homepage'}
             screenOptions={{ headerShown: false }}
         >
             <Stack.Screen
-                name={Screens.HOMEPAGE_STACK.HOMEPAGE}
+                name={'Homepage'}
                 component={Homepage}
             />
             <Stack.Screen
-                name={Screens.HOMEPAGE_STACK.HEADLINE_DETAILS}
+                name={'HeadlineDetails'}
                 component={HeadLineDetails}
             />
             <Stack.Screen
-                name={Screens.HOMEPAGE_STACK.NOTFICATIONS}
+                name={'Notifications'}
                 component={Notifications}
             />
         </Stack.Navigator>

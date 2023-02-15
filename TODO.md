@@ -8,7 +8,5 @@ Todo's
 
 Ask About
 <!-- - should notifications be part of the homepage feature -->
-<!-- - what is the typescript root.ts for?? -->
 <!-- - is the right place for notifications on the user object? -->
-<!-- - scrollview on headlinedetails height?? -->
 - why after login on android, go back button navigates to profile
