@@ -38,7 +38,7 @@ const App = () => {
   }, [loggedinUser])
 
   return (
-    <NavigationContainer ref={navigationRef} >
+    <NavigationContainer ref={navigationRef}>
       <View style={styles.statusBar}>
         <StatusBar barStyle="light-content" backgroundColor={Colors.BLUE800} />
       </View>

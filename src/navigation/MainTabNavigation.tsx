@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.BLUE800,
         paddingBottom: Constants.IS_IOS ? 25 : 18,
         paddingTop: 18,
+        borderTopWidth: 0,
     }
 })
 
