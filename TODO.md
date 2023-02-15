@@ -4,6 +4,7 @@ Todo's
 - type the func createStackNavigator & route
 - main tab bar height
 - keyboard logister sreen android bug
+- change dispathc action names
 
 Ask About
 <!-- - should notifications be part of the homepage feature -->

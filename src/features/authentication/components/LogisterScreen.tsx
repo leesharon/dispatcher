@@ -10,17 +10,13 @@ import { showAlertMessage } from 'utils/userMsgsUtils'
 import { Colors, Constants, Strings } from 'constants/index'
 import Logo from '../assets/logo.svg'
 import ArrowRight from '../../../../assets/arrow-right.svg'
-import { Navigation } from 'constants/screens'
-interface LogisterScreenProps {
-    navigation: Navigation
-}
 
 enum Status {
     LOGIN = 'Login',
     SIGNUP = 'Signup',
 }
 
-const LogisterScreen = ({ navigation }: LogisterScreenProps): JSX.Element => {
+const LogisterScreen = (): JSX.Element => {
 
     const [status, setStatus] = useState<Status>(Status.SIGNUP)
 

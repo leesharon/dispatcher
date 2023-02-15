@@ -1,21 +1,20 @@
 import { View, StyleSheet, Pressable } from "react-native"
 import FastImage from 'react-native-fast-image'
 import AppButton from 'components/common/AppButton'
-import { Colors, Layout, Screens } from 'constants'
+import { Colors, Layout } from 'constants'
 import { HeadLine } from 'models/headline'
 import { formatDateLong } from 'utils/dateUtils'
 import FavoriteIcon from '../assets/favorite.svg'
 import FavoriteStarredIcon from '../assets/favorite-starred.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
 import { AppText } from 'components/common/AppText'
-import { Navigation } from 'constants/screens'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { useMemo } from 'react'
+import { navigate } from 'navigation/RootNavigation'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
-    navigation?: Navigation
     isDetails?: boolean
     containerStyle?: {
         backgroundColor?: string
@@ -38,12 +37,12 @@ interface HeadLinePreviewProps {
     } | {}
 }
 
-const HeadLinePreview = ({ headLine, navigation, isDetails, containerStyle = {}, imageStyle = {} }: HeadLinePreviewProps): JSX.Element => {
+const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle = {} }: HeadLinePreviewProps): JSX.Element => {
     const dispatch = useAppDispatch()
     const loggedInUser = useAppSelector(selectLoggedinUser)
 
     const onPressDispatch = () => {
-        navigation && navigation.navigate(Screens.HOMEPAGE_STACK.HEADLINE_DETAILS, { id: headLine.id })
+        navigate('HeadlineDetails', { id: headLine.id })
     }
 
     const onToggleFavorite = () => {

@@ -11,10 +11,7 @@ import { ProfileTab } from 'features/profile/components/ProfileTab'
 import { FavortiesTab } from 'features/favorites/components/FavoritesTab'
 import { HomepageStack } from 'features/homepage/components/HomepageStack'
 
-interface MainTabNavigationProps {
-}
-
-const MainTabNavigation = ({ }: MainTabNavigationProps): JSX.Element => {
+const MainTabNavigation = (): JSX.Element => {
     const Tab = createBottomTabNavigator()
 
     return (

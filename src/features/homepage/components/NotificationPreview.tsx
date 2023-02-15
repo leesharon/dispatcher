@@ -1,25 +1,24 @@
 import { AppText } from 'components/common/AppText'
-import { Colors, Screens } from 'constants'
-import { Navigation } from 'constants/screens'
+import { Colors } from 'constants'
 import { Notification } from 'models/notification'
 import { View, StyleSheet, Pressable } from "react-native"
 import RectangleIcon from '../assets/rectangle.svg'
 import RectangleGrayIcon from '../assets/rectangle-gray.svg'
 import ForwardIcon from '../assets/forward.svg'
 import { useAppDispatch } from 'state/hooks'
+import { push } from 'navigation/RootNavigation'
 
 interface NotificationPreviewProps {
     notification: Notification
-    navigation: Navigation
 }
 
-const NotificationPreview = ({ notification, navigation }: NotificationPreviewProps): JSX.Element => {
+const NotificationPreview = ({ notification }: NotificationPreviewProps): JSX.Element => {
     const dispath = useAppDispatch()
 
     const onNotificationClick = () => {
         notification.isUnread &&
             dispath({ type: 'loggedinUser/markNotificationAsRead', payload: notification.id })
-        navigation.push(Screens.HOMEPAGE_STACK.HEADLINE_DETAILS, { id: notification.headLineId })
+        push('HeadlineDetails', { id: notification.headLineId })
     }
 
     const backgroundColor = notification.isUnread ? Colors.PURPLE200 : Colors.GRAY100

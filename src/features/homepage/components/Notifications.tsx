@@ -2,22 +2,17 @@ import { View, StyleSheet, FlatList } from "react-native"
 import { AppText } from 'components/common/AppText'
 import { TopBar } from 'components/common/TopBar'
 import { GoBackButton } from 'components/common/GoBackButton'
-import { Navigation } from 'constants/screens'
 import { Colors, Strings } from 'constants'
 import { useAppSelector } from 'state/hooks'
 import { NotificationPreview } from './NotificationPreview'
 
-interface NotificationsProps {
-    navigation: Navigation
-}
-
-const Notifications = ({ navigation }: NotificationsProps): JSX.Element => {
+const Notifications = (): JSX.Element => {
     const notifications = useAppSelector(state => state.loggedinUser.loggedinUser?.notifications)
 
     return (
         <View style={styles.container}>
             <TopBar>
-                <GoBackButton navigation={navigation} />
+                <GoBackButton />
             </TopBar>
             <AppText styleProps={styles.header}>Notifications</AppText>
             {(notifications && notifications.length)
@@ -25,7 +20,6 @@ const Notifications = ({ navigation }: NotificationsProps): JSX.Element => {
                     data={notifications}
                     renderItem={({ item }) => <NotificationPreview
                         notification={item}
-                        navigation={navigation}
                     />}
                 />
                 : <AppText styleProps={styles.noNotifications}>{Strings.NO_NOTIFICATIONS}</AppText>

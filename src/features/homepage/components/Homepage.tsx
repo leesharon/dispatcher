@@ -8,18 +8,14 @@ import { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { AppText } from 'components/common/AppText'
-import { Navigation } from 'constants/screens'
 import Logo from '../assets/logo.svg'
 import SearchIcon from '../assets/search.svg'
 import RedDotIcon from '../assets/red-dot.svg'
 import NotificationsIcon from '../assets/notifications.svg'
-import { Screens, Strings } from 'constants'
+import { Strings } from 'constants'
+import { navigate } from 'navigation/RootNavigation'
 
-interface HomepageProps {
-    navigation: Navigation
-}
-
-const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
+const Homepage = (): JSX.Element => {
     const loggedinUser = useSelector(selectLoggedinUser)
 
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
@@ -51,7 +47,7 @@ const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
                         <SearchIcon />
                     </View>
                     <View>
-                        <Pressable onPress={() => { navigation.navigate(Screens.HOMEPAGE_STACK.NOTFICATIONS) }}>
+                        <Pressable onPress={() => { navigate('Notifications') }}>
                             <NotificationsIcon />
                         </Pressable>
                         <View style={styles.redDotContainer}>
@@ -64,7 +60,7 @@ const Homepage = ({ navigation }: HomepageProps): JSX.Element => {
                 loggedinUser={loggedinUser}
                 setIsFilterMenuOpen={setIsFilterMenuOpen}
             />
-            <HeadLinesFeed headLines={headLines} navigation={navigation} />
+            <HeadLinesFeed headLines={headLines} />
         </SafeAreaView>
     )
 }

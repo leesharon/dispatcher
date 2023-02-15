@@ -20,7 +20,6 @@ const HOMEPAGE_STACK = {
 
 type MainStack = 'Logister' | 'MainTab'
 type MainTab = 'Homepage' | 'Profile' | 'Favorites'
-type Navigation = StackNavigationProp<ParamListBase>
 interface RootStackParamList {
     Logister: undefined
     MainTab: undefined
@@ -38,4 +37,4 @@ interface HomepageStackParamList {
 }
 
 export { ROOT_STACK, MAIN_TAB, HOMEPAGE_STACK }
-export type { MainStack, MainTab, HomepageStackParamList, MainTabsParamsList, Navigation, RootStackParamList }
+export type { MainStack, MainTab, HomepageStackParamList, MainTabsParamsList, RootStackParamList }

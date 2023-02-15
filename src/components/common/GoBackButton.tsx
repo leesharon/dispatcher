@@ -1,19 +1,15 @@
 import { Colors } from 'constants'
-import { View, Text, StyleSheet, Pressable } from "react-native"
+import { StyleSheet, Pressable } from "react-native"
 import { AppText } from './AppText'
 import DropDownIcon from '../../../assets/dropdown.svg'
-import { Navigation } from 'constants/screens'
+import { pop } from 'navigation/RootNavigation'
 
-interface GoBackButtonProps {
-    navigation: Navigation
-}
-
-const GoBackButton = ({ navigation }: GoBackButtonProps): JSX.Element => {
+const GoBackButton = (): JSX.Element => {
 
     return (
         <Pressable
             style={styles.iconsContainer}
-            onPress={() => navigation.pop()}
+            onPress={() => pop()}
         >
             <DropDownIcon />
             <AppText styleProps={styles.goBack}>Back</AppText>
