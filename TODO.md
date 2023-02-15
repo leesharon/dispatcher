@@ -7,3 +7,4 @@ Ask About
 - keyboard logister sreen android bug
 - why after login on android, go back button navigates to profile
 - status bar android not centered ?
+- environment variables
