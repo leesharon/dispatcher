@@ -6,7 +6,7 @@ import ProfileIcon from 'navigation/assets/profile.svg'
 import ProfileFocusedIcon from 'navigation/assets/profile-focused.svg'
 import FavoritesIcon from 'navigation/assets/favorites.svg'
 import FavoritesFocusedIcon from 'navigation/assets/favorites-focused.svg'
-import { Colors } from 'constants'
+import { Colors, Constants } from 'constants'
 import { ProfileTab } from 'features/profile/components/ProfileTab'
 import { FavortiesTab } from 'features/favorites/components/FavoritesTab'
 import { HomepageStack } from 'features/homepage/components/HomepageStack'
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     mainTabNavigation: {
         height: 68,
         backgroundColor: Colors.BLUE800,
-        paddingBottom: 18,
+        paddingBottom: Constants.IS_IOS ? 25 : 18,
         paddingTop: 18,
     }
 })
