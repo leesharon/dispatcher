@@ -19,7 +19,7 @@ const HeadLineDetails = ({ route: { params: { id } }, navigation }: HeadLineDeta
     const headLine = headLines?.find((article) => article.id === id)
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container} edges={['left', 'right', 'top']}>
             <ScrollView>
                 <TopBar>
                     <GoBackButton navigation={navigation} />

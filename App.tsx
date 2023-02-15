@@ -11,6 +11,8 @@ import { login } from 'features/authentication/reducers/loggedinUserSlice'
 import { MainTabNavigation } from 'navigation/MainTabNavigation'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { MainStack } from 'constants/screens'
+import { RootStackParamList } from 'models/navigation'
+import { navigationRef } from 'navigation/RootNavigation'
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -38,7 +40,7 @@ const App = () => {
   })
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <View style={styles.statusBar}>
         <StatusBar barStyle="light-content" backgroundColor={Colors.BLUE800} />
       </View>
