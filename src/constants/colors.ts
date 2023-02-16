@@ -15,7 +15,6 @@ const RED500 = '#FF6B57'
 const PURPLE200 = '#F0EEF9'
 const PURPLE500 = '#5858A6'
 
-
 export {
     GRAY100,
     GRAY300,
