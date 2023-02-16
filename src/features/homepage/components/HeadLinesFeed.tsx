@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     lastLoginText: {
         fontSize: 12,
         fontFamily: 'Roboto-Bold',
-        marginRight: 3,
+        marginEnd: 3,
     },
     title: {
         fontSize: 24,

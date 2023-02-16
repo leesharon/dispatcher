@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         flex: 1,
         top: 0,
-        left: 0,
-        right: 0,
+        start: 0,
+        end: 0,
         bottom: 0,
         backgroundColor: 'black',
         opacity: 0.5,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     redDotContainer: {
         position: 'absolute',
         top: -3,
-        right: -1,
+        end: -1,
     },
 })
 
