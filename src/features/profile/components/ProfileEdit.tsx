@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, StyleSheet, Pressable } from "react-native"
+import { View, StyleSheet, Pressable, Image } from "react-native"
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { AppText } from 'components/common/AppText'
 import { GoBackButton } from 'components/common/GoBackButton'
@@ -14,9 +14,11 @@ import { validateEmail } from 'utils/validationUtils'
 import CancelIcon from '../assets/cancel.svg'
 import ApproveIcon from '../assets/approve.svg'
 import { showAlertMessage } from 'utils/userMsgsUtils'
+import FastImage from 'react-native-fast-image'
 
 const ProfileEdit = (): JSX.Element => {
     const loggedinUser = useAppSelector(selectLoggedinUser)
+    console.log('ProfileEdit ~ loggedinUser', loggedinUser)
     const dispatch = useAppDispatch()
 
     const [isEditing, setIsEditing] = useState(false)
@@ -40,9 +42,31 @@ const ProfileEdit = (): JSX.Element => {
         setName(loggedinUser?.displayName || '')
     }
 
-    const onChangeProfilePicture = async () => {
-        setIsChangingProfilePicture(true)
-        // const res = await launchImageLibrary({ mediaType: 'photo' })
+    const onLaunchImgLibrary = () => {
+        launchImageLibrary({ mediaType: 'photo' }, (res) => {
+            if (res.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (res.errorCode) {
+                console.log('ImagePicker Error: ', res.errorCode);
+            } else {
+                console.log(res)
+                loggedinUser &&
+                    res.assets?.length &&
+                    dispatch(updateUser({ ...loggedinUser, photoURL: res.assets[0].uri || null }))
+            }
+        })
+    }
+
+    const onLaunchCamera = () => {
+        launchCamera({ mediaType: 'photo' }, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker')
+            } else if (response.errorCode) {
+                console.log('ImagePicker Error: ', response.errorCode)
+            } else {
+                console.log(response)
+            }
+        })
     }
 
     if (!loggedinUser) return <View>{Strings.MUST_BE_LOGGEDIN}</View>
@@ -59,10 +83,10 @@ const ProfileEdit = (): JSX.Element => {
                         <Header1>Profile Picture</Header1>
                         <AppText styleProps={styles.uploadImgText}>{Strings.UPLOAD_PROFILE_PICTURE}</AppText>
                         <View style={styles.modalBtnsContainer}>
-                            <Pressable>
+                            <Pressable onPress={onLaunchImgLibrary}>
                                 <AppText styleProps={styles.modalBtnText}>Gallery</AppText>
                             </Pressable>
-                            <Pressable>
+                            <Pressable onPress={onLaunchCamera}>
                                 <AppText styleProps={styles.modalBtnText}>Camera</AppText>
                             </Pressable>
                         </View>
@@ -96,9 +120,16 @@ const ProfileEdit = (): JSX.Element => {
                     : <View style={styles.hiddenView} />
                 }
                 <View style={styles.imgContainer}>
-                    <UserIcon />
+                    {loggedinUser.photoURL
+                        // ? <FastImage
+                        //     source={{ uri: loggedinUser.photoURL, priority: FastImage.priority.normal, }}
+                        //     style={{ flex: 1, width: 100, height: 100 }}
+                        // />
+                        ? <View style={{ flex: 1 }}><Image source={{ uri: loggedinUser.photoURL }} style={{ flex: 1 }} /></View>
+                        : <UserIcon />
+                    }
                     {isEditing &&
-                        <Pressable onPress={onChangeProfilePicture}>
+                        <Pressable onPress={() => { setIsChangingProfilePicture(true) }}>
                             <AppText styleProps={styles.editImgText}>
                                 {Strings.EDIT_PROFILE_PICTURE}
                             </AppText>
