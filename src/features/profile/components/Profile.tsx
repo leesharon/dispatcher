@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 1,
+        paddingBottom: 10,
     },
     userIconContainer: {
         justifyContent: 'center',

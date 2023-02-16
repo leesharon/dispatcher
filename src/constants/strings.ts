@@ -8,6 +8,8 @@ const PASSWORD_PLACEHOLDER = 'Password'
 const CONFIRM_PASSWORD_PLACEHOLDER = 'Re-Enter Password'
 const NAME_PLACEHOLDER = 'Your Name'
 
+const EMAIL_EXAMPLE = 'example@gmail.com'
+
 // AUTH ERRORS
 const INVALID_EMAIL_ADDRESS = 'That email address is invalid!'
 const USER_NOT_FOUND = 'No user found with that email address!'
@@ -42,6 +44,7 @@ export {
     NAME_PLACEHOLDER,
     PASSWORD_PLACEHOLDER,
     CONFIRM_PASSWORD_PLACEHOLDER,
+    EMAIL_EXAMPLE,
     INVALID_EMAIL_ADDRESS,
     MUST_BE_LOGGEDIN,
     USER_NOT_FOUND,

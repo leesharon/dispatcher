@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { TextInput, StyleSheet, View, Pressable, Text } from "react-native"
 import { Colors, Fonts } from 'constants/index'
 import Revealed from '../../../assets/revealed.svg'
@@ -21,12 +21,31 @@ interface AppInputProps {
     styleProps?: { marginBottom: number }
     error?: string
     setError?: (error: string) => void
+    isEditable?: boolean
 }
 
-const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType, validate, confirmValidate, styleProps, error, setError }: AppInputProps): JSX.Element => {
+const AppInput = ({
+    value,
+    confirmValue,
+    setValue,
+    placeholderText,
+    isEditable,
+    contentType,
+    validate,
+    confirmValidate,
+    styleProps,
+    error,
+    setError
+}: AppInputProps): JSX.Element => {
 
     const [borderColor, setBorderColor] = useState(Colors.GRAY600)
     const [isRevealed, setIsRevealed] = useState(false)
+
+    const inputFocusRef = useRef<TextInput>(null)
+
+    useEffect(() => {
+        isEditable && inputFocusRef.current?.focus()
+    }, [isEditable])
 
     const handleChange = (text: string) => {
         setValue(text)
@@ -104,6 +123,8 @@ const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType,
                     textContentType={contentType as any}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
+                    editable={isEditable}
+                    focusable={isEditable}
                 />
             </View>
             {error && <Text style={styles.error}>{error}</Text>}
@@ -123,6 +144,9 @@ const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType,
                     textContentType={contentType as any}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
+                    editable={isEditable}
+                    focusable={isEditable}
+                    ref={inputFocusRef}
                 />
             </View>
             {error && <Text style={styles.error}>{error}</Text>}
