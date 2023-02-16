@@ -11,11 +11,12 @@ import TermsIcon from '../assets/terms.svg'
 import LogoutIcon from '../assets/logout.svg'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import { firebaseLogout } from 'utils/firebaseAuthUtils'
+import { push } from 'navigation/RootNavigation'
 
 const menuItems = [
-    { id: 1, text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
-    { id: 2, text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { console.log('TERMS') } },
-    { id: 3, text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
+    { id: '1a', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
+    { id: '2b', text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { push('Terms') } },
+    { id: '3c', text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
 ]
 
 const Profile = (): JSX.Element => {
