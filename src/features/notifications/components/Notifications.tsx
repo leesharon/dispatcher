@@ -39,10 +39,10 @@ const styles = StyleSheet.create({
         color: Colors.BLUE800,
         paddingTop: 12,
         paddingBottom: 20,
-        paddingLeft: 18,
+        paddingStart: 18,
     },
     noNotifications: {
-        paddingLeft: 16,
+        paddingStart: 16,
     }
 })
 

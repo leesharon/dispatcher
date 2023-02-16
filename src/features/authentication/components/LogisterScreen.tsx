@@ -7,7 +7,7 @@ import AppButton from 'components/common/AppButton'
 import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
 import { firebaseLogin, firebaseSignup } from 'utils/firebaseAuthUtils'
 import { showAlertMessage } from 'utils/userMsgsUtils'
-import { Colors, Constants, Strings } from 'constants/index'
+import { Colors, Constants, Fonts, Strings } from 'constants/index'
 import Logo from '../assets/logo.svg'
 import ArrowRight from '../../../../assets/arrow-right.svg'
 
@@ -141,8 +141,8 @@ const styles = StyleSheet.create({
     formTitle: {
         color: Colors.BLUE400,
         fontSize: 24,
-        fontFamily: 'Roboto-Bold',
-        paddingLeft: 10,
+        fontFamily: Fonts.ROBOTO_BOLD,
+        paddingStart: 10,
         paddingBottom: 12,
     },
     formInput: {

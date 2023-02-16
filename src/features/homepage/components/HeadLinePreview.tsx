@@ -1,7 +1,7 @@
 import { View, StyleSheet, Pressable } from "react-native"
 import FastImage from 'react-native-fast-image'
 import AppButton from 'components/common/AppButton'
-import { Colors, Layout } from 'constants'
+import { Colors, Fonts, Layout } from 'constants'
 import { HeadLine } from 'models/headline'
 import { formatDateLong } from 'utils/dateUtils'
 import FavoriteIcon from '../assets/favorite.svg'
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        fontFamily: 'Roboto-Bold',
+        fontFamily: Fonts.ROBOTO_BOLD,
         marginBottom: Layout.MARGIN_BOTTOM_SMALL,
         color: Colors.BLUE1000,
     },

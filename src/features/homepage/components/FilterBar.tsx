@@ -1,7 +1,7 @@
 import { View, StyleSheet, Pressable } from "react-native"
 import SortByIcon from '../assets/sort-by.svg'
 import FilterIcon from '../assets/filter.svg'
-import { Colors, Layout } from 'constants'
+import { Colors, Layout, Fonts } from 'constants'
 import { User } from 'models/user'
 
 interface FilterBarProps {
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingLeft: Layout.PADDING_HORIZONTAL,
-        paddingRight: 12,
+        paddingStart: Layout.PADDING_HORIZONTAL,
+        paddingEnd: 12,
         height: 44,
         backgroundColor: 'white',
         borderWidth: 1,

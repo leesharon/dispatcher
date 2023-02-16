@@ -9,7 +9,7 @@ const GoBackButton = (): JSX.Element => {
     return (
         <Pressable
             style={styles.iconsContainer}
-            onPress={() => pop()}
+            onPress={pop}
         >
             <DropDownIcon />
             <AppText styleProps={styles.goBack}>Back</AppText>
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     goBack: {
         color: Colors.GRAY700,
         fontSize: 16,
-        marginLeft: 8,
+        marginStart: 8,
     },
 })
 

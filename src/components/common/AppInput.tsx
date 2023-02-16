@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { TextInput, StyleSheet, View, Pressable, Text } from "react-native"
-import { Colors } from 'constants/index'
+import { Colors, Fonts } from 'constants/index'
 import Revealed from '../../../assets/revealed.svg'
 import Hidden from '../../../assets/hidden.svg'
 
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         height: 44,
         width: '100%',
-        fontFamily: 'Roboto-Regular',
+        fontFamily: Fonts.ROBOTO_REGULAR,
         paddingHorizontal: 16,
         paddingVertical: 12,
         fontSize: 16,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
         lineHeight: 16,
         fontWeight: '400',
-        fontFamily: 'Roboto-Regular',
+        fontFamily: Fonts.ROBOTO_REGULAR,
         position: 'absolute',
         top: 44,
     }
