@@ -1,5 +1,4 @@
 Todo's
-- paddingstart paddingend all over
 - modify all payloads types
 - android splash screen
 - type for actions in all slices - שPayloadAction

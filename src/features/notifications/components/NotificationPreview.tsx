@@ -17,7 +17,7 @@ const NotificationPreview = ({ notification }: NotificationPreviewProps): JSX.El
     const dispath = useAppDispatch()
 
     const onNotificationClick = () => {
-        notification.isUnread && dispath(markNotificationAsRead(notification.id))
+        notification.isUnread && dispath(markNotificationAsRead({ id: notification.id }))
         push('HeadlineDetails', { id: notification.headLineId })
     }
 

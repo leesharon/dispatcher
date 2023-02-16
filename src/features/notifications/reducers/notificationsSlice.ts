@@ -1,5 +1,5 @@
 import { Notification } from 'models/notification'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { generateNewNotifcation } from 'utils/notificationsUtils'
 import { Strings } from 'constants'
 
@@ -15,11 +15,11 @@ const notificationsSlice = createSlice({
     name: 'notifications',
     initialState,
     reducers: {
-        markNotificationAsRead: (state, action) => {
+        markNotificationAsRead: (state, action: PayloadAction<{ id: string }>) => {
             const { notifications } = state
 
             let updatedNotifications: Notification[]
-            const index = notifications.findIndex(notification => notification.id === action.payload)
+            const index = notifications.findIndex(notification => notification.id === action.payload.id)
             if (index === -1) updatedNotifications = notifications
             else updatedNotifications = [
                 ...notifications.slice(0, index),
@@ -28,8 +28,8 @@ const notificationsSlice = createSlice({
             ]
             state.notifications = updatedNotifications
         },
-        addNotification: (state, action) => {
-            state.notifications = [generateNewNotifcation(Strings.NOTIFICATION_MSG, action.payload), ...state.notifications]
+        addNotification: (state, action: PayloadAction<{ id: string }>) => {
+            state.notifications = [generateNewNotifcation(Strings.NOTIFICATION_MSG, action.payload.id), ...state.notifications]
         }
     },
 })
