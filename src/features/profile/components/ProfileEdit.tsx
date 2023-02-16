@@ -7,17 +7,19 @@ import { TopBar } from 'components/common/TopBar'
 import { Colors, Layout, Strings } from 'constants'
 import UserIcon from '../assets/user-large.svg'
 import { AppInput, ContentType } from 'components/common/AppInput'
-import { useAppSelector } from 'state/hooks'
-import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { selectLoggedinUser, updateUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { validateEmail } from 'utils/validationUtils'
 import CancelIcon from '../assets/cancel.svg'
 import ApproveIcon from '../assets/approve.svg'
+import { showAlertMessage, showErrorMessage } from 'utils/userMsgsUtils'
 
 interface ProfileEditProps {
 }
 
 const ProfileEdit = ({ }: ProfileEditProps): JSX.Element => {
     const loggedinUser = useAppSelector(selectLoggedinUser)
+    const dispatch = useAppDispatch()
 
     const [isEditing, setIsEditing] = useState(false)
     const [emailError, setEmailError] = useState('')
@@ -25,13 +27,22 @@ const ProfileEdit = ({ }: ProfileEditProps): JSX.Element => {
     const [email, setEmail] = useState(loggedinUser?.email || Strings.EMAIL_EXAMPLE)
 
     const onApprove = () => {
-
+        if (emailError)
+            showAlertMessage(Strings.OH_OH, emailError)
+        else {
+            loggedinUser && dispatch(updateUser({ ...loggedinUser, displayName: name, email }))
+            setIsEditing(false)
+        }
     }
 
     const onCancel = () => {
         setIsEditing(false)
         setEmail(loggedinUser?.email || Strings.EMAIL_EXAMPLE)
         setName(loggedinUser?.displayName || '')
+    }
+
+    const onChangeProfilePicture = () => {
+
     }
 
     if (!loggedinUser) return <View>{Strings.MUST_BE_LOGGEDIN}</View>
@@ -66,6 +77,13 @@ const ProfileEdit = ({ }: ProfileEditProps): JSX.Element => {
                 }
                 <View style={styles.imgContainer}>
                     <UserIcon />
+                    {isEditing &&
+                        <Pressable onPress={onChangeProfilePicture}>
+                            <AppText styleProps={styles.editImgText}>
+                                {Strings.EDIT_PROFILE_PICTURE}
+                            </AppText>
+                        </Pressable>
+                    }
                 </View>
                 <AppText styleProps={styles.inputText}>Name</AppText>
                 <AppInput
@@ -131,6 +149,9 @@ const styles = StyleSheet.create({
     imgContainer: {
         alignItems: 'center',
         paddingBottom: 12,
+    },
+    editImgText: {
+        paddingTop: 10,
     },
     inputText: {
         paddingBottom: 5,

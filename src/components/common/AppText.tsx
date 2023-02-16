@@ -13,6 +13,7 @@ interface AppTextProps {
         paddingStart?: number
         maxWidth?: number | string
         paddingBottm?: number
+        paddingTop?: number
     }
 }
 

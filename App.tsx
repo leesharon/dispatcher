@@ -57,8 +57,8 @@ const App = () => {
             component={MainTabNavigation}
           />
         </Stack.Navigator>
-        <FlashMessage position="top" />
       </SafeAreaProvider>
+      <FlashMessage position="top" />
     </NavigationContainer>
   )
 }

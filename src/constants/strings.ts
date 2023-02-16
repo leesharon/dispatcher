@@ -35,6 +35,7 @@ const EDIT_PROFILE = 'Edit my profile'
 const SETTINGS = 'Settings'
 const TERMS = 'Terms & privacy'
 const LOGOUT = 'Logout'
+const EDIT_PROFILE_PICTURE = 'Tap to change profile picture'
 
 const LOADING_TEXT = 'Loading...'
 
@@ -65,4 +66,5 @@ export {
     SETTINGS,
     TERMS,
     LOGOUT,
+    EDIT_PROFILE_PICTURE,
 }
