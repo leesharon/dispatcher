@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { MainStack } from 'constants/screens'
 import { navigationRef } from 'navigation/RootNavigation'
 import { RootStackParamList } from 'constants/screens'
+import { User } from 'models/user'
 
 const App = () => {
   const Stack = createStackNavigator<RootStackParamList>()
@@ -24,7 +25,7 @@ const App = () => {
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
-    loggedinUser && dispatch(login(loggedinUser.toJSON()))
+    loggedinUser && dispatch(login(loggedinUser.toJSON() as User))
     if (initializing) setInitializing(false)
   }, [dispatch, initializing])
 

@@ -24,7 +24,7 @@ const userSlice = createSlice({
             state.loggedinUser = null
         },
         addFavoriteHeadline: (state, action: PayloadAction<{ id: string }>) => {
-            state.loggedinUser?.favoriteHeadLineIds.push(action.payload)
+            state.loggedinUser?.favoriteHeadLineIds.push(action.payload.id)
         },
         removeFavoriteHeadline: (state, action: PayloadAction<{ id: string }>) => {
             state.loggedinUser &&
