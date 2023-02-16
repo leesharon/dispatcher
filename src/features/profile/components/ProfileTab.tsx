@@ -6,10 +6,17 @@ import { AppText } from 'components/common/AppText'
 import { Colors, Layout, Strings } from 'constants'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import UserIcon from '../assets/user.svg'
-interface ProfileTabProps {
-}
+import SettingsIcon from '../assets/settings.svg'
+import TermsIcon from '../assets/terms.svg'
+import LogoutIcon from '../assets/logout.svg'
 
-const ProfileTab = ({ }: ProfileTabProps): JSX.Element => {
+const menuItems = [
+    { text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
+    { text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { console.log('TERMS') } },
+    { text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: () => { console.log('LOGOUT') } },
+]
+
+const ProfileTab = (): JSX.Element => {
     const loggedinUser = useAppSelector(selectLoggedinUser)
 
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
@@ -29,6 +36,14 @@ const ProfileTab = ({ }: ProfileTabProps): JSX.Element => {
                     <UserIcon />
                 </View>
             </Shadow>
+            <View style={styles.menuContainer}>
+                {menuItems.map((item, index) => (
+                    <View key={index}>
+                        <AppText>{item.text}</AppText>
+                        {item.icon}
+                    </View>
+                ))}
+            </View>
         </SafeAreaView>
     )
 }
@@ -62,6 +77,10 @@ const styles = StyleSheet.create({
     },
     userIconContainer: {
         justifyContent: 'center',
+    },
+    menuContainer: {
+        flex: 1,
+
     },
 })
 
