@@ -7,7 +7,7 @@ import ProfileFocusedIcon from 'navigation/assets/profile-focused.svg'
 import FavoritesIcon from 'navigation/assets/favorites.svg'
 import FavoritesFocusedIcon from 'navigation/assets/favorites-focused.svg'
 import { Colors, Constants } from 'constants'
-import { ProfileTab } from 'features/profile/components/ProfileTab'
+import { ProfileStack } from 'features/profile/components/ProfileStack'
 import { FavortiesTab } from 'features/favorites/components/FavoritesTab'
 import { HomepageStack } from 'features/homepage/components/HomepageStack'
 import { MainTabsParamsList } from 'constants/screens'
@@ -25,8 +25,8 @@ const MainTabNavigation = (): JSX.Element => {
             initialRouteName={'HomepageStack'}
         >
             <Tab.Screen
-                name={'Profile'}
-                component={ProfileTab}
+                name={'ProfileStack'}
+                component={ProfileStack}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return focused ? <ProfileFocusedIcon /> : <ProfileIcon />

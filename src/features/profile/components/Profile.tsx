@@ -10,14 +10,15 @@ import SettingsIcon from '../assets/settings.svg'
 import TermsIcon from '../assets/terms.svg'
 import LogoutIcon from '../assets/logout.svg'
 import { HorizontalLine } from 'components/common/HorizontalLine'
+import { firebaseLogout } from 'utils/firebaseAuthUtils'
 
 const menuItems = [
-    { text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
-    { text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { console.log('TERMS') } },
-    { text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: () => { console.log('LOGOUT') } },
+    { id: 1, text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
+    { id: 2, text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { console.log('TERMS') } },
+    { id: 3, text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
 ]
 
-const ProfileTab = (): JSX.Element => {
+const Profile = (): JSX.Element => {
     const loggedinUser = useAppSelector(selectLoggedinUser)
 
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
@@ -40,7 +41,11 @@ const ProfileTab = (): JSX.Element => {
             <View style={styles.menuContainer}>
                 {menuItems.map((item, index) => (
                     <>
-                        <Pressable key={index} style={[styles.menuItem, (index === 0) && { paddingStart: 2 }]}>
+                        <Pressable
+                            key={item.id}
+                            style={[styles.menuItem, (index === 0) && { paddingStart: 2 }]}
+                            onPress={item.onPress}
+                        >
                             {item.icon}
                             <AppText styleProps={styles.menuItemText}>{item.text}</AppText>
                         </Pressable>
@@ -99,4 +104,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export { ProfileTab }
+export { Profile }

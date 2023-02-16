@@ -25,4 +25,15 @@ const firebaseLogin = (email: string, password: string) => {
         })
 }
 
-export { firebaseSignup, firebaseLogin }
+const firebaseLogout = () => {
+    auth().signOut()
+        .then(() => {
+            console.log('User signed out!')
+        })
+        .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
+            authErrorHandler(error)
+        })
+    resetTo('Logister')
+}
+
+export { firebaseSignup, firebaseLogin, firebaseLogout }

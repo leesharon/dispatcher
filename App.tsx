@@ -10,7 +10,7 @@ import { Colors, Constants, Screens } from 'constants/index'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
 import { MainTabNavigation } from 'navigation/MainTabNavigation'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { MainStack } from 'constants/screens'
+import { RootStack } from 'constants/screens'
 import { navigationRef } from 'navigation/RootNavigation'
 import { RootStackParamList } from 'constants/screens'
 import { User } from 'models/user'
@@ -21,7 +21,7 @@ const App = () => {
   const loggedinUser = useAppSelector(state => state.loggedinUser)
   const dispatch = useAppDispatch()
 
-  const [initialRouteName, setIntialRouteName] = useState<MainStack>(Screens.ROOT_STACK.LOGISTER as MainStack)
+  const [initialRouteName, setIntialRouteName] = useState<RootStack>('Logister')
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
@@ -35,7 +35,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    loggedinUser.loggedinUser && setIntialRouteName(Screens.ROOT_STACK.MAIN_TAB as MainStack)
+    loggedinUser.loggedinUser && setIntialRouteName('MainTab')
   }, [loggedinUser])
 
   return (

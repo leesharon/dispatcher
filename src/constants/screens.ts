@@ -1,21 +1,5 @@
-const ROOT_STACK = {
-    LOGISTER: 'Logister',
-    MAIN_TAB: 'MainTab',
-}
 
-const MAIN_TAB = {
-    HOMEPAGE_STACK: 'HomepageStack',
-    PROFILE: 'Profile',
-    FAVORITES: 'Favorites',
-}
-
-const HOMEPAGE_STACK = {
-    HOMEPAGE: 'Homepage',
-    HEADLINE_DETAILS: 'HeadlineDetails',
-    NOTFICATIONS: 'Notifications',
-}
-
-type MainStack = 'Logister' | 'MainTab'
+type RootStack = 'Logister' | 'MainTab'
 
 type RootStackParamList = {
     Logister: undefined
@@ -24,14 +8,25 @@ type RootStackParamList = {
 
 type MainTabsParamsList = {
     HomepageStack: undefined
-    Profile: undefined
+    ProfileStack: undefined
     Favorites: undefined
 }
+
 type HomepageStackParamList = {
     Homepage: undefined
     HeadlineDetails: { id: string }
     Notifications: undefined
 }
 
-export { ROOT_STACK, MAIN_TAB, HOMEPAGE_STACK }
-export type { MainStack, HomepageStackParamList, MainTabsParamsList, RootStackParamList }
+type ProfileStackParamList = {
+    Profile: undefined
+    Terms: undefined
+}
+
+export type {
+    RootStack,
+    HomepageStackParamList,
+    MainTabsParamsList,
+    RootStackParamList,
+    ProfileStackParamList
+}
