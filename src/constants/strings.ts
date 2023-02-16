@@ -36,6 +36,7 @@ const SETTINGS = 'Settings'
 const TERMS = 'Terms & privacy'
 const LOGOUT = 'Logout'
 const EDIT_PROFILE_PICTURE = 'Tap to change profile picture'
+const UPLOAD_PROFILE_PICTURE = 'Upload new image for your personal Icon'
 
 const LOADING_TEXT = 'Loading...'
 
@@ -67,4 +68,5 @@ export {
     TERMS,
     LOGOUT,
     EDIT_PROFILE_PICTURE,
+    UPLOAD_PROFILE_PICTURE,
 }

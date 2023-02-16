@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { View, StyleSheet, Pressable } from "react-native"
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { AppText } from 'components/common/AppText'
 import { GoBackButton } from 'components/common/GoBackButton'
 import { Header1 } from 'components/common/Header1'
 import { TopBar } from 'components/common/TopBar'
-import { Colors, Layout, Strings } from 'constants'
+import { Colors, Constants, Layout, Strings } from 'constants'
 import UserIcon from '../assets/user-large.svg'
 import { AppInput, ContentType } from 'components/common/AppInput'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
@@ -12,16 +13,14 @@ import { selectLoggedinUser, updateUser } from 'features/authentication/reducers
 import { validateEmail } from 'utils/validationUtils'
 import CancelIcon from '../assets/cancel.svg'
 import ApproveIcon from '../assets/approve.svg'
-import { showAlertMessage, showErrorMessage } from 'utils/userMsgsUtils'
+import { showAlertMessage } from 'utils/userMsgsUtils'
 
-interface ProfileEditProps {
-}
-
-const ProfileEdit = ({ }: ProfileEditProps): JSX.Element => {
+const ProfileEdit = (): JSX.Element => {
     const loggedinUser = useAppSelector(selectLoggedinUser)
     const dispatch = useAppDispatch()
 
     const [isEditing, setIsEditing] = useState(false)
+    const [isChangingProfilePicture, setIsChangingProfilePicture] = useState(false)
     const [emailError, setEmailError] = useState('')
     const [name, setName] = useState(loggedinUser?.displayName || '')
     const [email, setEmail] = useState(loggedinUser?.email || Strings.EMAIL_EXAMPLE)
@@ -41,14 +40,35 @@ const ProfileEdit = ({ }: ProfileEditProps): JSX.Element => {
         setName(loggedinUser?.displayName || '')
     }
 
-    const onChangeProfilePicture = () => {
-
+    const onChangeProfilePicture = async () => {
+        setIsChangingProfilePicture(true)
+        // const res = await launchImageLibrary({ mediaType: 'photo' })
     }
 
     if (!loggedinUser) return <View>{Strings.MUST_BE_LOGGEDIN}</View>
 
     return (
         <View style={styles.container}>
+            {isChangingProfilePicture &&
+                <>
+                    <Pressable
+                        style={styles.backdrop}
+                        onPress={() => setIsChangingProfilePicture(false)}
+                    />
+                    <View style={styles.profilePictureModal}>
+                        <Header1>Profile Picture</Header1>
+                        <AppText styleProps={styles.uploadImgText}>{Strings.UPLOAD_PROFILE_PICTURE}</AppText>
+                        <View style={styles.modalBtnsContainer}>
+                            <Pressable>
+                                <AppText styleProps={styles.modalBtnText}>Gallery</AppText>
+                            </Pressable>
+                            <Pressable>
+                                <AppText styleProps={styles.modalBtnText}>Camera</AppText>
+                            </Pressable>
+                        </View>
+                    </View>
+                </>
+            }
             <TopBar>
                 {!isEditing
                     ? <GoBackButton />
@@ -106,13 +126,51 @@ const ProfileEdit = ({ }: ProfileEditProps): JSX.Element => {
                     isEditable={isEditing}
                 />
             </View>
-        </View>
+        </View >
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    backdrop: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(23, 23, 23, 0.6)',
+        zIndex: 4,
+    },
+    profilePictureModal: {
+        position: 'absolute',
+        top: '33%',
+        left: 16,
+        width: Constants.SCREEN_WIDTH - 32,
+        height: '26%',
+        backgroundColor: 'white',
+        borderRadius: 4,
+        zIndex: 5,
+        paddingHorizontal: 25,
+        paddingTop: 18,
+        paddingBottom: 25,
+    },
+    uploadImgText: {
+        fontSize: 16,
+        maxWidth: '80%',
+        lineHeight: 22,
+    },
+    modalBtnsContainer: {
+        flexDirection: 'row',
+        alignSelf: 'flex-end',
+        marginTop: 'auto',
+    },
+    modalBtnText: {
+        fontWeight: '700',
+        fontSize: 16,
+        color: Colors.BLUE350,
+        marginStart: 25,
     },
     buttonsContainer: {
         flex: 1,
@@ -133,7 +191,7 @@ const styles = StyleSheet.create({
         paddingBottom: 40,
     },
     hiddenView: {
-        height: 80,
+        height: 40,
     },
     editBtn: {
         backgroundColor: Colors.GRAY600,
