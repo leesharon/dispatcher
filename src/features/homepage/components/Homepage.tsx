@@ -31,8 +31,8 @@ const Homepage = (): JSX.Element => {
     }, [notifications])
 
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
-
-    if (!headLines) return <Loader />
+    if (isLoading) return <Loader />
+    if (!headLines) return <AppText>{Strings.GENERAL_ERROR}</AppText>
 
     return (
         <SafeAreaView style={styles.rootContainer}>
