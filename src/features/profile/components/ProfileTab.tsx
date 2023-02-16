@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native"
+import { Pressable, StyleSheet, View } from "react-native"
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Shadow } from 'react-native-shadow-2'
 import { useAppSelector } from 'state/hooks'
@@ -9,6 +9,7 @@ import UserIcon from '../assets/user.svg'
 import SettingsIcon from '../assets/settings.svg'
 import TermsIcon from '../assets/terms.svg'
 import LogoutIcon from '../assets/logout.svg'
+import { HorizontalLine } from 'components/common/HorizontalLine'
 
 const menuItems = [
     { text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
@@ -38,10 +39,13 @@ const ProfileTab = (): JSX.Element => {
             </Shadow>
             <View style={styles.menuContainer}>
                 {menuItems.map((item, index) => (
-                    <View key={index}>
-                        <AppText>{item.text}</AppText>
-                        {item.icon}
-                    </View>
+                    <>
+                        <Pressable key={index} style={[styles.menuItem, (index === 0) && { paddingStart: 2 }]}>
+                            {item.icon}
+                            <AppText styleProps={styles.menuItemText}>{item.text}</AppText>
+                        </Pressable>
+                        {index !== menuItems.length - 1 && <HorizontalLine />}
+                    </>
                 ))}
             </View>
         </SafeAreaView>
@@ -80,7 +84,18 @@ const styles = StyleSheet.create({
     },
     menuContainer: {
         flex: 1,
-
+        paddingTop: 16,
+        paddingHorizontal: Layout.PADDING_HORIZONTAL,
+    },
+    menuItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 8,
+    },
+    menuItemText: {
+        fontSize: 16,
+        color: Colors.BLUE800,
+        paddingStart: 10,
     },
 })
 
