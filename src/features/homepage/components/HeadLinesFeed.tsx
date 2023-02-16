@@ -3,18 +3,18 @@ import { Colors, Layout, Strings } from 'constants'
 import { AppText } from 'components/common/AppText'
 import { HeadLine } from 'models/headline'
 import { HeadLinePreview } from './HeadLinePreview'
+import { User } from 'models/user'
+import { formatDate } from 'utils/dateUtils'
 
 interface HeadLinesFeedProps {
     headLines: HeadLine[]
+    loggedinUser: User
 }
 
-const HeadLinesFeed = ({ headLines }: HeadLinesFeedProps): JSX.Element => {
+const HeadLinesFeed = ({ headLines, loggedinUser }: HeadLinesFeedProps): JSX.Element => {
 
     return (
         <View style={styles.container}>
-            <AppText styleProps={styles.title}>
-                {Strings.HEADLINES_FEED_TITLE}
-            </AppText>
             <FlatList
                 data={headLines}
                 renderItem={({ item }) => <HeadLinePreview
@@ -22,6 +22,19 @@ const HeadLinesFeed = ({ headLines }: HeadLinesFeedProps): JSX.Element => {
                     containerStyle={styles.headLineContainer}
                     imageStyle={styles.headLineImage}
                 />}
+                ListHeaderComponent={
+                    <>
+                        <View style={styles.lastLoginContainer}>
+                            <AppText styleProps={styles.lastLoginText}>Last Login:</AppText>
+                            {loggedinUser.metadata.lastSignInTime && <AppText styleProps={styles.lastLoginText}>
+                                {formatDate(loggedinUser.metadata.lastSignInTime)}
+                            </AppText>}
+                        </View>
+                        <AppText styleProps={styles.title}>
+                            {Strings.HEADLINES_FEED_TITLE}
+                        </AppText>
+                    </>
+                }
             />
         </View>
     )
@@ -30,6 +43,18 @@ const HeadLinesFeed = ({ headLines }: HeadLinesFeedProps): JSX.Element => {
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal: Layout.PADDING_HORIZONTAL,
+        backgroundColor: Colors.BLUE100,
+    },
+    lastLoginContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingTop: 10,
+    },
+    lastLoginText: {
+        fontSize: 12,
+        fontFamily: 'Roboto-Bold',
+        marginRight: 3,
     },
     title: {
         fontSize: 24,

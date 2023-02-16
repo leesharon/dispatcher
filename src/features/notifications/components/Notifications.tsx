@@ -5,9 +5,10 @@ import { GoBackButton } from 'components/common/GoBackButton'
 import { Colors, Strings } from 'constants'
 import { useAppSelector } from 'state/hooks'
 import { NotificationPreview } from './NotificationPreview'
+import { selectNotifications } from '../reducers/notificationsSlice'
 
 const Notifications = (): JSX.Element => {
-    const notifications = useAppSelector(state => state.loggedinUser.loggedinUser?.notifications)
+    const notifications = useAppSelector(selectNotifications)
 
     return (
         <View style={styles.container}>

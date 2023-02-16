@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import loggedinUserReducer from 'features/authentication/reducers/loggedinUserSlice'
+import notificationsReducer from 'features/notifications/reducers/notificationsSlice'
 import { apiSlice } from '../features/api/apiSlice'
 
 export const store = configureStore({
   reducer: {
     loggedinUser: loggedinUserReducer,
+    notifications: notificationsReducer,
     [apiSlice.reducerPath]: apiSlice.reducer
   },
   middleware: getDefaultMiddleware =>

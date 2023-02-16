@@ -6,13 +6,14 @@ import ProfileIcon from 'navigation/assets/profile.svg'
 import ProfileFocusedIcon from 'navigation/assets/profile-focused.svg'
 import FavoritesIcon from 'navigation/assets/favorites.svg'
 import FavoritesFocusedIcon from 'navigation/assets/favorites-focused.svg'
-import { Colors, Screens } from 'constants'
-import { ProfileTab } from 'features/profile/components/ProfileTab'
+import { Colors, Constants } from 'constants'
+import { ProfileStack } from 'features/profile/components/ProfileStack'
 import { FavortiesTab } from 'features/favorites/components/FavoritesTab'
 import { HomepageStack } from 'features/homepage/components/HomepageStack'
+import { MainTabsParamsList } from 'constants/screens'
 
 const MainTabNavigation = (): JSX.Element => {
-    const Tab = createBottomTabNavigator()
+    const Tab = createBottomTabNavigator<MainTabsParamsList>()
 
     return (
         <Tab.Navigator
@@ -21,11 +22,11 @@ const MainTabNavigation = (): JSX.Element => {
                 tabBarShowLabel: false,
                 headerShown: false
             }}
-            initialRouteName={Screens.MAIN_TAB.HOMEPAGE_STACK}
+            initialRouteName={'HomepageStack'}
         >
             <Tab.Screen
-                name={Screens.MAIN_TAB.PROFILE}
-                component={ProfileTab}
+                name={'ProfileStack'}
+                component={ProfileStack}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return focused ? <ProfileFocusedIcon /> : <ProfileIcon />
@@ -33,7 +34,7 @@ const MainTabNavigation = (): JSX.Element => {
                 }}
             />
             <Tab.Screen
-                name={Screens.MAIN_TAB.HOMEPAGE_STACK}
+                name={'HomepageStack'}
                 component={HomepageStack}
                 options={{
                     tabBarIcon: ({ focused }) => {
@@ -42,7 +43,7 @@ const MainTabNavigation = (): JSX.Element => {
                 }}
             />
             <Tab.Screen
-                name={Screens.MAIN_TAB.FAVORITES}
+                name={'Favorites'}
                 component={FavortiesTab}
                 options={{
                     tabBarIcon: ({ focused }) => {
@@ -58,8 +59,9 @@ const styles = StyleSheet.create({
     mainTabNavigation: {
         height: 68,
         backgroundColor: Colors.BLUE800,
-        paddingBottom: 18,
+        paddingBottom: Constants.IS_IOS ? 25 : 18,
         paddingTop: 18,
+        borderTopWidth: 0,
     }
 })
 

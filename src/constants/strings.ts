@@ -26,6 +26,12 @@ const HEADLINES_FEED_TITLE = 'Top Headlines in Israel'
 const NOTIFICATION_MSG = 'Notification text about a new article from a tag you liked, two lines of text.'
 const NO_NOTIFICATIONS = 'You have no new notifications.'
 
+// USER PROFILE
+const EDIT_PROFILE = 'Edit my profile'
+const SETTINGS = 'Settings'
+const TERMS = 'Terms & privacy'
+const LOGOUT = 'Logout'
+
 const LOADING_TEXT = 'Loading...'
 
 export {
@@ -48,4 +54,8 @@ export {
     NOTIFICATION_MSG,
     NO_NOTIFICATIONS,
     LOADING_TEXT,
+    EDIT_PROFILE,
+    SETTINGS,
+    TERMS,
+    LOGOUT,
 }

@@ -1,40 +1,32 @@
-import { ParamListBase } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
 
-const ROOT_STACK = {
-    LOGISTER: 'Logister',
-    MAIN_TAB: 'MainTab',
-}
+type RootStack = 'Logister' | 'MainTab'
 
-const MAIN_TAB = {
-    HOMEPAGE_STACK: 'HomepageStack',
-    PROFILE: 'Profile',
-    FAVORITES: 'Favorites',
-}
-
-const HOMEPAGE_STACK = {
-    HOMEPAGE: 'Homepage',
-    HEADLINE_DETAILS: 'HeadlineDetails',
-    NOTFICATIONS: 'Notifications',
-}
-
-type MainStack = 'Logister' | 'MainTab'
-type MainTab = 'Homepage' | 'Profile' | 'Favorites'
-interface RootStackParamList {
+type RootStackParamList = {
     Logister: undefined
     MainTab: undefined
 }
 
-interface MainTabsParamsList {
+type MainTabsParamsList = {
     HomepageStack: undefined
-    Profile: undefined
+    ProfileStack: undefined
     Favorites: undefined
 }
-interface HomepageStackParamList {
+
+type HomepageStackParamList = {
     Homepage: undefined
     HeadlineDetails: { id: string }
     Notifications: undefined
 }
 
-export { ROOT_STACK, MAIN_TAB, HOMEPAGE_STACK }
-export type { MainStack, MainTab, HomepageStackParamList, MainTabsParamsList, RootStackParamList }
+type ProfileStackParamList = {
+    Profile: undefined
+    Terms: undefined
+}
+
+export type {
+    RootStack,
+    HomepageStackParamList,
+    MainTabsParamsList,
+    RootStackParamList,
+    ProfileStackParamList
+}
