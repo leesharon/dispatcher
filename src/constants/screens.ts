@@ -21,6 +21,7 @@ type HomepageStackParamList = {
 type ProfileStackParamList = {
     Profile: undefined
     Terms: undefined
+    ProfileEdit: undefined
 }
 
 export type {

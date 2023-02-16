@@ -1,5 +1,6 @@
 import { AppText } from 'components/common/AppText'
 import { GoBackButton } from 'components/common/GoBackButton'
+import { Header1 } from 'components/common/Header1'
 import { TopBar } from 'components/common/TopBar'
 import { Colors, Layout, Strings } from 'constants'
 import { View, StyleSheet } from "react-native"
@@ -15,7 +16,7 @@ const Terms = ({ }: TermsProps): JSX.Element => {
                 <GoBackButton />
             </TopBar>
             <View style={styles.contentContainer}>
-                <AppText styleProps={styles.header}>Terms & Privacy</AppText>
+                <Header1>Terms & Privacy</Header1>
                 <AppText styleProps={styles.paragraph}>{Strings.LOREM}</AppText>
                 <AppText>{Strings.LOREM}</AppText>
             </View>
@@ -30,12 +31,6 @@ const styles = StyleSheet.create({
     contentContainer: {
         paddingHorizontal: Layout.PADDING_HORIZONTAL,
         paddingVertical: Layout.PADDING_HORIZONTAL,
-    },
-    header: {
-        fontSize: 24,
-        color: Colors.BLUE800,
-        fontWeight: '500',
-        paddingBottom: 12,
     },
     paragraph: {
         marginBottom: 12,
