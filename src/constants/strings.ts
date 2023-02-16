@@ -6,6 +6,7 @@ const LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem na
 const EMAIL_PLACEHOLDER = 'Your Email'
 const PASSWORD_PLACEHOLDER = 'Password'
 const CONFIRM_PASSWORD_PLACEHOLDER = 'Re-Enter Password'
+const NAME_PLACEHOLDER = 'Your Name'
 
 // AUTH ERRORS
 const INVALID_EMAIL_ADDRESS = 'That email address is invalid!'
@@ -38,6 +39,7 @@ const LOADING_TEXT = 'Loading...'
 export {
     LOREM,
     EMAIL_PLACEHOLDER,
+    NAME_PLACEHOLDER,
     PASSWORD_PLACEHOLDER,
     CONFIRM_PASSWORD_PLACEHOLDER,
     INVALID_EMAIL_ADDRESS,

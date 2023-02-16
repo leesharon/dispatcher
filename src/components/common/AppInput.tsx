@@ -19,8 +19,8 @@ interface AppInputProps {
     validate?: (value: string) => string | false
     confirmValidate?: (value: string, confirmValue: string) => string | false
     styleProps?: { marginBottom: number }
-    error: string
-    setError: (error: string) => void
+    error?: string
+    setError?: (error: string) => void
 }
 
 const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType, validate, confirmValidate, styleProps, error, setError }: AppInputProps): JSX.Element => {
@@ -36,10 +36,10 @@ const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType,
         else if (validate) res = validate(text)
 
         if (!res && error) {
-            setError('')
+            setError && setError('')
             setBorderColor(Colors.BLUE800)
         } else if (res) {
-            setError(res)
+            setError && setError(res)
             setBorderColor(Colors.RED500)
         }
     }
@@ -55,11 +55,11 @@ const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType,
         else if (validate) res = validate(value)
 
         if (res) {
-            setError(res)
+            setError && setError(res)
             setBorderColor(Colors.RED500)
         }
         else {
-            setError('')
+            setError && setError('')
             setBorderColor(Colors.GRAY600)
         }
     }
@@ -101,6 +101,25 @@ const AppInput = ({ value, confirmValue, setValue, placeholderText, contentType,
                     placeholderTextColor={Colors.BLUE400}
                     secureTextEntry={false}
                     keyboardType="email-address"
+                    textContentType={contentType as any}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+            </View>
+            {error && <Text style={styles.error}>{error}</Text>}
+        </View>
+    )
+
+    else if (contentType === ContentType.TEXT) return (
+        <View style={styleProps}>
+            <View>
+                <TextInput
+                    style={[styles.input, { borderColor }]}
+                    onChangeText={handleChange}
+                    value={value}
+                    placeholder={placeholderText}
+                    placeholderTextColor={Colors.BLUE400}
+                    secureTextEntry={false}
                     textContentType={contentType as any}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
