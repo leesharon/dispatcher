@@ -2,7 +2,7 @@ import { View, StyleSheet, Pressable } from "react-native"
 import SortByIcon from '../assets/sort-by.svg'
 import FilterIcon from '../assets/filter.svg'
 import { formatDate } from 'utils/dateUtils'
-import { Colors, Layout } from 'constants'
+import { Colors, Fonts, Layout } from 'constants'
 import { AppText } from 'components/common/AppText'
 import { User } from 'models/user'
 
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingLeft: Layout.PADDING_HORIZONTAL,
-        paddingRight: 12,
+        paddingStart: Layout.PADDING_HORIZONTAL,
+        paddingEnd: 12,
         height: 44,
         backgroundColor: 'white',
         borderWidth: 1,
@@ -54,12 +54,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 10,
-        paddingLeft: Layout.PADDING_HORIZONTAL,
+        paddingStart: Layout.PADDING_HORIZONTAL,
     },
     lastLoginText: {
         fontSize: 12,
-        fontFamily: 'Roboto-Bold',
-        marginRight: 3,
+        fontFamily: Fonts.ROBOTO_BOLD,
+        marginEnd: 3,
     }
 })
 

@@ -1,3 +1,4 @@
+import { Fonts } from 'constants'
 import { ReactNode } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { SvgProps } from 'react-native-svg'
@@ -50,14 +51,14 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         fontSize: 14,
-        fontFamily: 'Roboto-Regular',
+        fontFamily: Fonts.ROBOTO_REGULAR,
         fontWeight: '500',
     },
     pressed: {
         opacity: 0.85,
     },
     arrowImage: {
-        marginLeft: 8,
+        marginStart: 8,
     }
 })
 

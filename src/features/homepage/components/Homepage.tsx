@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     iconContainer: {
-        marginRight: 20,
+        marginEnd: 20,
     },
     redDotContainer: {
         position: 'absolute',

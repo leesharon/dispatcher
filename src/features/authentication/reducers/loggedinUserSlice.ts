@@ -1,5 +1,5 @@
 import { Notification } from 'models/notification';
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Strings } from 'constants'
 import { User } from 'models/user'
 import { generateNewNotifcation } from 'utils/notificationsUtils'
@@ -16,31 +16,31 @@ const userSlice = createSlice({
     name: 'loggedinUser',
     initialState,
     reducers: {
-        login: (state, action) => {
-            if (!action.payload.favoriteHeadLines) action.payload.favoriteHeadLineIds = []
+        login: (state, action: PayloadAction<User>) => {
+            if (!action.payload.favoriteHeadLineIds) action.payload.favoriteHeadLineIds = []
             if (!action.payload.notifications) action.payload.notifications = []
             state.loggedinUser = action.payload
         },
         logout: state => {
             state.loggedinUser = null
         },
-        addFavoriteHeadline: (state, action) => {
-            state.loggedinUser?.favoriteHeadLineIds.push(action.payload)
+        addFavoriteHeadline: (state, action: PayloadAction<{ id: string }>) => {
+            state.loggedinUser?.favoriteHeadLineIds.push(action.payload.id)
             state.loggedinUser?.notifications
-                .push(generateNewNotifcation(Strings.NOTIFICATION_MSG, action.payload))
+                .push(generateNewNotifcation(Strings.NOTIFICATION_MSG, action.payload.id))
         },
-        removeFavoriteHeadline: (state, action) => {
+        removeFavoriteHeadline: (state, action: PayloadAction<{ id: string }>) => {
             state.loggedinUser &&
                 (state.loggedinUser.favoriteHeadLineIds = state.loggedinUser.favoriteHeadLineIds.filter(
-                    headLineId => headLineId !== action.payload
+                    headLineId => headLineId !== action.payload.id
                 ))
         },
-        markNotificationAsRead: (state, action) => {
+        markNotificationAsRead: (state, action: PayloadAction<{ id: string }>) => {
             if (!state.loggedinUser) return
             const { notifications } = state.loggedinUser
 
             let updatedNotifications: Notification[]
-            const index = notifications.findIndex(notification => notification.id === action.payload);
+            const index = notifications.findIndex(notification => notification.id === action.payload.id);
             if (index === -1) updatedNotifications = notifications
             else updatedNotifications = [
                 ...notifications.slice(0, index),
