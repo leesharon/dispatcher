@@ -7,18 +7,16 @@ import AppButton from 'components/common/AppButton'
 import { validateConfirmPassword, validateEmail, validatePassword } from 'utils/validationUtils'
 import { firebaseLogin, firebaseSignup } from 'utils/firebaseAuthUtils'
 import { showAlertMessage } from 'utils/userMsgsUtils'
-import { Colors, Constants, Strings } from 'constants/index'
+import { Colors, Constants, Fonts, Strings } from 'constants/index'
 import Logo from '../assets/logo.svg'
 import ArrowRight from '../../../../assets/arrow-right.svg'
-interface LogisterScreenProps {
-}
 
 enum Status {
     LOGIN = 'Login',
     SIGNUP = 'Signup',
 }
 
-const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
+const LogisterScreen = (): JSX.Element => {
 
     const [status, setStatus] = useState<Status>(Status.SIGNUP)
 
@@ -33,19 +31,23 @@ const LogisterScreen = ({ }: LogisterScreenProps): JSX.Element => {
 
     const onSignup = () => {
         if (!isFormValid())
-            showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
-        else firebaseSignup(email, password)
+            showAlertMessage(Strings.OH_OH, Strings.FORM_ERROR)
+        else
+            firebaseSignup(email, password)
     }
 
     const onLogin = () => {
         if (!isFormValid())
-            showAlertMessage('Oh oh!', 'Please fill out the form correctly.')
-        else firebaseLogin(email, password)
+            showAlertMessage(Strings.OH_OH, Strings.FORM_ERROR)
+        else
+            firebaseLogin(email, password)
     }
 
     const isFormValid = () => {
-        if (status === Status.LOGIN) return email && password && !emailError && !passwordError
-        else return email && password && confirmPassword && !emailError && !passwordError && !confirmPasswordError
+        if (status === Status.LOGIN)
+            return email && password && !emailError && !passwordError
+        else
+            return email && password && confirmPassword && !emailError && !passwordError && !confirmPasswordError
     }
 
     const btnInnerContainerStyle = { backgroundColor: (isFormValid()) ? Colors.BLUE500 : Colors.BLUE300 }
@@ -151,8 +153,8 @@ const styles = StyleSheet.create({
     formTitle: {
         color: Colors.BLUE400,
         fontSize: 24,
-        fontFamily: 'Roboto-Bold',
-        paddingLeft: 10,
+        fontFamily: Fonts.ROBOTO_BOLD,
+        paddingStart: 10,
         paddingBottom: 12,
     },
     formInput: {

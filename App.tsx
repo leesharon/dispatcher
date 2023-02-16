@@ -1,23 +1,29 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { StatusBar, StyleSheet } from 'react-native'
+import { StatusBar, StyleSheet, View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import FlashMessage from "react-native-flash-message"
-import { useDispatch, useSelector } from 'react-redux'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
-import { HomePageScreen } from './src/features/homepage/components/HomePageScreen'
-import { Colors, Constants } from 'constants/index'
-import { login, selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
-import { firebaseLogin } from 'utils/firebaseAuthUtils'
+import { Colors, Constants, Screens } from 'constants/index'
+import { login } from 'features/authentication/reducers/loggedinUserSlice'
+import { MainTabNavigation } from 'navigation/MainTabNavigation'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { MainStack } from 'constants/screens'
+import { navigationRef } from 'navigation/RootNavigation'
 
 const App = () => {
-  const loggedinUser = useSelector(selectLoggedinUser)
-  const dispatch = useDispatch()
+  const Stack = createStackNavigator()
 
+  const loggedinUser = useAppSelector(state => state.loggedinUser)
+  const dispatch = useAppDispatch()
+
+  const [initialRouteName, setIntialRouteName] = useState<MainStack>(Screens.ROOT_STACK.LOGISTER as MainStack)
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
-    dispatch(login(loggedinUser?.toJSON()))
+    loggedinUser && dispatch(login(loggedinUser.toJSON()))
     if (initializing) setInitializing(false)
   }, [dispatch, initializing])
 
@@ -26,12 +32,32 @@ const App = () => {
     return subscriber
   }, [])
 
+  useEffect(() => {
+    loggedinUser.loggedinUser && setIntialRouteName(Screens.ROOT_STACK.MAIN_TAB as MainStack)
+  }, [loggedinUser])
+
   return (
-    <SafeAreaProvider style={styles.rootContainer}>
-      {/* <LogisterScreen /> */}
-      {loggedinUser && <HomePageScreen loggedinUser={loggedinUser} />}
-      <FlashMessage position="top" />
-    </SafeAreaProvider>
+    <NavigationContainer ref={navigationRef} >
+      <View style={styles.statusBar}>
+        <StatusBar barStyle="light-content" backgroundColor={Colors.BLUE800} />
+      </View>
+      <SafeAreaProvider style={styles.rootContainer}>
+        <Stack.Navigator
+          initialRouteName={initialRouteName}
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen
+            name={Screens.ROOT_STACK.LOGISTER}
+            component={LogisterScreen}
+          />
+          <Stack.Screen
+            name={Screens.ROOT_STACK.MAIN_TAB}
+            component={MainTabNavigation}
+          />
+        </Stack.Navigator>
+        <FlashMessage position="top" />
+      </SafeAreaProvider>
+    </NavigationContainer>
   )
 }
 
@@ -43,6 +69,7 @@ const styles = StyleSheet.create({
   },
   statusBar: {
     backgroundColor: Colors.BLUE800,
+    height: Constants.STATUS_BAR_HEIGHT,
   },
 })
 

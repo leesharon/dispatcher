@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { HeadLine } from 'models/HeadLine'
+import { HeadLine } from 'models/headline'
 import headLines from '../../../data/news-us.json'
 
 // TYPESCRIPT

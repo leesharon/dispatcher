@@ -1,62 +1,99 @@
-import AppButton from 'components/common/AppButton'
-import { Colors, Layout } from 'constants'
-import { HeadLine } from 'models/HeadLine'
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Pressable } from "react-native"
 import FastImage from 'react-native-fast-image'
+import AppButton from 'components/common/AppButton'
+import { Colors, Fonts, Layout } from 'constants'
+import { HeadLine } from 'models/headline'
 import { formatDateLong } from 'utils/dateUtils'
 import FavoriteIcon from '../assets/favorite.svg'
+import FavoriteStarredIcon from '../assets/favorite-starred.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
 import { AppText } from 'components/common/AppText'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
+import { useMemo } from 'react'
+import { navigate } from 'navigation/RootNavigation'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
+    isDetails?: boolean
+    containerStyle?: {
+        backgroundColor?: string
+        borderRadius?: number
+        borderWidth?: number
+        borderColor?: string
+        shadowColor?: string
+        shadowOffset?: {
+            width?: number
+            height?: number
+        }
+        shadowOpacity?: number
+        shadowRadius?: number
+        marginBottom?: number
+        paddingBottom?: number
+    } | {}
+    imageStyle?: {
+        borderTopLeftRadius: number
+        borderTopRightRadius: number
+    } | {}
 }
 
-const HeadLinePreview = ({ headLine }: HeadLinePreviewProps): JSX.Element => {
+const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle = {} }: HeadLinePreviewProps): JSX.Element => {
+    const dispatch = useAppDispatch()
+    const loggedInUser = useAppSelector(selectLoggedinUser)
 
-    const renderHeader = () => (
-        <>
-            <FavoriteIcon style={styles.favoriteIcon} />
-            <FastImage
-                style={styles.image}
-                source={{ uri: headLine.urlToImage, priority: FastImage.priority.normal, }}
-            />
-        </>
-    )
+    const onPressDispatch = () => {
+        navigate('HeadlineDetails', { id: headLine.id })
+    }
 
-    const renderContent = () => (
-        <>
-            <View style={styles.infoLine}>
-                <AppText styleProps={styles.lightText}>{formatDateLong(headLine.publishedAt)}</AppText>
-            </View>
-            <AppText styleProps={styles.title}>{headLine.title}</AppText>
-            <AppText styleProps={styles.lightText}>
-                {headLine.author && headLine.author + ', ' + headLine.source.name}
-            </AppText>
-            <AppText styleProps={styles.content}>
-                {headLine.content && headLine.content.substring(0, headLine.content.length - 13)}
-            </AppText>
-        </>
-    )
+    const onToggleFavorite = () => {
+        if (!isStarred) {
+            dispatch({ type: 'loggedinUser/addFavoriteHeadline', payload: { id: headLine.id } })
+        }
+        else
+            dispatch({ type: 'loggedinUser/removeFavoriteHeadline', payload: { id: headLine.id } })
+    }
 
-    const renderButton = () => (
-        <AppButton
-            onPress={() => { console.log('Dispatch!!!'); }}
-            innerContainerStyle={styles.buttonInnerContainer}
-            icon={<ArrowRightIcon />}
-            iconStyle={{ position: 'absolute', right: 30 }}
-            textStyle={{ position: 'relative', right: 15 }}
-        >
-            NAVIGATE TO DISPATCH
-        </AppButton>
+    const isStarred = useMemo(
+        () => loggedInUser?.favoriteHeadLineIds?.includes(headLine.id),
+        [loggedInUser?.favoriteHeadLineIds]
     )
 
     return (
-        <View style={styles.headLineContainer}>
-            {renderHeader()}
+        <View style={[styles.headLineContainer, containerStyle]}>
+            <Pressable style={styles.favoriteIcon} onPress={onToggleFavorite}>
+                {isStarred ? <FavoriteStarredIcon /> : <FavoriteIcon />}
+            </Pressable>
+            <FastImage
+                style={[styles.image, imageStyle]}
+                source={{ uri: headLine.urlToImage, priority: FastImage.priority.normal, }}
+            />
             <View style={styles.headLineContent}>
-                {renderContent()}
-                {renderButton()}
+
+                <View style={styles.infoLine}>
+                    <AppText styleProps={styles.lightText}>{formatDateLong(headLine.publishedAt)}</AppText>
+                </View>
+                <AppText styleProps={styles.title}>{headLine.title}</AppText>
+                <AppText styleProps={styles.lightText}>
+                    {headLine.author && headLine.author + ', ' + headLine.source.name}
+                </AppText>
+                <AppText styleProps={styles.content}>
+                    {headLine.content &&
+                        (isDetails
+                            ? (headLine.content.substring(0, headLine.content.length - 13)).repeat(10)
+                            : headLine.content.substring(0, headLine.content.length - 13)
+                        )
+                    }
+                </AppText>
+
+                {!isDetails && <AppButton
+                    onPress={onPressDispatch}
+                    innerContainerStyle={styles.buttonInnerContainer}
+                    icon={<ArrowRightIcon />}
+                    iconStyle={{ position: 'absolute', right: 30 }}
+                    textStyle={{ position: 'relative', right: 15 }}
+                >
+                    NAVIGATE TO DISPATCH
+                </AppButton>}
             </View>
         </View>
     )
@@ -65,20 +102,11 @@ const HeadLinePreview = ({ headLine }: HeadLinePreviewProps): JSX.Element => {
 const styles = StyleSheet.create({
     headLineContainer: {
         backgroundColor: 'white',
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: Colors.GRAY600,
-        shadowColor: 'rgba(0, 0, 0, 0.05)',
-        shadowOffset: { width: 0, height: 32 },
-        shadowOpacity: 1,
-        shadowRadius: 64,
-        marginBottom: Layout.MARGIN_BOTTOM_LARGE,
         paddingBottom: 12,
+        flex: 1
     },
     image: {
         height: 150,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
         marginBottom: Layout.MARGIN_BOTTOM_SMALL,
     },
     favoriteIcon: {
@@ -101,7 +129,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        fontFamily: 'Roboto-Bold',
+        fontFamily: Fonts.ROBOTO_BOLD,
         marginBottom: Layout.MARGIN_BOTTOM_SMALL,
         color: Colors.BLUE1000,
     },
