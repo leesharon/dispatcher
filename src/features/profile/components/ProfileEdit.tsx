@@ -48,6 +48,7 @@ const ProfileEdit = (): JSX.Element => {
         setIsEditing(false)
         setEmail(loggedinUser?.email || Strings.EMAIL_EXAMPLE)
         setName(loggedinUser?.displayName || '')
+        setProfilePicture(loggedinUser?.photoURL || null)
     }
 
     const onLaunchImgLibrary = () => {

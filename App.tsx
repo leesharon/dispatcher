@@ -40,7 +40,8 @@ const App = () => {
   }, [loggedinUser])
 
   useEffect(() => {
-    SplashScreen.hide(); //hides the splash screen on app load.
+    //hides the splash screen on app load
+    SplashScreen.hide()
   }, [])
 
   return (
