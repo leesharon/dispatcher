@@ -43,16 +43,17 @@ const ProfileEdit = (): JSX.Element => {
     }
 
     const onLaunchImgLibrary = () => {
-        launchImageLibrary({ mediaType: 'photo' }, (res) => {
-            if (res.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (res.errorCode) {
-                console.log('ImagePicker Error: ', res.errorCode);
-            } else {
+        launchImageLibrary({ mediaType: 'photo', maxWidth: 200, maxHeight: 200 }, (res) => {
+            if (res.didCancel)
+                console.log('User cancelled image picker')
+            else if (res.errorCode)
+                console.log('ImagePicker Error: ', res.errorCode)
+            else {
                 console.log(res)
                 loggedinUser &&
                     res.assets?.length &&
                     dispatch(updateUser({ ...loggedinUser, photoURL: res.assets[0].uri || null }))
+                setIsChangingProfilePicture(false)
             }
         })
     }
@@ -73,6 +74,7 @@ const ProfileEdit = (): JSX.Element => {
 
     return (
         <View style={styles.container}>
+            {/* Modal */}
             {isChangingProfilePicture &&
                 <>
                     <Pressable
@@ -121,11 +123,16 @@ const ProfileEdit = (): JSX.Element => {
                 }
                 <View style={styles.imgContainer}>
                     {loggedinUser.photoURL
-                        // ? <FastImage
-                        //     source={{ uri: loggedinUser.photoURL, priority: FastImage.priority.normal, }}
-                        //     style={{ flex: 1, width: 100, height: 100 }}
-                        // />
-                        ? <View style={{ flex: 1 }}><Image source={{ uri: loggedinUser.photoURL }} style={{ flex: 1 }} /></View>
+                        ? <View style={{ flex: 1, width: '100%', height: 100 }}>
+                            {/* <Image
+                                source={{ uri: loggedinUser.photoURL }}
+                                style={{ flex: 1, height: '100%', width: '100%' }}
+                            /> */}
+                            <FastImage
+                                source={{ uri: loggedinUser.photoURL, priority: FastImage.priority.normal, }}
+                                style={{ flex: 1, width: '100%', height: '100%' }}
+                            />
+                        </View>
                         : <UserIcon />
                     }
                     {isEditing &&
@@ -238,6 +245,7 @@ const styles = StyleSheet.create({
     imgContainer: {
         alignItems: 'center',
         paddingBottom: 12,
+        height: 200,
     },
     editImgText: {
         paddingTop: 10,

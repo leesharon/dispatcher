@@ -15,9 +15,9 @@ import { push } from 'navigation/RootNavigation'
 import { Header1 } from 'components/common/Header1'
 
 const menuItems = [
-    { id: '1a', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
-    { id: '2b', text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { push('Terms') } },
-    { id: '3c', text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
+    { id: '1aqads123', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
+    { id: '2basdASA2', text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { push('Terms') } },
+    { id: '3casd@@!!!', text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
 ]
 
 const Profile = (): JSX.Element => {
@@ -44,7 +44,7 @@ const Profile = (): JSX.Element => {
             </Shadow>
             <View style={styles.menuContainer}>
                 {menuItems.map((item, index) => (
-                    <>
+                    <View key={item.id}>
                         <Pressable
                             key={item.id}
                             style={[styles.menuItem, (index === 0) && { paddingStart: 2 }]}
@@ -54,10 +54,10 @@ const Profile = (): JSX.Element => {
                             <AppText styleProps={styles.menuItemText}>{item.text}</AppText>
                         </Pressable>
                         {index !== menuItems.length - 1 && <HorizontalLine />}
-                    </>
+                    </View>
                 ))}
             </View>
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 
