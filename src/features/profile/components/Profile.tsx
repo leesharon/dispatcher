@@ -15,7 +15,7 @@ import { push } from 'navigation/RootNavigation'
 import { Header1 } from 'components/common/Header1'
 
 const menuItems = [
-    { id: '1aqads123', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
+    { id: '1aqads123', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { push('Settings') } },
     { id: '2basdASA2', text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { push('Terms') } },
     { id: '3casd@@!!!', text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
 ]

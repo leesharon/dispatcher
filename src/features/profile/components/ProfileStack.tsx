@@ -4,6 +4,7 @@ import { ProfileStackParamList } from 'constants/screens'
 import { Profile } from './Profile'
 import { Terms } from './Terms'
 import { ProfileEdit } from './ProfileEdit'
+import { Settings } from './Settings'
 
 const ProfileStack = (): JSX.Element => {
     const Stack = createStackNavigator<ProfileStackParamList>()
@@ -24,6 +25,10 @@ const ProfileStack = (): JSX.Element => {
             <Stack.Screen
                 name={'ProfileEdit'}
                 component={ProfileEdit}
+            />
+            <Stack.Screen
+                name={'Settings'}
+                component={Settings}
             />
         </Stack.Navigator>
     )
