@@ -26,12 +26,20 @@ const ProfileEdit = (): JSX.Element => {
     const [emailError, setEmailError] = useState('')
     const [name, setName] = useState(loggedinUser?.displayName || '')
     const [email, setEmail] = useState(loggedinUser?.email || Strings.EMAIL_EXAMPLE)
+    const [profilePicture, setProfilePicture] = useState(loggedinUser?.photoURL || null)
 
     const onApprove = () => {
         if (emailError)
             showAlertMessage(Strings.OH_OH, emailError)
         else {
-            loggedinUser && dispatch(updateUser({ ...loggedinUser, displayName: name, email }))
+            loggedinUser && dispatch(updateUser(
+                {
+                    ...loggedinUser,
+                    displayName: name,
+                    email,
+                    photoURL: profilePicture
+                }
+            ))
             setIsEditing(false)
         }
     }
@@ -52,20 +60,24 @@ const ProfileEdit = (): JSX.Element => {
                 console.log(res)
                 loggedinUser &&
                     res.assets?.length &&
-                    dispatch(updateUser({ ...loggedinUser, photoURL: res.assets[0].uri || null }))
+                    setProfilePicture(res.assets[0].uri || null)
                 setIsChangingProfilePicture(false)
             }
         })
     }
 
     const onLaunchCamera = () => {
-        launchCamera({ mediaType: 'photo' }, (response) => {
-            if (response.didCancel) {
+        launchCamera({ mediaType: 'photo' }, (res) => {
+            if (res.didCancel) {
                 console.log('User cancelled image picker')
-            } else if (response.errorCode) {
-                console.log('ImagePicker Error: ', response.errorCode)
+            } else if (res.errorCode) {
+                console.log('ImagePicker Error: ', res.errorCode)
             } else {
-                console.log(response)
+                console.log(res)
+                loggedinUser &&
+                    res.assets?.length &&
+                    setProfilePicture(res.assets[0].uri || null)
+                setIsChangingProfilePicture(false)
             }
         })
     }
@@ -106,18 +118,21 @@ const ProfileEdit = (): JSX.Element => {
                     </View>
                     : <View style={styles.hiddenView} />
                 }
-                <View style={styles.imgContainer}>
-                    {loggedinUser.photoURL
-                        ? <View style={{ flex: 1, width: '100%', height: 100 }}>
+                <View style={styles.editImgContainer}>
+                    <View style={styles.imgContainer}>
+                        {profilePicture
+                            ?
                             <FastImage
-                                source={{ uri: loggedinUser.photoURL, priority: FastImage.priority.normal, }}
-                                style={{ flex: 1, width: '100%', height: '100%' }}
+                                source={{ uri: profilePicture, priority: FastImage.priority.normal, }}
+                                style={{ width: 100, height: 100, borderRadius: 50, }}
                             />
-                        </View>
-                        : <UserIcon />
-                    }
+                            : <UserIcon />
+                        }
+                    </View>
                     {isEditing &&
-                        <Pressable onPress={() => { setIsChangingProfilePicture(true) }}>
+                        <Pressable
+                            onPress={() => { setIsChangingProfilePicture(true) }}
+                        >
                             <AppText styleProps={styles.editImgText}>
                                 {Strings.EDIT_PROFILE_PICTURE}
                             </AppText>
@@ -174,6 +189,10 @@ const styles = StyleSheet.create({
     hiddenView: {
         height: 40,
     },
+    editImgContainer: {
+        alignItems: 'center',
+        paddingBottom: 12,
+    },
     editBtn: {
         backgroundColor: Colors.GRAY600,
         height: 30,
@@ -187,8 +206,10 @@ const styles = StyleSheet.create({
     },
     imgContainer: {
         alignItems: 'center',
-        paddingBottom: 12,
-        height: 200,
+        justifyContent: 'center',
+        height: 100,
+        width: 100,
+        borderRadius: 50,
     },
     editImgText: {
         paddingTop: 10,
