@@ -15,10 +15,10 @@ import CancelIcon from '../assets/cancel.svg'
 import ApproveIcon from '../assets/approve.svg'
 import { showAlertMessage } from 'utils/userMsgsUtils'
 import FastImage from 'react-native-fast-image'
+import { ProfilePictureModal } from './ProfilePictureModal'
 
 const ProfileEdit = (): JSX.Element => {
     const loggedinUser = useAppSelector(selectLoggedinUser)
-    console.log('ProfileEdit ~ loggedinUser', loggedinUser)
     const dispatch = useAppDispatch()
 
     const [isEditing, setIsEditing] = useState(false)
@@ -74,27 +74,12 @@ const ProfileEdit = (): JSX.Element => {
 
     return (
         <View style={styles.container}>
-            {/* Modal */}
-            {isChangingProfilePicture &&
-                <>
-                    <Pressable
-                        style={styles.backdrop}
-                        onPress={() => setIsChangingProfilePicture(false)}
-                    />
-                    <View style={styles.profilePictureModal}>
-                        <Header1>Profile Picture</Header1>
-                        <AppText styleProps={styles.uploadImgText}>{Strings.UPLOAD_PROFILE_PICTURE}</AppText>
-                        <View style={styles.modalBtnsContainer}>
-                            <Pressable onPress={onLaunchImgLibrary}>
-                                <AppText styleProps={styles.modalBtnText}>Gallery</AppText>
-                            </Pressable>
-                            <Pressable onPress={onLaunchCamera}>
-                                <AppText styleProps={styles.modalBtnText}>Camera</AppText>
-                            </Pressable>
-                        </View>
-                    </View>
-                </>
-            }
+            <ProfilePictureModal
+                isVisible={isChangingProfilePicture}
+                onDismiss={() => setIsChangingProfilePicture(false)}
+                onLaunchCamera={onLaunchCamera}
+                onLaunchImgLibrary={onLaunchImgLibrary}
+            />
             <TopBar>
                 {!isEditing
                     ? <GoBackButton />
@@ -124,10 +109,6 @@ const ProfileEdit = (): JSX.Element => {
                 <View style={styles.imgContainer}>
                     {loggedinUser.photoURL
                         ? <View style={{ flex: 1, width: '100%', height: 100 }}>
-                            {/* <Image
-                                source={{ uri: loggedinUser.photoURL }}
-                                style={{ flex: 1, height: '100%', width: '100%' }}
-                            /> */}
                             <FastImage
                                 source={{ uri: loggedinUser.photoURL, priority: FastImage.priority.normal, }}
                                 style={{ flex: 1, width: '100%', height: '100%' }}
@@ -171,44 +152,6 @@ const ProfileEdit = (): JSX.Element => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    backdrop: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(23, 23, 23, 0.6)',
-        zIndex: 4,
-    },
-    profilePictureModal: {
-        position: 'absolute',
-        top: '33%',
-        left: 16,
-        width: Constants.SCREEN_WIDTH - 32,
-        height: '26%',
-        backgroundColor: 'white',
-        borderRadius: 4,
-        zIndex: 5,
-        paddingHorizontal: 25,
-        paddingTop: 18,
-        paddingBottom: 25,
-    },
-    uploadImgText: {
-        fontSize: 16,
-        maxWidth: '80%',
-        lineHeight: 22,
-    },
-    modalBtnsContainer: {
-        flexDirection: 'row',
-        alignSelf: 'flex-end',
-        marginTop: 'auto',
-    },
-    modalBtnText: {
-        fontWeight: '700',
-        fontSize: 16,
-        color: Colors.BLUE350,
-        marginStart: 25,
     },
     buttonsContainer: {
         flex: 1,
