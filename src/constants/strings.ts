@@ -38,6 +38,9 @@ const LOGOUT = 'Logout'
 const EDIT_PROFILE_PICTURE = 'Tap to change profile picture'
 const UPLOAD_PROFILE_PICTURE = 'Upload new image for your personal Icon'
 
+// SEARCH
+const RECENTS = 'RECENT SEARCHES'
+
 const LOADING_TEXT = 'Loading...'
 
 export {
@@ -69,4 +72,5 @@ export {
     LOGOUT,
     EDIT_PROFILE_PICTURE,
     UPLOAD_PROFILE_PICTURE,
+    RECENTS,
 }

@@ -4,6 +4,7 @@ import { Homepage } from './Homepage'
 import { HeadLineDetails } from './HeadLineDetails'
 import { Notifications } from '../../notifications/components/Notifications'
 import { HomepageStackParamList } from 'constants/screens'
+import { Search } from 'features/search/components/Search'
 
 const HomepageStack = (): JSX.Element => {
     const Stack = createStackNavigator<HomepageStackParamList>()
@@ -24,6 +25,10 @@ const HomepageStack = (): JSX.Element => {
             <Stack.Screen
                 name={'Notifications'}
                 component={Notifications}
+            />
+            <Stack.Screen
+                name={'Search'}
+                component={Search}
             />
         </Stack.Navigator>
     )

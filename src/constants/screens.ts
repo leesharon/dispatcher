@@ -16,6 +16,7 @@ type HomepageStackParamList = {
     Homepage: undefined
     HeadlineDetails: { id: string }
     Notifications: undefined
+    Search: undefined
 }
 
 type ProfileStackParamList = {

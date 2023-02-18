@@ -2,6 +2,7 @@ const GRAY100 = '#FAFAFA'
 const GRAY300 = '#E5E5E5'
 const GRAY500 = '#F1F1F9'
 const GRAY600 = '#D9DBE9'
+const GRAY600_OPACITY = '#D9DBE980'
 const GRAY700 = '#D2D2D2'
 const GRAY800 = '#B3B3B3'
 const GRAY900 = '#878787'
@@ -9,6 +10,7 @@ const BLUE100 = '#F8F8FF'
 const BLUE300 = '#6CA4E1'
 const BLUE350 = '#5897D1'
 const BLUE400 = '#5A5A89'
+const BLUE400_OPACITY = '#5A5A8980'
 const BLUE500 = '#0058B9'
 const BLUE600 = '#116ACC'
 const BLUE800 = '#262146'
@@ -22,6 +24,7 @@ export {
     GRAY300,
     GRAY500,
     GRAY600,
+    GRAY600_OPACITY,
     GRAY700,
     GRAY800,
     GRAY900,
@@ -29,6 +32,7 @@ export {
     BLUE300,
     BLUE350,
     BLUE400,
+    BLUE400_OPACITY,
     BLUE500,
     BLUE600,
     BLUE800,

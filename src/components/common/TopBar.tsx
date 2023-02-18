@@ -3,12 +3,13 @@ import { View, StyleSheet } from "react-native"
 
 interface TopBarProps {
     children: React.ReactNode
+    styleProps?: { backgroundColor?: string } | {}
 }
 
-const TopBar = ({ children }: TopBarProps): JSX.Element => {
+const TopBar = ({ children, styleProps = {} }: TopBarProps): JSX.Element => {
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, styleProps]}>
             {children}
         </View>
     )

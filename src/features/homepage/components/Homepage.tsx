@@ -12,7 +12,7 @@ import SearchIcon from '../assets/search.svg'
 import RedDotIcon from '../assets/red-dot.svg'
 import NotificationsIcon from '../assets/notifications.svg'
 import { Strings } from 'constants'
-import { navigate } from 'navigation/RootNavigation'
+import { navigate, push } from 'navigation/RootNavigation'
 import { useAppSelector } from 'state/hooks'
 import { selectNotifications } from 'features/notifications/reducers/notificationsSlice'
 import { Loader } from 'components/common/Loader'
@@ -46,9 +46,12 @@ const Homepage = (): JSX.Element => {
             <TopBar>
                 <Logo />
                 <View style={styles.iconsContainer}>
-                    <View style={styles.iconContainer}>
+                    <Pressable
+                        style={styles.iconContainer}
+                        onPress={() => { push('Search') }}
+                    >
                         <SearchIcon />
-                    </View>
+                    </Pressable>
                     <View>
                         <Pressable onPress={() => { navigate('Notifications') }}>
                             <NotificationsIcon />
