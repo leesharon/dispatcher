@@ -10,6 +10,7 @@ const BLUE300 = '#6CA4E1'
 const BLUE350 = '#5897D1'
 const BLUE400 = '#5A5A89'
 const BLUE500 = '#0058B9'
+const BLUE600 = '#116ACC'
 const BLUE800 = '#262146'
 const BLUE1000 = '#14142B'
 const RED500 = '#FF6B57'
@@ -29,6 +30,7 @@ export {
     BLUE350,
     BLUE400,
     BLUE500,
+    BLUE600,
     BLUE800,
     BLUE1000,
     RED500,

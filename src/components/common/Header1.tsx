@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 24,
         color: Colors.BLUE800,
-        fontWeight: '500',
+        fontWeight: 'bold',
         paddingBottom: 12,
     },
 })

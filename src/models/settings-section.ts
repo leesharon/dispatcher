@@ -4,5 +4,6 @@ export interface SettingsSection {
         title: string
         text?: string | undefined
         element: 'switch' | 'select'
+        value: boolean
     }[]
 }

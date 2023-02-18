@@ -4,7 +4,7 @@ import { Header1 } from 'components/common/Header1'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import { MainContainer } from 'components/common/MainContainer'
 import { TopBar } from 'components/common/TopBar'
-import { Colors } from 'constants'
+import { Colors, Constants } from 'constants'
 import { SettingsSection } from 'models/settings-section'
 import { View, StyleSheet, Switch } from "react-native"
 
@@ -15,12 +15,14 @@ const settingsSections: SettingsSection[] = [
             {
                 title: 'Save Filters',
                 text: 'Allow us to save filters when entering back to the app',
-                element: 'switch'
+                element: 'switch',
+                value: false
             },
             {
                 title: 'Save Search Results',
                 text: 'Allow us to save your search result prefrences for next search',
-                element: 'switch'
+                element: 'switch',
+                value: false
             }
         ]
     },
@@ -29,11 +31,13 @@ const settingsSections: SettingsSection[] = [
         items: [
             {
                 title: 'Notifications',
-                element: 'switch'
+                element: 'switch',
+                value: true
             },
             {
                 title: 'News Language',
-                element: 'select'
+                element: 'select',
+                value: false
             }
         ]
     },
@@ -57,7 +61,12 @@ const Settings = (): JSX.Element => {
                                 <View key={index} style={styles.sectionItem}>
                                     <View style={styles.itemHeader}>
                                         <AppText styleProps={styles.itemTitle}>{item.title}</AppText>
-                                        {item.element === 'switch' && <Switch />}
+                                        {item.element === 'switch' && <Switch
+                                            trackColor={{ false: Colors.GRAY700, true: Colors.BLUE600 }}
+                                            thumbColor={'white'}
+                                            value={item.value}
+                                            style={styles.switch}
+                                        />}
                                     </View>
                                     {item.text && <AppText styleProps={styles.itemText}>{item.text}</AppText>}
                                 </View>
@@ -99,12 +108,15 @@ const styles = StyleSheet.create({
     itemTitle: {
         fontSize: 16,
         color: Colors.BLUE1000,
-        fontWeight: '500'
+        fontWeight: 'bold'
     },
     itemText: {
         color: Colors.GRAY900,
         width: '70%',
         lineHeight: 30,
+    },
+    switch: {
+        transform: Constants.IS_IOS ? [] : [{ scaleX: 1.4 }, { scaleY: 1.4 }],
     },
 })
 
