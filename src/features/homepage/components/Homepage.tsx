@@ -4,7 +4,7 @@ import { TopBar } from '../../../components/common/TopBar'
 import { FilterBar } from './FilterBar'
 import { HeadLinesFeed } from './HeadLinesFeed'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { AppText } from 'components/common/AppText'
 import Logo from '../assets/logo.svg'
@@ -16,23 +16,38 @@ import { navigate, push } from 'navigation/RootNavigation'
 import { useAppSelector } from 'state/hooks'
 import { selectNotifications } from 'features/notifications/reducers/notificationsSlice'
 import { Loader } from 'components/common/Loader'
+import { StackScreenProps } from '@react-navigation/stack'
+import { HomepageStackParamList } from 'constants/screens'
 
-const Homepage = (): JSX.Element => {
+type HomepageProps = StackScreenProps<HomepageStackParamList, 'Homepage'>
+
+const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
     const loggedinUser = useAppSelector(selectLoggedinUser)
     const notifications = useAppSelector(selectNotifications)
 
-    const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
-
     const { data: headLines, isLoading, isSuccess, isError, error } = useGetHeadLinesQuery()
+
+    const [headLinesToDisplay, setHeadLinesToDisplay] = useState(headLines)
+    const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
 
     const isUnreadNotifications = useMemo(() => {
         if (!notifications.length) return false
         return notifications.some(notification => notification.isUnread)
     }, [notifications])
 
+    useEffect(() => {
+        params?.searchValue && headLines &&
+            setHeadLinesToDisplay(headLines.filter(headLine => headLine.title.includes(params.searchValue)))
+
+    }, [params])
+
+    useEffect(() => {
+        isSuccess && setHeadLinesToDisplay(headLines)
+    }, [isSuccess])
+
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
     if (isLoading) return <Loader />
-    if (!headLines) return <AppText>{Strings.GENERAL_ERROR}</AppText>
+    if (!headLinesToDisplay) return <AppText>{Strings.GENERAL_ERROR}</AppText>
 
     return (
         <SafeAreaView style={styles.rootContainer}>
@@ -63,7 +78,7 @@ const Homepage = (): JSX.Element => {
                 </View>
             </TopBar>
             <FilterBar setIsFilterMenuOpen={setIsFilterMenuOpen} />
-            <HeadLinesFeed headLines={headLines} loggedinUser={loggedinUser} />
+            <HeadLinesFeed headLines={headLinesToDisplay} loggedinUser={loggedinUser} />
         </SafeAreaView>
     )
 }

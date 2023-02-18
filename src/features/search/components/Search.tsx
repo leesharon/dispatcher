@@ -3,10 +3,12 @@ import { GoBackButton } from 'components/common/GoBackButton'
 import { MainContainer } from 'components/common/MainContainer'
 import { TopBar } from 'components/common/TopBar'
 import { Colors, Strings } from 'constants'
+import { push } from 'navigation/RootNavigation'
 import { useState } from 'react'
 import { View, StyleSheet, Pressable } from "react-native"
 import { TextInput } from 'react-native-gesture-handler'
 import { Shadow } from 'react-native-shadow-2'
+import { sortBySearchTerm } from 'utils/generalUtils'
 import BackIcon from '../assets/back.svg'
 import CancelIcon from '../assets/cancel.svg'
 
@@ -18,12 +20,18 @@ const Search = ({ }: SearchProps): JSX.Element => {
     const [recentSearches, setRecentSearches] = useState<string[]>(['crypto', 'soccer', 'chess'])
 
     const onSubmit = () => {
-        console.log('submit: ')
-
+        searchValue &&
+            setRecentSearches(prevState => [searchValue, ...prevState])
+        push('Homepage', { searchValue })
     }
 
     const onRemoveRecent = (item: string) => {
         setRecentSearches(recentSearches.filter((recent) => recent !== item))
+    }
+
+    const handleChange = (text: string) => {
+        setSearchValue(text)
+        setRecentSearches(sortBySearchTerm(recentSearches, text))
     }
 
     return (
@@ -37,7 +45,7 @@ const Search = ({ }: SearchProps): JSX.Element => {
                             style={styles.input}
                             placeholderTextColor={Colors.BLUE400_OPACITY}
                             value={searchValue}
-                            onChangeText={setSearchValue}
+                            onChangeText={handleChange}
                             onSubmitEditing={onSubmit}
                         />
                     </View>
@@ -51,27 +59,30 @@ const Search = ({ }: SearchProps): JSX.Element => {
             <MainContainer>
                 <View style={styles.headerConatiner}>
                     <AppText styleProps={styles.header}>{Strings.RECENTS}</AppText>
-                    <Pressable
+                    {(recentSearches.length !== 0) && <Pressable
                         onPress={() => { setRecentSearches([]) }}
                         style={styles.clearBtn}
                     >
                         <AppText isBold={true}>CLEAR</AppText>
-                    </Pressable>
+                    </Pressable>}
                 </View>
-                <View>
-                    {recentSearches.map((item, index) => (
-                        <Pressable
-                            onPress={() => { console.log('go to ' + item) }}
-                            style={styles.recentsItem}
-                            key={index}
-                        >
-                            <AppText>{item}</AppText>
-                            <Pressable onPress={() => { onRemoveRecent(item) }}>
-                                <CancelIcon />
+                {(recentSearches.length === 0)
+                    ? <AppText>{Strings.NO_RECENTS}</AppText>
+                    : <View>
+                        {recentSearches.map((item, index) => (
+                            <Pressable
+                                onPress={() => { console.log('go to ' + item) }}
+                                style={styles.recentsItem}
+                                key={index}
+                            >
+                                <AppText>{item}</AppText>
+                                <Pressable onPress={() => { onRemoveRecent(item) }}>
+                                    <CancelIcon />
+                                </Pressable>
                             </Pressable>
-                        </Pressable>
-                    ))}
-                </View>
+                        ))}
+                    </View>
+                }
             </MainContainer >
         </View >
     )
@@ -101,6 +112,7 @@ const styles = StyleSheet.create({
     },
     input: {
         paddingStart: 20,
+        width: '100%',
     },
     headerConatiner: {
         flexDirection: 'row',
