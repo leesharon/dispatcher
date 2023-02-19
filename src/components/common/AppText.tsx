@@ -16,6 +16,7 @@ interface AppTextProps {
         paddingTop?: number
         alignSelf?: 'center' | 'flex-start' | 'flex-end'
         marginTop?: number
+        opacity?: number
     }
     isBold?: boolean
 }
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.ROBOTO_REGULAR,
         fontSize: 14,
         color: Colors.BLUE400,
+        lineHeight: 22
     }
 })
 
