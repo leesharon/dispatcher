@@ -1,13 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import loggedinUserReducer from 'features/authentication/reducers/loggedinUserSlice'
 import notificationsReducer from 'features/notifications/reducers/notificationsSlice'
+import searchReducer from 'features/search/reducers/searchSlice'
 import { apiSlice } from '../features/api/apiSlice'
 
 export const store = configureStore({
   reducer: {
     loggedinUser: loggedinUserReducer,
     notifications: notificationsReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    search: searchReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSlice.middleware)

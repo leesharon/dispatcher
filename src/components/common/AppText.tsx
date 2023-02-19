@@ -14,6 +14,8 @@ interface AppTextProps {
         maxWidth?: number | string
         paddingBottm?: number
         paddingTop?: number
+        alignSelf?: 'center' | 'flex-start' | 'flex-end'
+        marginTop?: number
     }
     isBold?: boolean
 }

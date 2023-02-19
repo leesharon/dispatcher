@@ -7,76 +7,72 @@ import { push } from 'navigation/RootNavigation'
 import { useState } from 'react'
 import { View, StyleSheet, Pressable } from "react-native"
 import { TextInput } from 'react-native-gesture-handler'
-import { Shadow } from 'react-native-shadow-2'
-import { sortBySearchTerm } from 'utils/generalUtils'
-import BackIcon from '../assets/back.svg'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import BackIcon from '../../../../assets/back.svg'
 import CancelIcon from '../assets/cancel.svg'
+import { addRecentSearch, clearRecentSearches, removeRecentSearch, selectRecentSearches, sortRecentSearches } from '../reducers/searchSlice'
 
-interface SearchProps {
-}
-
-const Search = ({ }: SearchProps): JSX.Element => {
+const Search = (): JSX.Element => {
+    const dispatch = useAppDispatch()
     const [searchValue, setSearchValue] = useState<string>('')
-    const [recentSearches, setRecentSearches] = useState<string[]>(['crypto', 'soccer', 'chess'])
+    const recentSearches = useAppSelector(selectRecentSearches)
 
     const onSubmit = () => {
         searchValue &&
-            setRecentSearches(prevState => [searchValue, ...prevState])
+            dispatch(addRecentSearch(searchValue))
         push('Homepage', { searchValue })
     }
 
-    const onRemoveRecent = (item: string) => {
-        setRecentSearches(recentSearches.filter((recent) => recent !== item))
+    const onRemoveRecentSearch = (value: string) => {
+        dispatch(removeRecentSearch(value))
     }
 
     const handleChange = (text: string) => {
         setSearchValue(text)
-        setRecentSearches(sortBySearchTerm(recentSearches, text))
+        dispatch(sortRecentSearches(text))
     }
 
     return (
         <View style={styles.screenContainer}>
-            <Shadow style={styles.shadowConatainer}>
-                <TopBar styleProps={styles.topBar}>
-                    <View style={styles.topBarLeft}>
-                        <GoBackButton icon={<BackIcon />} withText={false} />
-                        <TextInput
-                            placeholder="Search"
-                            style={styles.input}
-                            placeholderTextColor={Colors.BLUE400_OPACITY}
-                            value={searchValue}
-                            onChangeText={handleChange}
-                            onSubmitEditing={onSubmit}
-                        />
-                    </View>
-                    {searchValue &&
-                        <Pressable onPress={() => { setSearchValue('') }}>
-                            <CancelIcon />
-                        </Pressable>
-                    }
-                </TopBar>
-            </Shadow>
+            <TopBar styleProps={styles.topBar}>
+                <View style={styles.topBarLeft}>
+                    <GoBackButton icon={<BackIcon />} withText={false} />
+                    <TextInput
+                        placeholder="Search"
+                        style={styles.input}
+                        placeholderTextColor={Colors.BLUE400_OPACITY}
+                        value={searchValue}
+                        onChangeText={handleChange}
+                        onSubmitEditing={onSubmit}
+                    />
+                </View>
+                {searchValue &&
+                    <Pressable onPress={() => { setSearchValue('') }}>
+                        <CancelIcon />
+                    </Pressable>
+                }
+            </TopBar>
             <MainContainer>
                 <View style={styles.headerConatiner}>
                     <AppText styleProps={styles.header}>{Strings.RECENTS}</AppText>
                     {(recentSearches.length !== 0) && <Pressable
-                        onPress={() => { setRecentSearches([]) }}
+                        onPress={() => { dispatch(clearRecentSearches()) }}
                         style={styles.clearBtn}
                     >
                         <AppText isBold={true}>CLEAR</AppText>
                     </Pressable>}
                 </View>
                 {(recentSearches.length === 0)
-                    ? <AppText>{Strings.NO_RECENTS}</AppText>
+                    ? <AppText styleProps={styles.noRecents}>{Strings.NO_RECENTS}</AppText>
                     : <View>
                         {recentSearches.map((item, index) => (
                             <Pressable
-                                onPress={() => { console.log('go to ' + item) }}
+                                onPress={() => { push('Homepage', { searchValue: item }) }}
                                 style={styles.recentsItem}
                                 key={index}
                             >
                                 <AppText>{item}</AppText>
-                                <Pressable onPress={() => { onRemoveRecent(item) }}>
+                                <Pressable onPress={() => { onRemoveRecentSearch(item) }}>
                                     <CancelIcon />
                                 </Pressable>
                             </Pressable>
@@ -93,17 +89,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.BLUE100,
     },
-    shadowConatainer: {
-        width: '100%',
-        shadowColor: 'rgba(0, 0, 0, 0.05)',
-        shadowOffset: {
-            width: 0,
-            height: 32,
-        },
-        shadowRadius: 64,
-        shadowOpacity: 0.5,
-    },
     topBar: {
+        borderWidth: 1,
+        borderColor: Colors.GRAY600,
         backgroundColor: 'white',
     },
     topBarLeft: {
@@ -131,6 +119,9 @@ const styles = StyleSheet.create({
         paddingVertical: 4,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    noRecents: {
+        alignSelf: 'center',
     },
     recentsItem: {
         flexDirection: 'row',

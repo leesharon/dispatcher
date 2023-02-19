@@ -10,9 +10,10 @@ import { Header1 } from 'components/common/Header1'
 interface HeadLinesFeedProps {
     headLines: HeadLine[]
     loggedinUser: User
+    isSearch?: boolean
 }
 
-const HeadLinesFeed = ({ headLines, loggedinUser }: HeadLinesFeedProps): JSX.Element => {
+const HeadLinesFeed = ({ headLines, loggedinUser, isSearch }: HeadLinesFeedProps): JSX.Element => {
 
     return (
         <View style={styles.container}>
@@ -24,20 +25,22 @@ const HeadLinesFeed = ({ headLines, loggedinUser }: HeadLinesFeedProps): JSX.Ele
                     imageStyle={styles.headLineImage}
                 />}
                 ListHeaderComponent={
-                    <>
-                        <View style={styles.lastLoginContainer}>
-                            <AppText styleProps={styles.lastLoginText}>Last Login:</AppText>
-                            {loggedinUser.metadata.lastSignInTime && <AppText styleProps={styles.lastLoginText}>
-                                {formatDate(loggedinUser.metadata.lastSignInTime)}
-                            </AppText>}
-                        </View>
-                        <Header1>
-                            {Strings.HEADLINES_FEED_TITLE}
-                        </Header1>
-                    </>
+                    <View style={styles.listHeaderContainer}>
+                        {!isSearch &&
+                            <View style={styles.lastLoginContainer}>
+                                <AppText styleProps={styles.lastLoginText}>Last Login:</AppText>
+                                {loggedinUser.metadata.lastSignInTime && <AppText styleProps={styles.lastLoginText}>
+                                    {formatDate(loggedinUser.metadata.lastSignInTime)}
+                                </AppText>}
+                            </View>}
+                        {(headLines.length !== 0) &&
+                            <Header1>
+                                {Strings.HEADLINES_FEED_TITLE}
+                            </Header1>}
+                    </View>
                 }
             />
-        </View>
+        </View >
     )
 }
 
@@ -50,7 +53,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingTop: 10,
         paddingBottom: 12,
     },
     lastLoginText: {
@@ -71,7 +73,10 @@ const styles = StyleSheet.create({
     headLineImage: {
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-    }
+    },
+    listHeaderContainer: {
+        paddingTop: 10,
+    },
 })
 
 export { HeadLinesFeed }
