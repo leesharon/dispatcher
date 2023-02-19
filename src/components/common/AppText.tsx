@@ -14,13 +14,16 @@ interface AppTextProps {
         maxWidth?: number | string
         paddingBottm?: number
         paddingTop?: number
+        alignSelf?: 'center' | 'flex-start' | 'flex-end'
+        marginTop?: number
     }
+    isBold?: boolean
 }
 
-const AppText = ({ children, styleProps }: AppTextProps): JSX.Element => {
+const AppText = ({ children, styleProps, isBold }: AppTextProps): JSX.Element => {
 
     return (
-        <Text style={[styles.text, styleProps]}>
+        <Text style={[styles.text, styleProps, isBold && { fontWeight: 'bold' }]}>
             {children}
         </Text>
     )

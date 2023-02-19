@@ -13,9 +13,10 @@ type MainTabsParamsList = {
 }
 
 type HomepageStackParamList = {
-    Homepage: undefined
+    Homepage: { searchValue: string } | undefined
     HeadlineDetails: { id: string }
     Notifications: undefined
+    Search: undefined
 }
 
 type ProfileStackParamList = {

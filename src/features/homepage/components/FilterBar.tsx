@@ -1,8 +1,7 @@
 import { View, StyleSheet, Pressable } from "react-native"
 import SortByIcon from '../assets/sort-by.svg'
 import FilterIcon from '../assets/filter.svg'
-import { Colors, Layout, Fonts } from 'constants'
-import { User } from 'models/user'
+import { Colors, Layout } from 'constants'
 
 interface FilterBarProps {
     setIsFilterMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -11,13 +10,11 @@ interface FilterBarProps {
 const FilterBar = ({ setIsFilterMenuOpen }: FilterBarProps): JSX.Element => {
 
     return (
-        <View>
-            <View style={styles.filterBarContainer}>
-                <SortByIcon />
-                <Pressable onPress={() => { setIsFilterMenuOpen(true) }}>
-                    <FilterIcon />
-                </Pressable>
-            </View>
+        <View style={styles.filterBarContainer}>
+            <SortByIcon />
+            <Pressable onPress={() => { setIsFilterMenuOpen(true) }}>
+                <FilterIcon />
+            </Pressable>
         </View>
     )
 }
