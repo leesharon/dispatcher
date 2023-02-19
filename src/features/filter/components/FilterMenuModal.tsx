@@ -68,7 +68,7 @@ const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): 
         return (
             <View style={styles.container}>
                 {renderTitle("FILTER")}
-                {Object.keys(updatedFilterBy).map((category, index) => (
+                {Object.keys(updatedFilterBy).map((category) => (
                     <Pressable
                         key={category}
                         onPress={() => onSelectFilterCategory(category)}
