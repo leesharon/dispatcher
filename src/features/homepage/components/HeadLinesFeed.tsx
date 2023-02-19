@@ -24,6 +24,7 @@ const HeadLinesFeed = ({ headLines, loggedinUser, isSearch }: HeadLinesFeedProps
                     containerStyle={styles.headLineContainer}
                     imageStyle={styles.headLineImage}
                 />}
+                keyExtractor={item => item.id}
                 ListHeaderComponent={
                     <View style={styles.listHeaderContainer}>
                         {!isSearch &&

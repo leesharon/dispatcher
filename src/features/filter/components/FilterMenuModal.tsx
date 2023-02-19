@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react'
-import { View, StyleSheet, Pressable } from "react-native"
+import { View, StyleSheet, Pressable, FlatList } from "react-native"
 import Modal from "react-native-modal"
 import { AppText } from 'components/common/AppText'
 import { Colors, Constants, Layout } from 'constants'
@@ -104,17 +104,20 @@ const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): 
             >
                 <View style={styles.container}>
                     {renderTitle(nestedModal?.title || '', <BackIcon style={{ marginEnd: 15 }} />)}
-                    {nestedModal?.options.map((option, index) => (
-                        <Pressable
-                            key={option}
-                            onPress={() => { onSelectFilterOption(option) }}
-                        >
-                            <View style={styles.listItem}>
-                                <AppText>{option}</AppText>
-                            </View>
-                            <HorizontalLine styleProps={styles.horizontalLine} />
-                        </Pressable>
-                    ))}
+                    <FlatList
+                        data={nestedModal?.options}
+                        keyExtractor={(option) => option}
+                        renderItem={({ item }) => (
+                            <Pressable
+                                onPress={() => { onSelectFilterOption(item) }}
+                            >
+                                <View style={styles.listItem}>
+                                    <AppText>{item}</AppText>
+                                </View>
+                                <HorizontalLine styleProps={styles.horizontalLine} />
+                            </Pressable>
+                        )}
+                    />
                 </View>
             </Modal>
         )

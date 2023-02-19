@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, View } from "react-native"
 import { StackScreenProps } from '@react-navigation/stack'
-import { navigate, push } from 'navigation/RootNavigation'
+import { navigate, push, resetTo } from 'navigation/RootNavigation'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useGetHeadLinesQuery } from 'features/api/apiSlice'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { selectNotifications } from 'features/notifications/reducers/notificationsSlice'
-import { updateSources } from 'features/filter/reducers/filterSlice'
+import { selectFilterBy, updateSources } from 'features/filter/reducers/filterSlice'
 
 import { HeadLinesFeed } from './HeadLinesFeed'
 import { AppText } from 'components/common/AppText'
@@ -30,9 +30,9 @@ type HomepageProps = StackScreenProps<HomepageStackParamList, 'Homepage'>
 
 const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
     const dispatch = useAppDispatch()
-
     const loggedinUser = useAppSelector(selectLoggedinUser)
     const notifications = useAppSelector(selectNotifications)
+    const filterBy = useAppSelector(selectFilterBy)
 
     const { data: headLines, isLoading, isSuccess, isError, error } = useGetHeadLinesQuery()
 
@@ -44,6 +44,7 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
         return notifications.some(notification => notification.isUnread)
     }, [notifications])
 
+    // handles success api call
     useEffect(() => {
         if (isSuccess) {
             setHeadLinesToDisplay(headLines)
@@ -51,6 +52,7 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
         }
     }, [isSuccess])
 
+    // handles search results from params
     useEffect(() => {
         if (params?.searchValue && headLinesToDisplay) {
             setHeadLinesToDisplay(
@@ -61,6 +63,20 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
         }
     }, [params])
 
+    // handles filter results
+    useEffect(() => {
+        if (!headLines) return
+        if (filterBy.sources.value === 'All') setHeadLinesToDisplay(headLines)
+        if (filterBy.sources.value !== 'All') {
+            setHeadLinesToDisplay(
+                headLines.filter(headLine => {
+                    return headLine.source.name === filterBy.sources.value
+                })
+            )
+        }
+    }, [filterBy])
+
+    if (!loggedinUser) resetTo('Logister')
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
     if (isLoading) return <Loader />
     if (!headLinesToDisplay) return <AppText>{Strings.GENERAL_ERROR}</AppText>
