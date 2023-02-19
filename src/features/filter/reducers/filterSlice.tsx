@@ -13,6 +13,19 @@ const searchSlice = createSlice({
     name: 'search',
     initialState,
     reducers: {
+        // markNotificationAsRead: (state, action: PayloadAction<{ id: string }>) => {
+        //     const { notifications } = state
+
+        //     let updatedNotifications: Notification[]
+        //     const index = notifications.findIndex(notification => notification.id === action.payload.id)
+        //     if (index === -1) updatedNotifications = notifications
+        //     else updatedNotifications = [
+        //         ...notifications.slice(0, index),
+        //         { ...notifications[index], isUnread: false },
+        //         ...notifications.slice(index + 1)
+        //     ]
+        //     state.notifications = updatedNotifications
+        // },
         addRecentSearch: (state, action: PayloadAction<string>) => {
             state.recentSearches = [action.payload, ...state.recentSearches]
         },

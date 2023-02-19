@@ -19,6 +19,7 @@ import { Loader } from 'components/common/Loader'
 import { StackScreenProps } from '@react-navigation/stack'
 import { HomepageStackParamList } from 'constants/screens'
 import { TopBarSearch } from './TopBarSearch'
+import { FilterMenuModal } from 'features/filter/components/FilterMenuModal'
 
 type HomepageProps = StackScreenProps<HomepageStackParamList, 'Homepage'>
 
@@ -56,13 +57,10 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
 
     return (
         <SafeAreaView style={styles.rootContainer}>
-            {isFilterMenuOpen &&
-                <Pressable
-                    style={styles.backdrop}
-                    onPress={() => { setIsFilterMenuOpen(false) }}
-                >
-                </Pressable>
-            }
+            <FilterMenuModal
+                isVisible={isFilterMenuOpen}
+                onBackdropPress={() => { setIsFilterMenuOpen(false) }}
+            />
             {params?.searchValue
                 ? <TopBarSearch searchValue={params.searchValue} />
                 : <TopBar>
