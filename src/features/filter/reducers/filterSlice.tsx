@@ -20,6 +20,9 @@ const filterSlice = createSlice({
     reducers: {
         updateFilterBy: (state, action: PayloadAction<FilterBy>) => {
             state.filterBy = action.payload
+        },
+        updateSources: (state, action: PayloadAction<string[]>) => {
+            state.filterBy.sources.options = action.payload
         }
     },
 })
@@ -27,5 +30,5 @@ const filterSlice = createSlice({
 export const selectFilterBy =
     (state: { filter: filterState }) => state.filter.filterBy
 
-export const { updateFilterBy } = filterSlice.actions
+export const { updateFilterBy, updateSources } = filterSlice.actions
 export default filterSlice.reducer

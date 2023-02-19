@@ -64,70 +64,74 @@ const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): 
         )
     }
 
-    const renderButton = () => {
-        return <View style={styles.buttonContainer}>
-            <AppButton
-                onPress={onSubmit}
-                innerContainerStyle={styles.buttonInnerContainer}
-            >
-                View Results
-            </AppButton>
-        </View>
+    const renderModalContent = () => {
+        return (
+            <View style={styles.container}>
+                {renderTitle('FILTER')}
+                {Object.keys(updatedFilterBy).map((category, index) => (
+                    <Pressable
+                        key={category}
+                        onPress={() => onSelectFilterCategory(category)}
+                    >
+                        <View style={styles.listItem}>
+                            <AppText>{updatedFilterBy[category].title}</AppText>
+                            <AppText styleProps={styles.listItemValue}>{updatedFilterBy[category].value}</AppText>
+                        </View>
+                        <HorizontalLine styleProps={styles.horizontalLine} />
+                    </Pressable>
+                ))}
+                <View style={styles.buttonContainer}>
+                    <AppButton
+                        onPress={onSubmit}
+                        innerContainerStyle={styles.buttonInnerContainer}
+                    >
+                        View Results
+                    </AppButton>
+                </View>
+            </View>
+        )
     }
 
-    return (
-        <>
+    const renderNestedModal = () => {
+        return (
             <Modal
-                isVisible={isVisible}
-                onBackdropPress={onBackdropPress}
+                isVisible={!!nestedModal}
                 style={styles.modal}
                 animationIn="slideInRight"
                 animationOut="slideOutRight"
-                backdropColor='#303032'
+                backdropColor='transparent'
+                onBackdropPress={() => { onBackdropPress(); setNestedModal(null) }}
             >
                 <View style={styles.container}>
-                    {renderTitle('FILTER')}
-                    {Object.keys(updatedFilterBy).map((category, index) => (
+                    {renderTitle(nestedModal?.title || '', <BackIcon style={{ marginEnd: 15 }} />)}
+                    {nestedModal?.options.map((option, index) => (
                         <Pressable
-                            key={category}
-                            onPress={() => onSelectFilterCategory(category)}
+                            key={option}
+                            onPress={() => { onSelectFilterOption(option) }}
                         >
                             <View style={styles.listItem}>
-                                <AppText>{updatedFilterBy[category].title}</AppText>
-                                <AppText styleProps={styles.listItemValue}>{updatedFilterBy[category].value}</AppText>
+                                <AppText>{option}</AppText>
                             </View>
                             <HorizontalLine styleProps={styles.horizontalLine} />
                         </Pressable>
                     ))}
-                    {renderButton()}
                 </View>
-
-                {/* Nested Modal */}
-                <Modal
-                    isVisible={!!nestedModal}
-                    style={styles.modal}
-                    animationIn="slideInRight"
-                    animationOut="slideOutRight"
-                    backdropColor='transparent'
-                    onBackdropPress={() => { onBackdropPress(); setNestedModal(null) }}
-                >
-                    <View style={styles.container}>
-                        {renderTitle(nestedModal?.title || '', <BackIcon style={{ marginEnd: 15 }} />)}
-                        {nestedModal?.options.map((option, index) => (
-                            <Pressable
-                                key={option}
-                                onPress={() => { onSelectFilterOption(option) }}
-                            >
-                                <View style={styles.listItem}>
-                                    <AppText>{option}</AppText>
-                                </View>
-                                <HorizontalLine styleProps={styles.horizontalLine} />
-                            </Pressable>
-                        ))}
-                    </View>
-                </Modal>
             </Modal>
-        </>
+        )
+    }
+
+    return (
+        <Modal
+            isVisible={isVisible}
+            onBackdropPress={onBackdropPress}
+            style={styles.modal}
+            animationIn="slideInRight"
+            animationOut="slideOutRight"
+            backdropColor='#303032'
+        >
+            {renderModalContent()}
+            {renderNestedModal()}
+        </Modal>
     )
 }
 
