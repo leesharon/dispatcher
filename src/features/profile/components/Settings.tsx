@@ -1,6 +1,6 @@
 import { AppText } from 'components/common/AppText'
 import { GoBackButton } from 'components/common/GoBackButton'
-import { Header1 } from 'components/common/Header1'
+import { Heading1 } from 'components/common/Heading1'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import { MainContainer } from 'components/common/MainContainer'
 import { TopBar } from 'components/common/TopBar'
@@ -51,7 +51,7 @@ const Settings = (): JSX.Element => {
                 <GoBackButton />
             </TopBar>
             <MainContainer>
-                <Header1>Settings</Header1>
+                <Heading1>Settings</Heading1>
                 <View style={styles.mainContent}>
                     {settingsSections.map((section, index) => (
                         <View key={index}>

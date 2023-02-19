@@ -1,5 +1,5 @@
 import { AppText } from 'components/common/AppText'
-import { Header1 } from 'components/common/Header1'
+import { Heading1 } from 'components/common/Heading1'
 import { Colors, Constants, Strings } from 'constants'
 import { View, StyleSheet, Pressable } from "react-native"
 
@@ -20,7 +20,7 @@ const ProfilePictureModal = ({ isVisible, onDismiss, onLaunchCamera, onLaunchImg
                 onPress={onDismiss}
             />
             <View style={styles.container}>
-                <Header1>Profile Picture</Header1>
+                <Heading1>Profile Picture</Heading1>
                 <AppText styleProps={styles.uploadImgText}>{Strings.UPLOAD_PROFILE_PICTURE}</AppText>
                 <View style={styles.modalBtnsContainer}>
                     <Pressable onPress={onLaunchImgLibrary}>

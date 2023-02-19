@@ -2,11 +2,11 @@ import { StyleSheet } from "react-native"
 import { Colors } from 'constants'
 import { AppText } from './AppText'
 
-interface Header1Props {
+interface Heading1Props {
     children: string
 }
 
-const Header1 = ({ children }: Header1Props): JSX.Element => {
+const Heading1 = ({ children }: Heading1Props): JSX.Element => {
 
     return (
         <AppText styleProps={styles.text}>
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export { Header1 }
+export { Heading1 }
