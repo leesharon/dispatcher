@@ -12,6 +12,8 @@ interface AppTextProps {
         marginBottom?: number
         paddingStart?: number
         maxWidth?: number | string
+        paddingBottm?: number
+        paddingTop?: number
     }
 }
 

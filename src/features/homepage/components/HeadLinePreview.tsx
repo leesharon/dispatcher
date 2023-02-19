@@ -48,11 +48,11 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
 
     const onToggleFavorite = () => {
         if (!isStarred) {
-            dispatch(addFavoriteHeadline(headLine.id))
-            dispatch(addNotification(headLine.id))
+            dispatch(addFavoriteHeadline({ id: headLine.id }))
+            dispatch(addNotification({ id: headLine.id }))
         }
         else
-            dispatch(removeFavoriteHeadline(headLine.id))
+            dispatch(removeFavoriteHeadline({ id: headLine.id }))
     }
 
     const isStarred = useMemo(
@@ -91,8 +91,8 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
                     onPress={onPressDispatch}
                     innerContainerStyle={styles.buttonInnerContainer}
                     icon={<ArrowRightIcon />}
-                    iconStyle={{ position: 'absolute', right: 30 }}
-                    textStyle={{ position: 'relative', right: 15 }}
+                    iconStyle={{ position: 'absolute', end: 30 }}
+                    textStyle={{ position: 'relative', end: 15 }}
                 >
                     NAVIGATE TO DISPATCH
                 </AppButton>}
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     favoriteIcon: {
         position: 'absolute',
         top: 16,
-        right: 16,
+        end: 16,
         zIndex: 1,
     },
     headLineContent: {

@@ -17,7 +17,7 @@ const NotificationPreview = ({ notification }: NotificationPreviewProps): JSX.El
     const dispath = useAppDispatch()
 
     const onNotificationClick = () => {
-        notification.isUnread && dispath(markNotificationAsRead(notification.id))
+        notification.isUnread && dispath(markNotificationAsRead({ id: notification.id }))
         push('HeadlineDetails', { id: notification.headLineId })
     }
 
@@ -42,16 +42,18 @@ const styles = StyleSheet.create({
     container: {
         height: 65,
         alignItems: 'center',
-        paddingLeft: 8,
-        paddingRight: 20,
+        paddingStart: 8,
+        paddingEnd: 20,
         marginBottom: 2,
         flexDirection: 'row',
     },
     rectangle: {
-        paddingRight: 8,
+        paddingEnd: 8,
     },
     forward: {
         position: 'absolute',
-        right: 20,
+        end: 20,
     }
 })
+
+export { NotificationPreview }

@@ -11,11 +11,13 @@ import TermsIcon from '../assets/terms.svg'
 import LogoutIcon from '../assets/logout.svg'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import { firebaseLogout } from 'utils/firebaseAuthUtils'
+import { push } from 'navigation/RootNavigation'
+import { Header1 } from 'components/common/Header1'
 
 const menuItems = [
-    { id: 1, text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { console.log('settings') } },
-    { id: 2, text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { console.log('TERMS') } },
-    { id: 3, text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
+    { id: '1aqads123', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { push('Settings') } },
+    { id: '2basdASA2', text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { push('Terms') } },
+    { id: '3casd@@!!!', text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
 ]
 
 const Profile = (): JSX.Element => {
@@ -27,12 +29,14 @@ const Profile = (): JSX.Element => {
         <SafeAreaView style={styles.container}>
             <Shadow style={styles.shadowContainer}>
                 <View style={styles.header}>
-                    <AppText styleProps={styles.hi}>
+                    <Header1>
                         {'Hi ' + (loggedinUser.displayName || loggedinUser.email || 'User')}
-                    </AppText>
-                    <AppText>
-                        {Strings.EDIT_PROFILE}
-                    </AppText>
+                    </Header1>
+                    <Pressable onPress={() => push('ProfileEdit')}>
+                        <AppText>
+                            {Strings.EDIT_PROFILE}
+                        </AppText>
+                    </Pressable>
                 </View>
                 <View style={styles.userIconContainer}>
                     <UserIcon />
@@ -40,7 +44,7 @@ const Profile = (): JSX.Element => {
             </Shadow>
             <View style={styles.menuContainer}>
                 {menuItems.map((item, index) => (
-                    <>
+                    <View key={item.id}>
                         <Pressable
                             key={item.id}
                             style={[styles.menuItem, (index === 0) && { paddingStart: 2 }]}
@@ -50,10 +54,10 @@ const Profile = (): JSX.Element => {
                             <AppText styleProps={styles.menuItemText}>{item.text}</AppText>
                         </Pressable>
                         {index !== menuItems.length - 1 && <HorizontalLine />}
-                    </>
+                    </View>
                 ))}
             </View>
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 
@@ -77,12 +81,7 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 1,
-    },
-    hi: {
-        fontSize: 24,
-        fontWeight: '500',
-        color: Colors.BLUE800,
-        paddingBottom: 5,
+        paddingBottom: 10,
     },
     userIconContainer: {
         justifyContent: 'center',

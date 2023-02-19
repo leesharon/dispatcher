@@ -3,10 +3,11 @@ import { StatusBar, StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import SplashScreen from "react-native-splash-screen"
 import FlashMessage from "react-native-flash-message"
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
-import { Colors, Constants, Screens } from 'constants/index'
+import { Colors, Constants } from 'constants/index'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
 import { MainTabNavigation } from 'navigation/MainTabNavigation'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
@@ -38,6 +39,11 @@ const App = () => {
     loggedinUser.loggedinUser && setIntialRouteName('MainTab')
   }, [loggedinUser])
 
+  useEffect(() => {
+    //hides the splash screen on app load
+    SplashScreen.hide()
+  }, [])
+
   return (
     <NavigationContainer ref={navigationRef}>
       <View style={styles.statusBar}>
@@ -57,8 +63,8 @@ const App = () => {
             component={MainTabNavigation}
           />
         </Stack.Navigator>
-        <FlashMessage position="top" />
       </SafeAreaProvider>
+      <FlashMessage position="top" />
     </NavigationContainer>
   )
 }

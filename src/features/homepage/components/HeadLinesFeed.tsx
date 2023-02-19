@@ -5,6 +5,7 @@ import { HeadLine } from 'models/headline'
 import { HeadLinePreview } from './HeadLinePreview'
 import { User } from 'models/user'
 import { formatDate } from 'utils/dateUtils'
+import { Header1 } from 'components/common/Header1'
 
 interface HeadLinesFeedProps {
     headLines: HeadLine[]
@@ -30,9 +31,9 @@ const HeadLinesFeed = ({ headLines, loggedinUser }: HeadLinesFeedProps): JSX.Ele
                                 {formatDate(loggedinUser.metadata.lastSignInTime)}
                             </AppText>}
                         </View>
-                        <AppText styleProps={styles.title}>
+                        <Header1>
                             {Strings.HEADLINES_FEED_TITLE}
-                        </AppText>
+                        </Header1>
                     </>
                 }
             />
@@ -50,18 +51,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         paddingTop: 10,
+        paddingBottom: 12,
     },
     lastLoginText: {
         fontSize: 12,
         fontFamily: 'Roboto-Bold',
-        marginRight: 3,
-    },
-    title: {
-        fontSize: 24,
-        color: Colors.BLUE800,
-        fontWeight: '500',
-        paddingTop: 12,
-        paddingBottom: 20,
+        marginEnd: 3,
     },
     headLineContainer: {
         borderRadius: 20,
