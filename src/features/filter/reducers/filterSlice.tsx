@@ -18,14 +18,14 @@ const filterSlice = createSlice({
     name: 'filter',
     initialState,
     reducers: {
-        // addRecentSearch: (state, action: PayloadAction<string>) => {
-        //     state.recentSearches = [action.payload, ...state.recentSearches]
-        // },
+        updateFilterBy: (state, action: PayloadAction<FilterBy>) => {
+            state.filterBy = action.payload
+        }
     },
 })
 
 export const selectFilterBy =
     (state: { filter: filterState }) => state.filter.filterBy
 
-// export const { addRecentSearch } = filterSlice.actions
+export const { updateFilterBy } = filterSlice.actions
 export default filterSlice.reducer
