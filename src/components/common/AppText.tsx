@@ -12,7 +12,7 @@ interface AppTextProps {
         marginBottom?: number
         paddingStart?: number
         maxWidth?: number | string
-        paddingBottm?: number
+        paddingBottom?: number
         paddingTop?: number
         alignSelf?: 'center' | 'flex-start' | 'flex-end'
         marginTop?: number

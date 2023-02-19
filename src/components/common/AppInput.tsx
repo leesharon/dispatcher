@@ -3,6 +3,7 @@ import { TextInput, StyleSheet, View, Pressable, Text } from "react-native"
 import { Colors, Fonts } from 'constants/index'
 import Revealed from '../../../assets/revealed.svg'
 import Hidden from '../../../assets/hidden.svg'
+import { textContentType } from 'models/text-content-type'
 
 enum ContentType {
     EMAIL = 'emailAddress',
@@ -93,7 +94,7 @@ const AppInput = ({
                     placeholder={placeholderText}
                     placeholderTextColor={Colors.BLUE400}
                     secureTextEntry={contentType === ContentType.PASSWORD && !isRevealed}
-                    textContentType={contentType as any}
+                    textContentType={contentType as textContentType}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                 />
@@ -120,7 +121,7 @@ const AppInput = ({
                     placeholderTextColor={Colors.BLUE400}
                     secureTextEntry={false}
                     keyboardType="email-address"
-                    textContentType={contentType as any}
+                    textContentType={contentType as textContentType}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     editable={isEditable}
@@ -141,7 +142,7 @@ const AppInput = ({
                     placeholder={placeholderText}
                     placeholderTextColor={Colors.BLUE400}
                     secureTextEntry={false}
-                    textContentType={contentType as any}
+                    textContentType={contentType as textContentType}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     editable={isEditable}
