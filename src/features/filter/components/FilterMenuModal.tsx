@@ -1,14 +1,14 @@
-import { ReactNode, useState } from 'react'
+import React, { ReactNode, useState } from "react"
 import { View, StyleSheet, Pressable, FlatList } from "react-native"
 import Modal from "react-native-modal"
-import { AppText } from 'components/common/AppText'
-import { Colors, Constants, Layout } from 'constants'
-import { HorizontalLine } from 'components/common/HorizontalLine'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { selectFilterBy, updateFilterBy } from '../reducers/filterSlice'
-import AppButton from 'components/common/AppButton'
-import BackIcon from '../../../../assets/back.svg'
-import { FilterBy } from 'models/filter-by'
+import { AppText } from "components/common/AppText"
+import { Colors, Constants, Layout } from "constants"
+import { HorizontalLine } from "components/common/HorizontalLine"
+import { useAppDispatch, useAppSelector } from "state/hooks"
+import { selectFilterBy, updateFilterBy } from "../reducers/filterSlice"
+import AppButton from "components/common/AppButton"
+import BackIcon from "../../../../assets/back.svg"
+import { FilterBy } from "models/filter-by"
 
 interface FilterMenuModalProps {
     isVisible: boolean
@@ -40,7 +40,7 @@ const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): 
     }
 
     const onSelectFilterOption = (option: string) => {
-        if (!(typeof selectedCategory === 'string')) return
+        if (!(typeof selectedCategory === "string")) return
         setNestedModal(null)
         setUpdatedFilterBy(prevState => ({
             ...prevState,
@@ -67,7 +67,7 @@ const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): 
     const renderModalContent = () => {
         return (
             <View style={styles.container}>
-                {renderTitle('FILTER')}
+                {renderTitle("FILTER")}
                 {Object.keys(updatedFilterBy).map((category, index) => (
                     <Pressable
                         key={category}
@@ -103,7 +103,7 @@ const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): 
                 onBackdropPress={() => { onBackdropPress(); setNestedModal(null) }}
             >
                 <View style={styles.container}>
-                    {renderTitle(nestedModal?.title || '', <BackIcon style={{ marginEnd: 15 }} />)}
+                    {renderTitle(nestedModal?.title || "", <BackIcon style={styles.backIcon} />)}
                     <FlatList
                         data={nestedModal?.options}
                         keyExtractor={(option) => option}
@@ -144,21 +144,24 @@ const styles = StyleSheet.create({
         marginTop: Constants.STATUS_BAR_HEIGHT,
         marginBottom: 68,
         marginEnd: 0,
-        marginStart: '20%',
-        backgroundColor: 'white',
+        marginStart: "20%",
+        backgroundColor: "white",
     },
     container: {
         flex: 1,
     },
+    backIcon: {
+        marginEnd: 15
+    },
     headerContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
         paddingHorizontal: Layout.PADDING_HORIZONTAL,
         paddingVertical: 25,
     },
     headerText: {
         fontSize: 16,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         lineHeight: 22,
     },
     horizontalLine: {
@@ -167,15 +170,15 @@ const styles = StyleSheet.create({
     listItem: {
         paddingHorizontal: Layout.PADDING_HORIZONTAL,
         paddingVertical: Layout.PADDING_VERTICAL,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
     listItemValue: {
         opacity: 0.5,
     },
     buttonContainer: {
         backgroundColor: Colors.BLUE100,
-        marginTop: 'auto',
+        marginTop: "auto",
         paddingVertical: 20,
         paddingHorizontal: 70
     },

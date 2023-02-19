@@ -8,4 +8,3 @@ Todo's
 Ask about
 - Why on android after login go back button goes to profile
 - keyboardavoidingview in android logister
-- should reset on tab change?

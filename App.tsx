@@ -3,8 +3,8 @@ import { StatusBar, StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import SplashScreen from "react-native-splash-screen"
-import FlashMessage from "react-native-flash-message"
+import SplashScreen from 'react-native-splash-screen'
+import FlashMessage from 'react-native-flash-message'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
 import { Colors, Constants } from 'constants/index'
