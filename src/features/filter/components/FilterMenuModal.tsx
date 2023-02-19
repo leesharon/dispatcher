@@ -1,16 +1,22 @@
-import { View, StyleSheet } from "react-native"
+import { ReactNode, useState } from 'react'
+import { View, StyleSheet, Pressable } from "react-native"
 import Modal from "react-native-modal"
 import { AppText } from 'components/common/AppText'
 import { Colors, Constants, Layout } from 'constants'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { selectFilterBy } from '../reducers/filterSlice'
-import { FilterBy } from 'models/filter-by'
 import AppButton from 'components/common/AppButton'
+import BackIcon from '../../../../assets/back.svg'
 
 interface FilterMenuModalProps {
     isVisible: boolean
     onBackdropPress: () => void
+}
+
+interface NestedModal {
+    title: string
+    options: string[]
 }
 
 const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): JSX.Element => {
@@ -18,15 +24,32 @@ const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): 
     const dispatch = useAppDispatch()
     const filterBy = useAppSelector(selectFilterBy)
 
+    const [nestedModal, setNestedModal] = useState<NestedModal | null>(null)
+
     const onSubmit = () => {
         console.log(': filtered!')
+    }
+
+    const renderTitle = (title: string, icon?: ReactNode) => {
+        return (
+            <>
+                <View style={styles.headerContainer}>
+                    {icon &&
+                        <Pressable onPress={() => { setNestedModal(null) }}>
+                            {icon}
+                        </Pressable>
+                    }
+                    <AppText styleProps={styles.headerText}>{title}</AppText>
+                </View>
+                <HorizontalLine styleProps={styles.horizontalLine} />
+            </>
+        )
     }
 
     return (
         <>
             <Modal
                 isVisible={isVisible}
-                hasBackdrop={true}
                 onBackdropPress={onBackdropPress}
                 style={styles.modal}
                 animationIn="slideInRight"
@@ -34,16 +57,18 @@ const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): 
                 backdropColor='#303032'
             >
                 <View style={styles.container}>
-                    <AppText styleProps={styles.header}>FILTER</AppText>
-                    <HorizontalLine styleProps={styles.horizontalLine} />
+                    {renderTitle('FILTER')}
                     {Object.keys(filterBy).map((key, index) => (
-                        <View>
+                        <Pressable
+                            key={key}
+                            onPress={() => setNestedModal({ title: filterBy[key].title, options: filterBy[key].options })}
+                        >
                             <View style={styles.listItem}>
                                 <AppText>{filterBy[key].title}</AppText>
                                 <AppText styleProps={styles.listItemValue}>{filterBy[key].value}</AppText>
                             </View>
                             <HorizontalLine styleProps={styles.horizontalLine} />
-                        </View>
+                        </Pressable>
                     ))}
                     <View style={styles.buttonContainer}>
                         <AppButton
@@ -54,11 +79,31 @@ const FilterMenuModal = ({ isVisible, onBackdropPress }: FilterMenuModalProps): 
                         </AppButton>
                     </View>
                 </View>
-            </Modal>
-            <Modal>
-                <View>
 
-                </View>
+                {/* Nested Modal */}
+                <Modal
+                    isVisible={!!nestedModal}
+                    style={styles.modal}
+                    animationIn="slideInRight"
+                    animationOut="slideOutRight"
+                    backdropColor='transparent'
+                    onBackdropPress={() => { onBackdropPress(); setNestedModal(null) }}
+                >
+                    <View style={styles.container}>
+                        {renderTitle(nestedModal?.title || '', <BackIcon style={{ marginEnd: 15 }} />)}
+                        {nestedModal?.options.map((option, index) => (
+                            <Pressable
+                                key={option}
+                                onPress={() => setNestedModal(null)}
+                            >
+                                <View style={styles.listItem}>
+                                    <AppText>{option}</AppText>
+                                </View>
+                                <HorizontalLine styleProps={styles.horizontalLine} />
+                            </Pressable>
+                        ))}
+                    </View>
+                </Modal>
             </Modal>
         </>
     )
@@ -76,12 +121,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    header: {
+    headerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: Layout.PADDING_HORIZONTAL,
+        paddingVertical: 25,
+    },
+    headerText: {
         fontSize: 16,
         fontWeight: 'bold',
         lineHeight: 22,
-        paddingHorizontal: Layout.PADDING_HORIZONTAL,
-        paddingVertical: 25,
     },
     horizontalLine: {
         backgroundColor: Colors.GRAY600_OPACITY
