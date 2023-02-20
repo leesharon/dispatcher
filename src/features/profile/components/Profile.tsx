@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from "react-native"
+import { Pressable, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Shadow } from 'react-native-shadow-2'
 import { useAppSelector } from 'state/hooks'
@@ -12,7 +12,6 @@ import LogoutIcon from '../assets/logout.svg'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import { firebaseLogout } from 'utils/firebaseAuthUtils'
 import { push } from 'navigation/RootNavigation'
-import { Heading1 } from 'components/common/Heading1'
 
 const menuItems = [
     { id: '1aqads123', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { push('Settings') } },
@@ -29,9 +28,9 @@ const Profile = (): JSX.Element => {
         <SafeAreaView style={styles.container}>
             <Shadow style={styles.shadowContainer}>
                 <View style={styles.header}>
-                    <Heading1>
+                    <AppText styleProps={styles.greeting}>
                         {'Hi ' + (loggedinUser.displayName || loggedinUser.email || 'User')}
-                    </Heading1>
+                    </AppText>
                     <Pressable onPress={() => push('ProfileEdit')}>
                         <AppText>
                             {Strings.EDIT_PROFILE}
@@ -82,6 +81,12 @@ const styles = StyleSheet.create({
     header: {
         flex: 1,
         paddingBottom: 10,
+    },
+    greeting: {
+        fontSize: 24,
+        color: Colors.BLUE800,
+        fontWeight: '500',
+        lineHeight: 32,
     },
     userIconContainer: {
         justifyContent: 'center',
