@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Pressable, StyleSheet, View } from "react-native"
+import React, { useEffect, useMemo, useState } from 'react'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { navigate, push, resetTo } from 'navigation/RootNavigation'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -18,7 +18,7 @@ import { Loader } from 'components/common/Loader'
 import { HomepageStackParamList } from 'constants/screens'
 import { TopBarSearch } from './TopBarSearch'
 import { FilterMenuModal } from 'features/filter/components/FilterMenuModal'
-import { getSourcesFromHeadlines } from 'utils/filterUtils'
+import { getFilteredHeadlines, getSourcesFromHeadlines } from 'utils/filterUtils'
 
 import Logo from '../assets/logo.svg'
 import SearchIcon from '../assets/search.svg'
@@ -34,7 +34,7 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
     const notifications = useAppSelector(selectNotifications)
     const filterBy = useAppSelector(selectFilterBy)
 
-    const { data: headLines, isLoading, isSuccess, isError, error } = useGetHeadLinesQuery()
+    const { data: headLines, isLoading, isSuccess } = useGetHeadLinesQuery()
 
     const [headLinesToDisplay, setHeadLinesToDisplay] = useState(headLines)
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
@@ -66,15 +66,12 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
     // handles filter results
     useEffect(() => {
         if (!headLines) return
-        if (filterBy.sources.value === 'All') setHeadLinesToDisplay(headLines)
-        if (filterBy.sources.value !== 'All') {
-            setHeadLinesToDisplay(
-                headLines.filter(headLine => {
-                    return headLine.source.name === filterBy.sources.value
-                })
-            )
+        if (filterBy.sources.value === 'All' && filterBy.dates.value === 'All')
+            setHeadLinesToDisplay(headLines)
+        else if (filterBy.sources.value !== 'All' || filterBy.dates.value !== 'All') {
+            setHeadLinesToDisplay(getFilteredHeadlines(headLines, filterBy))
         }
-    }, [filterBy])
+    }, [filterBy, headLines])
 
     if (!loggedinUser) resetTo('Logister')
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
@@ -131,17 +128,6 @@ const styles = StyleSheet.create({
         position: 'relative',
         paddingBottom: 80,
         backgroundColor: Colors.BLUE100,
-    },
-    backdrop: {
-        position: 'absolute',
-        flex: 1,
-        top: 0,
-        start: 0,
-        end: 0,
-        bottom: 0,
-        backgroundColor: 'black',
-        opacity: 0.5,
-        zIndex: 5
     },
     iconsContainer: {
         flexDirection: 'row',

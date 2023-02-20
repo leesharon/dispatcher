@@ -10,7 +10,7 @@ const initialState: filterState = {
         searchIn: { title: 'Search in', value: 'Everything', options: ['Everything', 'Headlines', 'Articles'] },
         sources: { title: 'Sources', value: 'All', options: ['All', 'BBC News', 'CNN', 'Fox News', 'The New York Times'] },
         languages: { title: 'Languages', value: 'All', options: ['All', 'English', 'Spanish', 'French', 'German'] },
-        dates: { title: 'Dates', value: 'All', options: ['All', 'Today', 'This Week', 'This Month'] }
+        dates: { title: 'Dates', value: 'All', options: ['All', 'Last 6 Hours', 'Last 12 Hours', 'Last Day'] }
     },
 }
 
