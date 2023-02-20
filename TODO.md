@@ -5,6 +5,7 @@ Todo's
 - configure eslint
 - autolinking in react native for ios
 - bug for usefffect in app, intital route not always correct
+- github CP
 
 Ask about
 - Why on android after login go back button goes to profile

@@ -1,8 +1,8 @@
-import { View, StyleSheet, FlatList } from "react-native"
+import { View, StyleSheet, FlatList } from 'react-native'
 import { AppText } from 'components/common/AppText'
 import { TopBar } from 'components/common/TopBar'
 import { GoBackButton } from 'components/common/GoBackButton'
-import { Colors, Strings } from 'constants'
+import { Strings } from 'constants'
 import { useAppSelector } from 'state/hooks'
 import { NotificationPreview } from './NotificationPreview'
 import { selectNotifications } from '../reducers/notificationsSlice'
@@ -22,6 +22,7 @@ const Notifications = (): JSX.Element => {
             {(notifications && notifications.length)
                 ? <FlatList
                     data={notifications}
+                    keyExtractor={item => item.id}
                     renderItem={({ item }) => <NotificationPreview
                         notification={item}
                     />}
