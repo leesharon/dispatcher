@@ -1,10 +1,10 @@
 
-type RootStack = 'Logister' | 'MainTab' | 'Carousel'
+type RootStack = 'Logister' | 'MainTab' | 'Onboarding'
 
 type RootStackParamList = {
     Logister: undefined
     MainTab: undefined
-    Carousel: undefined
+    Onboarding: undefined
 }
 
 type MainTabsParamsList = {

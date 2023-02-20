@@ -15,7 +15,7 @@ import { RootStack } from 'constants/screens'
 import { navigationRef } from 'navigation/RootNavigation'
 import { RootStackParamList } from 'constants/screens'
 import { User } from 'models/user'
-import { CarouselScreen } from 'features/carousel/components/CarouselScreen'
+import { OnboardingScreen } from 'features/onboarding/components/OnboardingScreen'
 
 const App = () => {
   const Stack = createStackNavigator<RootStackParamList>()
@@ -23,7 +23,7 @@ const App = () => {
   const loggedinUser = useAppSelector(state => state.loggedinUser)
   const dispatch = useAppDispatch()
 
-  const [initialRouteName, setIntialRouteName] = useState<RootStack>('Carousel')
+  const [initialRouteName, setIntialRouteName] = useState<RootStack>('Onboarding')
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
@@ -37,7 +37,7 @@ const App = () => {
   }, [onAuthStateChanged])
 
   useEffect(() => {
-    loggedinUser.loggedinUser && setIntialRouteName('Carousel')
+    loggedinUser.loggedinUser && setIntialRouteName('Onboarding')
   }, [loggedinUser])
 
   useEffect(() => {
@@ -64,8 +64,8 @@ const App = () => {
             component={MainTabNavigation}
           />
           <Stack.Screen
-            name={'Carousel'}
-            component={CarouselScreen}
+            name={'Onboarding'}
+            component={OnboardingScreen}
           />
         </Stack.Navigator>
       </SafeAreaProvider>

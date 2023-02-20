@@ -15,7 +15,7 @@ interface Item {
     text: string
 }
 
-const CarouselScreen = (): JSX.Element => {
+const OnboardingScreen = (): JSX.Element => {
     const [activeIndex, setActiveIndex] = useState(0)
     const [carouselRef, setCarouselRef] = useState<Carousel<Item> | null>(null)
 
@@ -167,4 +167,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export { CarouselScreen }
+export { OnboardingScreen }
