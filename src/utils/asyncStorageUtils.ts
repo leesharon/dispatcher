@@ -7,7 +7,8 @@ const FAVORITE_HEADLINES = 'favoriteHeadLines'
 export const asyncStorageUtils = {
     isBoarding,
     addFavoriteHeadLine,
-    removeFavoriteHeadline
+    removeFavoriteHeadline,
+    getFavoriteHeadLines
 }
 
 async function addFavoriteHeadLine(headLine: HeadLine) {

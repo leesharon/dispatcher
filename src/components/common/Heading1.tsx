@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from 'react-native'
 import { Colors } from 'constants'
 import { AppText } from './AppText'
 
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         color: Colors.BLUE800,
         fontWeight: 'bold',
         paddingBottom: 12,
+        paddingTop: 12
     },
 })
 
