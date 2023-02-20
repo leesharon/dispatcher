@@ -1,7 +1,6 @@
 Todo's
 - error handling in homepage
 - use maincontainer everywhere
-- configure eslint
 - autolinking in react native for ios
 - bug for usefffect in app, intital route not always correct
 - virtualized list error
