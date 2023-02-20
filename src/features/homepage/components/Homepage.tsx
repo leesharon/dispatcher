@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { resetTo } from 'navigation/RootNavigation'
@@ -33,34 +33,28 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
     const [headLinesToDisplay, setHeadLinesToDisplay] = useState(headLines)
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
 
+    const headLinesSources = useMemo(() => {
+        if (!headLines) return []
+        return getSourcesFromHeadlines(headLines)
+    }, [headLines])
+
     // handles success api call
     useEffect(() => {
         if (isSuccess) {
-            setHeadLinesToDisplay(headLines)
-            dispatch(updateSources(getSourcesFromHeadlines(headLines)))
+            dispatch(updateSources(headLinesSources))
         }
-    }, [isSuccess, dispatch, headLines])
-
-    // handles search results from params
-    useEffect(() => {
-        if (params?.searchValue && headLinesToDisplay) {
-            setHeadLinesToDisplay(
-                headLinesToDisplay.filter(
-                    headLine => headLine.title.toLowerCase().includes(params.searchValue.toLowerCase())
-                )
-            )
-        }
-    }, [params, headLinesToDisplay])
+    }, [isSuccess, dispatch, headLinesSources])
 
     // handles filter results
     useEffect(() => {
-        if (!headLines) return
-        if (filterBy.sources.value === 'All' && filterBy.dates.value === 'All')
+        if (!headLines || !isSuccess) return
+        if (filterBy.sources.value === 'All' && filterBy.dates.value === 'All' && !params?.searchValue) {
             setHeadLinesToDisplay(headLines)
-        else if (filterBy.sources.value !== 'All' || filterBy.dates.value !== 'All') {
-            setHeadLinesToDisplay(getFilteredHeadlines(headLines, filterBy))
         }
-    }, [filterBy, headLines])
+        else if (filterBy.sources.value !== 'All' || filterBy.dates.value !== 'All' || params?.searchValue) {
+            setHeadLinesToDisplay(getFilteredHeadlines(headLines, filterBy, params?.searchValue))
+        }
+    }, [filterBy, headLines, params, isSuccess])
 
     if (!loggedinUser) resetTo('Logister')
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>

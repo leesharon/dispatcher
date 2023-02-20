@@ -13,9 +13,19 @@ export function getSourcesFromHeadlines(headlines: HeadLine[]): string[] {
     return sources
 }
 
-export function getFilteredHeadlines(headLines: HeadLine[], filterBy: FilterBy): HeadLine[] {
+export function getFilteredHeadlines(
+    headLines: HeadLine[],
+    filterBy: FilterBy,
+    searchValue: string | undefined): HeadLine[] {
+
     return headLines.filter(headline => {
+        // source filter
         const isMatchingSource = filterBy.sources.value === 'All' || headline.source.name === filterBy.sources.value
+
+        // search filter
+        const isMatchingSearch = !searchValue || headline.title.toLowerCase().includes(searchValue.toLowerCase())
+
+        // date filter
         let isMatchingDate = false
         const publishedAt = new Date(headline.publishedAt)
         switch (filterBy.dates.value) {
@@ -34,6 +44,6 @@ export function getFilteredHeadlines(headLines: HeadLine[], filterBy: FilterBy):
             default:
                 break
         }
-        return isMatchingSource && isMatchingDate
+        return isMatchingSource && isMatchingDate && isMatchingSearch
     })
 }
