@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { TextInput, StyleSheet, View, Pressable, Text } from "react-native"
+import React, { useState } from 'react'
+import { TextInput, StyleSheet, View, Pressable, Text } from 'react-native'
 import { Colors, Fonts } from 'constants/index'
 import Revealed from '../../../assets/revealed.svg'
 import Hidden from '../../../assets/hidden.svg'
@@ -41,12 +41,6 @@ const AppInput = ({
 
     const [borderColor, setBorderColor] = useState(Colors.GRAY600)
     const [isRevealed, setIsRevealed] = useState(false)
-
-    const inputFocusRef = useRef<TextInput>(null)
-
-    useEffect(() => {
-        isEditable && inputFocusRef.current?.focus()
-    }, [isEditable])
 
     const handleChange = (text: string) => {
         setValue(text)
@@ -147,7 +141,6 @@ const AppInput = ({
                     onBlur={handleBlur}
                     editable={isEditable}
                     focusable={isEditable}
-                    ref={inputFocusRef}
                 />
             </View>
             {error && <Text style={styles.error}>{error}</Text>}
