@@ -1,20 +1,21 @@
-import React, { useEffect, useState, useCallback } from "react"
-import { StatusBar, StyleSheet, View } from "react-native"
-import { NavigationContainer } from "@react-navigation/native"
-import { createStackNavigator } from "@react-navigation/stack"
-import { SafeAreaProvider } from "react-native-safe-area-context"
-import SplashScreen from "react-native-splash-screen"
-import FlashMessage from "react-native-flash-message"
-import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth"
-import { LogisterScreen } from "./src/features/authentication/components/LogisterScreen"
-import { Colors, Constants } from "constants/index"
-import { login } from "features/authentication/reducers/loggedinUserSlice"
-import { MainTabNavigation } from "navigation/MainTabNavigation"
-import { useAppDispatch, useAppSelector } from "state/hooks"
-import { RootStack } from "constants/screens"
-import { navigationRef } from "navigation/RootNavigation"
-import { RootStackParamList } from "constants/screens"
-import { User } from "models/user"
+import { useEffect, useState, useCallback } from 'react'
+import { StatusBar, StyleSheet, View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import SplashScreen from 'react-native-splash-screen'
+import FlashMessage from 'react-native-flash-message'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { LogisterScreen } from './src/features/authentication/components/LogisterScreen'
+import { Colors, Constants } from 'constants/index'
+import { login } from 'features/authentication/reducers/loggedinUserSlice'
+import { MainTabNavigation } from 'navigation/MainTabNavigation'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { RootStack } from 'constants/screens'
+import { navigationRef } from 'navigation/RootNavigation'
+import { RootStackParamList } from 'constants/screens'
+import { User } from 'models/user'
+import { CarouselScreen } from 'features/carousel/components/CarouselScreen'
 
 const App = () => {
   const Stack = createStackNavigator<RootStackParamList>()
@@ -22,7 +23,7 @@ const App = () => {
   const loggedinUser = useAppSelector(state => state.loggedinUser)
   const dispatch = useAppDispatch()
 
-  const [initialRouteName, setIntialRouteName] = useState<RootStack>("Logister")
+  const [initialRouteName, setIntialRouteName] = useState<RootStack>('Carousel')
   const [initializing, setInitializing] = useState(true)
 
   const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
@@ -33,10 +34,10 @@ const App = () => {
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
     return subscriber
-  }, [])
+  }, [onAuthStateChanged])
 
   useEffect(() => {
-    loggedinUser.loggedinUser && setIntialRouteName("MainTab")
+    loggedinUser.loggedinUser && setIntialRouteName('Carousel')
   }, [loggedinUser])
 
   useEffect(() => {
@@ -55,12 +56,16 @@ const App = () => {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen
-            name={"Logister"}
+            name={'Logister'}
             component={LogisterScreen}
           />
           <Stack.Screen
-            name={"MainTab"}
+            name={'MainTab'}
             component={MainTabNavigation}
+          />
+          <Stack.Screen
+            name={'Carousel'}
+            component={CarouselScreen}
           />
         </Stack.Navigator>
       </SafeAreaProvider>

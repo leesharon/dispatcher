@@ -1,7 +1,6 @@
 Todo's
 - error handling in homepage
 - input focus bug android profile edit
-- edit user in datavase?
 - use maincontainer everywhere
 - configure eslint
 

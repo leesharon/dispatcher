@@ -7,6 +7,8 @@ module.exports = {
 	'extends': [
 		'eslint:recommended',
 		'plugin:react/recommended',
+		'plugin:react/jsx-runtime',
+		'plugin:react-hooks/recommended',
 		'plugin:@typescript-eslint/recommended'
 	],
 	'overrides': [
@@ -29,6 +31,7 @@ module.exports = {
 			'error',
 			'single'
 		],
+		// 'indent': ['error', 2],
 		'semi': [
 			'error',
 			'never'
