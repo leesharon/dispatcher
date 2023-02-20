@@ -1,10 +1,14 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { View, StyleSheet, Pressable } from 'react-native'
-import { AppText } from 'components/common/AppText'
-import { Colors, Constants, Fonts, Layout } from 'constants'
 import Carousel from 'react-native-snap-carousel'
-import ForwardIcon from '../../../../assets/forward-white.svg'
+import { Bar } from 'react-native-progress'
+import { AppText } from 'components/common/AppText'
+import { Colors, Constants, Fonts } from 'constants'
 import { resetTo } from 'navigation/RootNavigation'
+import ForwardIcon from '../../../../assets/forward-white.svg'
+import Rectangle1 from '../assets/rectangle1.svg'
+import Rectangle2 from '../assets/rectangle2.svg'
+import Rectangle3 from '../assets/rectangle3.svg'
 
 interface Item {
     title: string
@@ -31,8 +35,25 @@ const CarouselScreen = (): JSX.Element => {
     ]
 
     const handleNextButtonPress = () => {
-        if (activeIndex === carouselItems.length - 1) resetTo('Logister')
+        if (activeIndex === carouselItems.length - 1) {
+            resetTo('Logister')
+            return
+        }
+        setActiveIndex(activeIndex + 1)
         carouselRef?.snapToNext()
+    }
+
+    const getRectangleImage = () => {
+        switch (activeIndex) {
+            case 0:
+                return <Rectangle1 style={styles.rectangle} />
+            case 1:
+                return <Rectangle2 style={styles.rectangle} />
+            case 2:
+                return <Rectangle3 style={styles.rectangle} />
+            default:
+                return <Rectangle1 style={styles.rectangle} />
+        }
     }
 
     const renderItem = ({ item }: { item: Item }) => {
@@ -42,22 +63,23 @@ const CarouselScreen = (): JSX.Element => {
                     <AppText styleProps={styles.title}>Dispatcher</AppText>
                     <AppText styleProps={styles.itemText}>{item.text}</AppText>
                 </View>
-                <View style={styles.buttonsConatainer}>
-                    <Pressable onPress={() => { resetTo('Logister') }}>
-                        <AppText styleProps={styles.skipButton}>Skip</AppText>
-                    </Pressable>
-                    <Pressable style={styles.nextButtonContainer} onPress={handleNextButtonPress}>
-                        <AppText styleProps={styles.nextButton}>Next</AppText>
-                        <ForwardIcon />
-                    </Pressable>
-                </View>
             </View>
         )
     }
 
-
     return (
         <View style={styles.screenContainer}>
+            <Bar
+                progress={(activeIndex + 1) / 3}
+                width={255}
+                color={Colors.RED600}
+                unfilledColor={Colors.BLUE150}
+                borderColor={Colors.BLUE150}
+                borderWidth={2}
+                height={11}
+                borderRadius={7}
+                style={styles.bar}
+            />
             <Carousel
                 ref={(c) => { setCarouselRef(c) }}
                 data={carouselItems}
@@ -66,6 +88,16 @@ const CarouselScreen = (): JSX.Element => {
                 itemWidth={Constants.SCREEN_WIDTH - 50}
                 onSnapToItem={(index) => setActiveIndex(index)}
             />
+            <View style={styles.buttonsConatainer}>
+                <Pressable onPress={() => { resetTo('Logister') }}>
+                    <AppText styleProps={styles.skipButton}>Skip</AppText>
+                </Pressable>
+                <Pressable style={styles.nextButtonContainer} onPress={handleNextButtonPress}>
+                    <AppText styleProps={styles.nextButton}>Next</AppText>
+                    <ForwardIcon />
+                </Pressable>
+            </View>
+            {getRectangleImage()}
         </View>
     )
 }
@@ -74,13 +106,16 @@ const styles = StyleSheet.create({
     screenContainer: {
         flex: 1,
         backgroundColor: Colors.BLUE800,
-        alignItems: 'center',
-        paddingHorizontal: Layout.PADDING_HORIZONTAL,
+        paddingTop: 20,
+        paddingHorizontal: 20,
         paddingBottom: 30,
+    },
+    bar: {
+        alignSelf: 'center',
     },
     carouselItemContainer: {
         flex: 1,
-        paddingTop: 100,
+        paddingTop: 80,
     },
     textContainer: {
         alignItems: 'center',
@@ -103,13 +138,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 'auto'
+        marginTop: 'auto',
     },
     skipButton: {
         color: Colors.BLUE800,
         fontSize: 12,
-        fontWeight: 'bold',
+        fontWeight: '500',
         lineHeight: 14,
+        paddingStart: 7,
     },
     nextButtonContainer: {
         flexDirection: 'row',
@@ -123,6 +159,12 @@ const styles = StyleSheet.create({
         paddingTop: 4,
         paddingEnd: 7,
     },
+    rectangle: {
+        position: 'absolute',
+        bottom: 0,
+        start: 0,
+        zIndex: -1,
+    }
 })
 
 export { CarouselScreen }

@@ -7,6 +7,7 @@ const GRAY700 = '#D2D2D2'
 const GRAY800 = '#B3B3B3'
 const GRAY900 = '#878787'
 const BLUE100 = '#F8F8FF'
+const BLUE150 = '#514D6B'
 const BLUE200 = '#CACAEE'
 const BLUE300 = '#6CA4E1'
 const BLUE350 = '#5897D1'
@@ -17,6 +18,7 @@ const BLUE600 = '#116ACC'
 const BLUE800 = '#262146'
 const BLUE1000 = '#14142B'
 const RED500 = '#FF6B57'
+const RED600 = '#FD5959'
 const PURPLE200 = '#F0EEF9'
 const PURPLE500 = '#5858A6'
 
@@ -31,6 +33,7 @@ export {
     GRAY800,
     GRAY900,
     BLUE100,
+    BLUE150,
     BLUE300,
     BLUE350,
     BLUE400,
@@ -40,6 +43,7 @@ export {
     BLUE800,
     BLUE1000,
     RED500,
+    RED600,
     PURPLE200,
     PURPLE500
 }
