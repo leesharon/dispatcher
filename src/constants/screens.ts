@@ -1,5 +1,5 @@
 
-type RootStack = 'Logister' | 'MainTab' | 'Onboarding'
+type RootStack = 'Logister' | 'MainTab' | 'Onboarding' | null
 
 type RootStackParamList = {
     Logister: undefined
