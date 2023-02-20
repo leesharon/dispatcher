@@ -1,10 +1,10 @@
 import { AppText } from 'components/common/AppText'
 import { Colors } from 'constants'
 import { Notification } from 'models/notification'
-import { View, StyleSheet, Pressable } from "react-native"
+import { View, StyleSheet, Pressable } from 'react-native'
 import RectangleIcon from '../assets/rectangle.svg'
 import RectangleGrayIcon from '../assets/rectangle-gray.svg'
-import ForwardIcon from '../assets/forward.svg'
+import ForwardIcon from '../../../../assets/forward.svg'
 import { useAppDispatch } from 'state/hooks'
 import { push } from 'navigation/RootNavigation'
 import { markNotificationAsRead } from '../reducers/notificationsSlice'

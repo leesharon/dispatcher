@@ -7,6 +7,7 @@ const GRAY700 = '#D2D2D2'
 const GRAY800 = '#B3B3B3'
 const GRAY900 = '#878787'
 const BLUE100 = '#F8F8FF'
+const BLUE200 = '#CACAEE'
 const BLUE300 = '#6CA4E1'
 const BLUE350 = '#5897D1'
 const BLUE400 = '#5A5A89'
@@ -21,6 +22,7 @@ const PURPLE500 = '#5858A6'
 
 export {
     GRAY100,
+    BLUE200,
     GRAY300,
     GRAY500,
     GRAY600,
