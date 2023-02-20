@@ -1,6 +1,6 @@
 import { AppText } from 'components/common/AppText'
 import { GoBackButton } from 'components/common/GoBackButton'
-import { Header1 } from 'components/common/Header1'
+import { Heading1 } from 'components/common/Heading1'
 import { TopBar } from 'components/common/TopBar'
 import { Colors, Layout, Strings } from 'constants'
 import { View, StyleSheet } from "react-native"
@@ -16,7 +16,7 @@ const Terms = ({ }: TermsProps): JSX.Element => {
                 <GoBackButton />
             </TopBar>
             <View style={styles.contentContainer}>
-                <Header1>Terms & Privacy</Header1>
+                <Heading1>Terms & Privacy</Heading1>
                 <AppText styleProps={styles.paragraph}>{Strings.LOREM}</AppText>
                 <AppText>{Strings.LOREM}</AppText>
             </View>

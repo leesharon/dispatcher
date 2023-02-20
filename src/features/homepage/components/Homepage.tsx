@@ -1,32 +1,40 @@
-import { Pressable, StyleSheet, View } from "react-native"
+import React, { useEffect, useMemo, useState } from 'react'
+import { Pressable, StyleSheet, View } from 'react-native'
+import { StackScreenProps } from '@react-navigation/stack'
+import { navigate, push, resetTo } from 'navigation/RootNavigation'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useGetHeadLinesQuery } from 'features/api/apiSlice'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
+import { selectNotifications } from 'features/notifications/reducers/notificationsSlice'
+import { selectFilterBy, updateSources } from 'features/filter/reducers/filterSlice'
+
+import { HeadLinesFeed } from './HeadLinesFeed'
+import { AppText } from 'components/common/AppText'
+import { Colors, Strings } from 'constants'
 import { TopBar } from '../../../components/common/TopBar'
 import { FilterBar } from './FilterBar'
-import { HeadLinesFeed } from './HeadLinesFeed'
-import { useGetHeadLinesQuery } from 'features/api/apiSlice'
-import { useEffect, useMemo, useState } from 'react'
-import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
-import { AppText } from 'components/common/AppText'
+import { Loader } from 'components/common/Loader'
+import { HomepageStackParamList } from 'constants/screens'
+import { TopBarSearch } from './TopBarSearch'
+import { FilterMenuModal } from 'features/filter/components/FilterMenuModal'
+import { getFilteredHeadlines, getSourcesFromHeadlines } from 'utils/filterUtils'
+
 import Logo from '../assets/logo.svg'
 import SearchIcon from '../assets/search.svg'
 import RedDotIcon from '../assets/red-dot.svg'
 import NotificationsIcon from '../assets/notifications.svg'
-import { Colors, Strings } from 'constants'
-import { navigate, push } from 'navigation/RootNavigation'
-import { useAppSelector } from 'state/hooks'
-import { selectNotifications } from 'features/notifications/reducers/notificationsSlice'
-import { Loader } from 'components/common/Loader'
-import { StackScreenProps } from '@react-navigation/stack'
-import { HomepageStackParamList } from 'constants/screens'
-import { TopBarSearch } from './TopBarSearch'
+import NoResultsIcon from '../assets/no-search-results.svg'
 
 type HomepageProps = StackScreenProps<HomepageStackParamList, 'Homepage'>
 
 const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
+    const dispatch = useAppDispatch()
     const loggedinUser = useAppSelector(selectLoggedinUser)
     const notifications = useAppSelector(selectNotifications)
+    const filterBy = useAppSelector(selectFilterBy)
 
-    const { data: headLines, isLoading, isSuccess, isError, error } = useGetHeadLinesQuery()
+    const { data: headLines, isLoading, isSuccess } = useGetHeadLinesQuery()
 
     const [headLinesToDisplay, setHeadLinesToDisplay] = useState(headLines)
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
@@ -36,10 +44,15 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
         return notifications.some(notification => notification.isUnread)
     }, [notifications])
 
+    // handles success api call
     useEffect(() => {
-        isSuccess && setHeadLinesToDisplay(headLines)
+        if (isSuccess) {
+            setHeadLinesToDisplay(headLines)
+            dispatch(updateSources(getSourcesFromHeadlines(headLines)))
+        }
     }, [isSuccess])
 
+    // handles search results from params
     useEffect(() => {
         if (params?.searchValue && headLinesToDisplay) {
             setHeadLinesToDisplay(
@@ -50,19 +63,27 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
         }
     }, [params])
 
+    // handles filter results
+    useEffect(() => {
+        if (!headLines) return
+        if (filterBy.sources.value === 'All' && filterBy.dates.value === 'All')
+            setHeadLinesToDisplay(headLines)
+        else if (filterBy.sources.value !== 'All' || filterBy.dates.value !== 'All') {
+            setHeadLinesToDisplay(getFilteredHeadlines(headLines, filterBy))
+        }
+    }, [filterBy, headLines])
+
+    if (!loggedinUser) resetTo('Logister')
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
     if (isLoading) return <Loader />
     if (!headLinesToDisplay) return <AppText>{Strings.GENERAL_ERROR}</AppText>
 
     return (
         <SafeAreaView style={styles.rootContainer}>
-            {isFilterMenuOpen &&
-                <Pressable
-                    style={styles.backdrop}
-                    onPress={() => { setIsFilterMenuOpen(false) }}
-                >
-                </Pressable>
-            }
+            <FilterMenuModal
+                isVisible={isFilterMenuOpen}
+                onBackdropPress={() => { setIsFilterMenuOpen(false) }}
+            />
             {params?.searchValue
                 ? <TopBarSearch searchValue={params.searchValue} />
                 : <TopBar>
@@ -91,8 +112,10 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
                 loggedinUser={loggedinUser}
                 isSearch={!!params?.searchValue}
             />
-            {params?.searchValue && headLinesToDisplay.length === 0 &&
-                <AppText styleProps={styles.noResults}>{Strings.NO_RESULTS}</AppText>
+            {(headLinesToDisplay.length === 0) &&
+                <View style={styles.noResultsContainer}>
+                    <NoResultsIcon />
+                </View>
             }
         </SafeAreaView>
     )
@@ -106,17 +129,6 @@ const styles = StyleSheet.create({
         paddingBottom: 80,
         backgroundColor: Colors.BLUE100,
     },
-    backdrop: {
-        position: 'absolute',
-        flex: 1,
-        top: 0,
-        start: 0,
-        end: 0,
-        bottom: 0,
-        backgroundColor: 'black',
-        opacity: 0.5,
-        zIndex: 5
-    },
     iconsContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -129,10 +141,11 @@ const styles = StyleSheet.create({
         top: -3,
         end: -1,
     },
-    noResults: {
-        alignSelf: 'center',
-        marginTop: 20,
-    }
+    noResultsContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 })
 
 export { Homepage }

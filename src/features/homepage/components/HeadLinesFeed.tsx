@@ -5,7 +5,7 @@ import { HeadLine } from 'models/headline'
 import { HeadLinePreview } from './HeadLinePreview'
 import { User } from 'models/user'
 import { formatDate } from 'utils/dateUtils'
-import { Header1 } from 'components/common/Header1'
+import { Heading1 } from 'components/common/Heading1'
 
 interface HeadLinesFeedProps {
     headLines: HeadLine[]
@@ -24,6 +24,7 @@ const HeadLinesFeed = ({ headLines, loggedinUser, isSearch }: HeadLinesFeedProps
                     containerStyle={styles.headLineContainer}
                     imageStyle={styles.headLineImage}
                 />}
+                keyExtractor={item => item.id}
                 ListHeaderComponent={
                     <View style={styles.listHeaderContainer}>
                         {!isSearch &&
@@ -34,9 +35,9 @@ const HeadLinesFeed = ({ headLines, loggedinUser, isSearch }: HeadLinesFeedProps
                                 </AppText>}
                             </View>}
                         {(headLines.length !== 0) &&
-                            <Header1>
+                            <Heading1>
                                 {Strings.HEADLINES_FEED_TITLE}
-                            </Header1>}
+                            </Heading1>}
                     </View>
                 }
             />

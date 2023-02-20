@@ -6,7 +6,7 @@ import { Colors, Strings } from 'constants'
 import { useAppSelector } from 'state/hooks'
 import { NotificationPreview } from './NotificationPreview'
 import { selectNotifications } from '../reducers/notificationsSlice'
-import { Header1 } from 'components/common/Header1'
+import { Heading1 } from 'components/common/Heading1'
 
 const Notifications = (): JSX.Element => {
     const notifications = useAppSelector(selectNotifications)
@@ -17,7 +17,7 @@ const Notifications = (): JSX.Element => {
                 <GoBackButton />
             </TopBar>
             <View style={styles.headerContainer}>
-                <Header1>Notifications</Header1>
+                <Heading1>Notifications</Heading1>
             </View>
             {(notifications && notifications.length)
                 ? <FlatList

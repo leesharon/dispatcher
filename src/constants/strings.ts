@@ -41,7 +41,6 @@ const UPLOAD_PROFILE_PICTURE = 'Upload new image for your personal Icon'
 // SEARCH
 const RECENTS = 'RECENT SEARCHES'
 const NO_RECENTS = 'You have no recent searches.'
-const NO_RESULTS = 'No matching results found.'
 
 const LOADING_TEXT = 'Loading...'
 
@@ -76,5 +75,4 @@ export {
     UPLOAD_PROFILE_PICTURE,
     RECENTS,
     NO_RECENTS,
-    NO_RESULTS,
 }

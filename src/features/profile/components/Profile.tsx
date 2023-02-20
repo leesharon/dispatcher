@@ -12,7 +12,7 @@ import LogoutIcon from '../assets/logout.svg'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import { firebaseLogout } from 'utils/firebaseAuthUtils'
 import { push } from 'navigation/RootNavigation'
-import { Header1 } from 'components/common/Header1'
+import { Heading1 } from 'components/common/Heading1'
 
 const menuItems = [
     { id: '1aqads123', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { push('Settings') } },
@@ -29,9 +29,9 @@ const Profile = (): JSX.Element => {
         <SafeAreaView style={styles.container}>
             <Shadow style={styles.shadowContainer}>
                 <View style={styles.header}>
-                    <Header1>
+                    <Heading1>
                         {'Hi ' + (loggedinUser.displayName || loggedinUser.email || 'User')}
-                    </Header1>
+                    </Heading1>
                     <Pressable onPress={() => push('ProfileEdit')}>
                         <AppText>
                             {Strings.EDIT_PROFILE}

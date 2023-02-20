@@ -20,7 +20,7 @@ const TopBarSearch = ({ searchValue }: TopBarSearchProps): JSX.Element => {
                 <GoBackButton icon={<BackIcon />} withText={false} />
                 <AppText styleProps={styles.searchValue}>{"\"" + searchValue.toUpperCase() + "\""}</AppText>
             </View>
-            <Pressable onPress={() => { pop() }}>
+            <Pressable onPress={pop}>
                 <SearchIcon />
             </Pressable>
         </TopBar>

@@ -3,7 +3,7 @@ import { View, StyleSheet, Pressable, Image } from "react-native"
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { AppText } from 'components/common/AppText'
 import { GoBackButton } from 'components/common/GoBackButton'
-import { Header1 } from 'components/common/Header1'
+import { Heading1 } from 'components/common/Heading1'
 import { TopBar } from 'components/common/TopBar'
 import { Colors, Constants, Layout, Strings } from 'constants'
 import UserIcon from '../assets/user-large.svg'
@@ -109,7 +109,7 @@ const ProfileEdit = (): JSX.Element => {
             <View style={styles.contentContainer}>
                 {!isEditing
                     ? <View style={styles.headerContainer}>
-                        <Header1>My Profile</Header1>
+                        <Heading1>My Profile</Heading1>
                         <Pressable
                             onPress={() => setIsEditing(true)}
                             style={styles.editBtn}
