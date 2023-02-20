@@ -112,7 +112,7 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
                 loggedinUser={loggedinUser}
                 isSearch={!!params?.searchValue}
             />
-            {params?.searchValue && headLinesToDisplay.length === 0 &&
+            {(headLinesToDisplay.length === 0) &&
                 <View style={styles.noResultsContainer}>
                     <NoResultsIcon />
                 </View>
