@@ -7,6 +7,8 @@ module.exports = {
 	'extends': [
 		'eslint:recommended',
 		'plugin:react/recommended',
+		'plugin:react/jsx-runtime',
+		'plugin:react-hooks/recommended',
 		'plugin:@typescript-eslint/recommended'
 	],
 	'overrides': [
@@ -29,13 +31,14 @@ module.exports = {
 			'error',
 			'single'
 		],
+		// 'indent': ['error', 2],
 		'semi': [
 			'error',
 			'never'
 		],
 		'react-native/no-unused-styles': 2,
 		'react-native/split-platform-components': 2,
-		'react-native/no-inline-styles': 2,
+		// 'react-native/no-inline-styles': 2,
 		'react-native/no-single-element-style-arrays': 2,
 		'@typescript-eslint/no-unused-vars': ['error']
 	}
