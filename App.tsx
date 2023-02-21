@@ -46,7 +46,7 @@ const App = () => {
                 if (!isBoarded)
                     setInitialRouteName('Onboarding')
                 else if (loggedinUser)
-                    setInitialRouteName('MainTab')
+                    setInitialRouteName('MainTabNavigation')
                 else setInitialRouteName('Logister')
 
             } catch (err) {
@@ -76,7 +76,7 @@ const App = () => {
                             component={LogisterScreen}
                         />
                         <Stack.Screen
-                            name={'MainTab'}
+                            name={'MainTabNavigation'}
                             component={MainTabNavigation}
                         />
                         <Stack.Screen

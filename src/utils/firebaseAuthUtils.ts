@@ -7,7 +7,7 @@ const firebaseSignup = (email: string, password: string) => {
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
             console.log('User account created & signed in!')
-            resetTo('MainTab')
+            resetTo('MainTabNavigation')
         })
         .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
             authErrorHandler(error)
@@ -18,7 +18,7 @@ const firebaseLogin = (email: string, password: string) => {
     auth().signInWithEmailAndPassword(email, password)
         .then(() => {
             console.log('User account signed in!')
-            resetTo('MainTab')
+            resetTo('MainTabNavigation')
         })
         .catch((error: FirebaseAuthTypes.NativeFirebaseAuthError) => {
             authErrorHandler(error)

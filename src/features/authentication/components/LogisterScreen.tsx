@@ -123,6 +123,7 @@ const LogisterScreen = (): JSX.Element => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.BLUE100,
     },
     logoContainer: {
         height: '35%',
@@ -136,6 +137,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         paddingHorizontal: 20,
         paddingBottom: 20,
+        justifyContent: 'space-between',
     },
     inputsContainer: {
         paddingBottom: 50,

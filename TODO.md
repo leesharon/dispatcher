@@ -6,6 +6,7 @@ Todo's
 - maintab to maintab naviagtor
 - unfavorite from homepage bug
 - vysor
+- change navigate()
 
 Ask about
 - Why on android after login go back button goes to profile

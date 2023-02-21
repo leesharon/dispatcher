@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native"
 import { createStackNavigator } from '@react-navigation/stack'
 import { Homepage } from './Homepage'
 import { HeadLineDetails } from './HeadLineDetails'
@@ -33,9 +32,5 @@ const HomepageStack = (): JSX.Element => {
         </Stack.Navigator>
     )
 }
-
-const styles = StyleSheet.create({
-
-})
 
 export { HomepageStack }
