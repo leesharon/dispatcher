@@ -22,6 +22,7 @@ const RED500 = '#FF6B57'
 const RED600 = '#FD5959'
 const PURPLE200 = '#F0EEF9'
 const PURPLE500 = '#5858A6'
+const BLACK = '#000000'
 
 export {
     WHITE,
@@ -47,5 +48,6 @@ export {
     RED500,
     RED600,
     PURPLE200,
-    PURPLE500
+    PURPLE500,
+    BLACK
 }

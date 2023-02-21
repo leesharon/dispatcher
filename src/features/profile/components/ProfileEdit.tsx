@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { View, StyleSheet, Pressable, Image } from "react-native"
+import { View, StyleSheet, Pressable } from 'react-native'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { AppText } from 'components/common/AppText'
 import { GoBackButton } from 'components/common/GoBackButton'
 import { Heading1 } from 'components/common/Heading1'
 import { TopBar } from 'components/common/TopBar'
-import { Colors, Constants, Layout, Strings } from 'constants'
+import { Colors, Layout, Strings } from 'constants'
 import UserIcon from '../assets/user-large.svg'
 import { AppInput, ContentType } from 'components/common/AppInput'
 import { useAppDispatch, useAppSelector } from 'state/hooks'

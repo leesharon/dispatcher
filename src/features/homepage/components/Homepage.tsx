@@ -38,23 +38,18 @@ const Homepage = ({ route: { params } }: HomepageProps): JSX.Element => {
         return getSourcesFromHeadlines(headLines)
     }, [headLines])
 
+    // handles filter results
+    useEffect(() => {
+        if (!headLines || !isSuccess) return
+        setHeadLinesToDisplay(getFilteredHeadlines(headLines, filterBy, params?.searchValue))
+    }, [filterBy, headLines, params, isSuccess])
+
     // handles success api call
     useEffect(() => {
         if (isSuccess) {
             dispatch(updateSources(headLinesSources))
         }
     }, [isSuccess, dispatch, headLinesSources])
-
-    // handles filter results
-    useEffect(() => {
-        if (!headLines || !isSuccess) return
-        if (filterBy.sources.value === 'All' && filterBy.dates.value === 'All' && !params?.searchValue) {
-            setHeadLinesToDisplay(headLines)
-        }
-        else if (filterBy.sources.value !== 'All' || filterBy.dates.value !== 'All' || params?.searchValue) {
-            setHeadLinesToDisplay(getFilteredHeadlines(headLines, filterBy, params?.searchValue))
-        }
-    }, [filterBy, headLines, params, isSuccess])
 
     if (!loggedinUser) resetTo('Logister')
     if (!loggedinUser) return <AppText>{Strings.MUST_BE_LOGGEDIN}</AppText>
