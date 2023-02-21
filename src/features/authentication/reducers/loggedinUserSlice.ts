@@ -1,6 +1,4 @@
-import { Notification } from 'models/notification';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Strings } from 'constants'
 import { User } from 'models/user'
 
 interface LoggedinUserState {
@@ -26,6 +24,10 @@ const userSlice = createSlice({
         updateUser: (state, action: PayloadAction<User>) => {
             state.loggedinUser = action.payload
         },
+        updateFavoriteHeadlineIds: (state, action: PayloadAction<string[]>) => {
+            state.loggedinUser && (state.loggedinUser.favoriteHeadLineIds =
+                [...action.payload, ...state.loggedinUser.favoriteHeadLineIds])
+        },
         addFavoriteHeadline: (state, action: PayloadAction<{ id: string }>) => {
             state.loggedinUser?.favoriteHeadLineIds.push(action.payload.id)
         },
@@ -41,5 +43,5 @@ const userSlice = createSlice({
 export const selectLoggedinUser =
     (state: { loggedinUser: LoggedinUserState }) => state.loggedinUser.loggedinUser
 
-export const { login, logout, addFavoriteHeadline, removeFavoriteHeadline, updateUser } = userSlice.actions
+export const { login, logout, addFavoriteHeadline, updateFavoriteHeadlineIds, removeFavoriteHeadline, updateUser } = userSlice.actions
 export default userSlice.reducer

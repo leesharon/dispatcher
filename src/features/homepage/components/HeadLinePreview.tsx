@@ -1,11 +1,11 @@
-import { View, StyleSheet, Pressable } from "react-native"
+import { View, StyleSheet, Pressable } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import AppButton from 'components/common/AppButton'
 import { Colors, Fonts, Layout } from 'constants'
 import { HeadLine } from 'models/headline'
 import { formatDateLong } from 'utils/dateUtils'
-import FavoriteIcon from '../assets/favorite.svg'
-import FavoriteStarredIcon from '../assets/favorite-starred.svg'
+import FavoriteIcon from '../../../../assets/favorite.svg'
+import FavoriteStarredIcon from '../../../../assets/favorite-starred.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
 import { AppText } from 'components/common/AppText'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
@@ -13,6 +13,7 @@ import { addFavoriteHeadline, removeFavoriteHeadline, selectLoggedinUser } from 
 import { useMemo } from 'react'
 import { navigate } from 'navigation/RootNavigation'
 import { addNotification } from 'features/notifications/reducers/notificationsSlice'
+import { asyncStorageUtils } from 'utils/asyncStorageUtils'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
@@ -31,11 +32,11 @@ interface HeadLinePreviewProps {
         shadowRadius?: number
         marginBottom?: number
         paddingBottom?: number
-    } | {}
+    } | object
     imageStyle?: {
         borderTopLeftRadius: number
         borderTopRightRadius: number
-    } | {}
+    } | object
 }
 
 const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle = {} }: HeadLinePreviewProps): JSX.Element => {
@@ -50,14 +51,17 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
         if (!isStarred) {
             dispatch(addFavoriteHeadline({ id: headLine.id }))
             dispatch(addNotification({ id: headLine.id }))
+            asyncStorageUtils.addFavoriteHeadLine(headLine)
         }
-        else
+        else {
             dispatch(removeFavoriteHeadline({ id: headLine.id }))
+            asyncStorageUtils.removeFavoriteHeadline(headLine.id)
+        }
     }
 
     const isStarred = useMemo(
         () => loggedInUser?.favoriteHeadLineIds?.includes(headLine.id),
-        [loggedInUser?.favoriteHeadLineIds]
+        [loggedInUser?.favoriteHeadLineIds, headLine.id]
     )
 
     return (

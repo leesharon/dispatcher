@@ -1,9 +1,14 @@
 Todo's
 - error handling in homepage
-- input focus bug android profile edit
 - use maincontainer everywhere
-- configure eslint
+- bug for usefffect in app, intital route not always correct
+- virtualized list error
+- how to apply fontWeight in android?
+- loader for photo
+maintab to maintab naviagtor
+- unfavorite from homepage bug
 
 Ask about
 - Why on android after login go back button goes to profile
-- keyboardavoidingview in android logister
+- navigating from one tab to another tab and backwards
+- keyboardavoidingview in android logister=

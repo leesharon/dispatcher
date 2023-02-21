@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native"
+import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppInput, ContentType } from 'components/common/AppInput'
 import { HorizontalLine } from 'components/common/HorizontalLine'
@@ -55,7 +55,7 @@ const LogisterScreen = (): JSX.Element => {
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
-                behavior={Constants.IS_IOS ? 'position' : 'height'}
+                behavior={Constants.IS_IOS ? 'position' : 'padding'}
                 style={styles.container}
                 contentContainerStyle={styles.container}
             >

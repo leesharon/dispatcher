@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList } from "react-native"
+import { View, StyleSheet, FlatList } from 'react-native'
 import { Colors, Layout, Strings } from 'constants'
 import { AppText } from 'components/common/AppText'
 import { HeadLine } from 'models/headline'

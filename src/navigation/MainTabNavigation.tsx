@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeFocusedIcon from 'navigation/assets/home-focused.svg'
 import HomeIcon from 'navigation/assets/home.svg'
@@ -8,7 +8,7 @@ import FavoritesIcon from 'navigation/assets/favorites.svg'
 import FavoritesFocusedIcon from 'navigation/assets/favorites-focused.svg'
 import { Colors, Constants } from 'constants'
 import { ProfileStack } from 'features/profile/components/ProfileStack'
-import { FavortiesTab } from 'features/favorites/components/FavoritesTab'
+import { FavoritesTab } from 'features/favorites/components/FavoritesTab'
 import { HomepageStack } from 'features/homepage/components/HomepageStack'
 import { MainTabsParamsList } from 'constants/screens'
 
@@ -30,7 +30,8 @@ const MainTabNavigation = (): JSX.Element => {
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return focused ? <ProfileFocusedIcon /> : <ProfileIcon />
-                    }
+                    },
+                    lazy: false
                 }}
             />
             <Tab.Screen
@@ -44,7 +45,7 @@ const MainTabNavigation = (): JSX.Element => {
             />
             <Tab.Screen
                 name={'Favorites'}
-                component={FavortiesTab}
+                component={FavoritesTab}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return focused ? <FavoritesFocusedIcon /> : <FavoritesIcon />

@@ -16,74 +16,94 @@ import { navigationRef } from 'navigation/RootNavigation'
 import { RootStackParamList } from 'constants/screens'
 import { User } from 'models/user'
 import { OnboardingScreen } from 'features/onboarding/components/OnboardingScreen'
+import { asyncStorageUtils } from 'utils/asyncStorageUtils'
 
 const App = () => {
-  const Stack = createStackNavigator<RootStackParamList>()
+    const Stack = createStackNavigator<RootStackParamList>()
 
-  const loggedinUser = useAppSelector(state => state.loggedinUser)
-  const dispatch = useAppDispatch()
+    const loggedinUser = useAppSelector(state => state.loggedinUser)
+    const dispatch = useAppDispatch()
 
-  const [initialRouteName, setIntialRouteName] = useState<RootStack>('Onboarding')
-  const [initializing, setInitializing] = useState(true)
+    const [initialRouteName, setIntialRouteName] = useState<RootStack>(null)
+    const [initializing, setInitializing] = useState(true)
 
-  const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
-    loggedinUser && dispatch(login(loggedinUser.toJSON() as User))
-    if (initializing) setInitializing(false)
-  }, [dispatch, initializing])
+    const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
+        loggedinUser && dispatch(login(loggedinUser.toJSON() as User))
+        if (initializing) setInitializing(false)
+    }, [dispatch, initializing])
 
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-    return subscriber
-  }, [onAuthStateChanged])
+    // handles authentication changes
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+        return subscriber
+    }, [onAuthStateChanged])
 
-  useEffect(() => {
-    loggedinUser.loggedinUser && setIntialRouteName('Onboarding')
-  }, [loggedinUser])
+    // handles user initial screen
+    useEffect(() => {
+        (async () => {
+            try {
+                const isBoarded = await asyncStorageUtils.isBoarding()
+                // split
+                if (!isBoarded) {
+                    setIntialRouteName('Onboarding')
+                }
+                else if (loggedinUser.loggedinUser) {
+                    // const user = await auth().currentUser
+                    setIntialRouteName('MainTab')
+                }
+                else if (loggedinUser.loggedinUser === null) setIntialRouteName('Logister')
 
-  useEffect(() => {
+            } catch (err) {
+                console.log(err, 'Cannot get is boarding')
+            }
+        })()
+    }, [loggedinUser])
+
     //hides the splash screen on app load
-    SplashScreen.hide()
-  }, [])
+    useEffect(() => {
+        SplashScreen.hide()
+    }, [])
 
-  return (
-    <NavigationContainer ref={navigationRef}>
-      <View style={styles.statusBar}>
-        <StatusBar barStyle="light-content" backgroundColor={Colors.BLUE800} />
-      </View>
-      <SafeAreaProvider style={styles.rootContainer}>
-        <Stack.Navigator
-          initialRouteName={initialRouteName}
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen
-            name={'Logister'}
-            component={LogisterScreen}
-          />
-          <Stack.Screen
-            name={'MainTab'}
-            component={MainTabNavigation}
-          />
-          <Stack.Screen
-            name={'Onboarding'}
-            component={OnboardingScreen}
-          />
-        </Stack.Navigator>
-      </SafeAreaProvider>
-      <FlashMessage position="top" />
-    </NavigationContainer>
-  )
+    return (
+        <NavigationContainer ref={navigationRef}>
+            <View style={styles.statusBar}>
+                <StatusBar barStyle="light-content" backgroundColor={Colors.BLUE800} />
+            </View>
+            <SafeAreaProvider style={styles.rootContainer}>
+                {initialRouteName &&
+                    <Stack.Navigator
+                        initialRouteName={initialRouteName}
+                        screenOptions={{ headerShown: false }}
+                    >
+                        <Stack.Screen
+                            name={'Logister'}
+                            component={LogisterScreen}
+                        />
+                        <Stack.Screen
+                            name={'MainTab'}
+                            component={MainTabNavigation}
+                        />
+                        <Stack.Screen
+                            name={'Onboarding'}
+                            component={OnboardingScreen}
+                        />
+                    </Stack.Navigator>}
+            </SafeAreaProvider>
+            <FlashMessage position="top" />
+        </NavigationContainer>
+    )
 }
 
 const styles = StyleSheet.create({
-  rootContainer: {
-    flex: 1,
-    backgroundColor: Colors.BLUE100,
-    height: Constants.SCREEN_HEIGHT_WITHOUT_STATUS_BAR,
-  },
-  statusBar: {
-    backgroundColor: Colors.BLUE800,
-    height: Constants.STATUS_BAR_HEIGHT,
-  },
+    rootContainer: {
+        flex: 1,
+        backgroundColor: Colors.BLUE100,
+        height: Constants.SCREEN_HEIGHT_WITHOUT_STATUS_BAR,
+    },
+    statusBar: {
+        backgroundColor: Colors.BLUE800,
+        height: Constants.STATUS_BAR_HEIGHT,
+    },
 })
 
 export default App
