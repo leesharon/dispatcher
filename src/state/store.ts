@@ -3,25 +3,27 @@ import loggedinUserReducer from 'features/authentication/reducers/loggedinUserSl
 import notificationsReducer from 'features/notifications/reducers/notificationsSlice'
 import searchReducer from 'features/search/reducers/searchSlice'
 import filterReducer from 'features/filter/reducers/filterSlice'
+import favoritesReducer from 'features/favorites/reducers/favoritesSlice'
 import { apiSlice } from '../features/api/apiSlice'
 
 export const store = configureStore({
-  reducer: {
-    loggedinUser: loggedinUserReducer,
-    notifications: notificationsReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
-    search: searchReducer,
-    filter: filterReducer
-  },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(apiSlice.middleware)
+    reducer: {
+        loggedinUser: loggedinUserReducer,
+        notifications: notificationsReducer,
+        [apiSlice.reducerPath]: apiSlice.reducer,
+        search: searchReducer,
+        filter: filterReducer,
+        favorites: favoritesReducer
+    },
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware().concat(apiSlice.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
+    ReturnType,
+    RootState,
+    unknown,
+    Action<string>
 >

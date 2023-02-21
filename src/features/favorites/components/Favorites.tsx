@@ -1,41 +1,30 @@
-import { useState } from 'react'
 import { Heading1 } from 'components/common/Heading1'
 import { MainContainer } from 'components/common/MainContainer'
 import { MainTopBar } from 'components/common/MainTopBar'
-import { updateFavoriteHeadlineIds } from 'features/authentication/reducers/loggedinUserSlice'
 import { HeadLine } from 'models/headline'
 import { StyleSheet, View, FlatList } from 'react-native'
 import { FavoriteHeadLinePreview } from './FavoriteHeadLinePreview'
-import { addFavoriteHeadline, removeFavoriteHeadline } from 'features/authentication/reducers/loggedinUserSlice'
+import { addFavoriteHeadlineId, removeFavoriteHeadlineId } from 'features/authentication/reducers/loggedinUserSlice'
 import { addNotification } from 'features/notifications/reducers/notificationsSlice'
-import { useAppDispatch } from 'state/hooks'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { asyncStorageUtils } from 'utils/asyncStorageUtils'
-import { useFocusEffect } from '@react-navigation/native'
+import { addFavoriteHeadLine, removeFavoriteHeadLine } from '../reducers/favoritesSlice'
 
 const Favorites = (): JSX.Element => {
     const dispatch = useAppDispatch()
-    const [favoriteHeadLines, setFavoriteHeadLines] = useState<HeadLine[] | []>([])
-
-    useFocusEffect(() => {
-        (async () => {
-            const headLines = await asyncStorageUtils.getFavoriteHeadLines()
-            if (headLines) {
-                setFavoriteHeadLines(headLines)
-                dispatch(updateFavoriteHeadlineIds(headLines.map((headLine: HeadLine) => headLine.id)))
-            }
-        })()
-    })
+    const favoriteHeadLines = useAppSelector(state => state.favorites.favoriteHeadLines)
 
     const onToggleFavorite = (headLine: HeadLine, isStarred: boolean) => {
         if (!isStarred) {
-            dispatch(addFavoriteHeadline({ id: headLine.id }))
+            dispatch(addFavoriteHeadlineId({ id: headLine.id }))
             dispatch(addNotification({ id: headLine.id }))
+            dispatch(addFavoriteHeadLine(headLine))
             asyncStorageUtils.addFavoriteHeadLine(headLine)
         }
         else {
-            dispatch(removeFavoriteHeadline({ id: headLine.id }))
+            dispatch(removeFavoriteHeadlineId({ id: headLine.id }))
+            dispatch(removeFavoriteHeadLine(headLine.id))
             asyncStorageUtils.removeFavoriteHeadline(headLine.id)
-            setFavoriteHeadLines(favoriteHeadLines.filter((item: HeadLine) => item.id !== headLine.id))
         }
     }
 

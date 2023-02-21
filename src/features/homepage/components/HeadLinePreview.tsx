@@ -9,11 +9,12 @@ import FavoriteStarredIcon from '../../../../assets/favorite-starred.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
 import { AppText } from 'components/common/AppText'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { addFavoriteHeadline, removeFavoriteHeadline, selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
+import { addFavoriteHeadlineId, removeFavoriteHeadlineId, selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { useMemo } from 'react'
 import { navigate } from 'navigation/RootNavigation'
 import { addNotification } from 'features/notifications/reducers/notificationsSlice'
 import { asyncStorageUtils } from 'utils/asyncStorageUtils'
+import { addFavoriteHeadLine, removeFavoriteHeadLine } from 'features/favorites/reducers/favoritesSlice'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
@@ -49,12 +50,14 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
 
     const onToggleFavorite = () => {
         if (!isStarred) {
-            dispatch(addFavoriteHeadline({ id: headLine.id }))
+            dispatch(addFavoriteHeadlineId({ id: headLine.id }))
+            dispatch(addFavoriteHeadLine(headLine))
             dispatch(addNotification({ id: headLine.id }))
             asyncStorageUtils.addFavoriteHeadLine(headLine)
         }
         else {
-            dispatch(removeFavoriteHeadline({ id: headLine.id }))
+            dispatch(removeFavoriteHeadlineId({ id: headLine.id }))
+            dispatch(removeFavoriteHeadLine(headLine.id))
             asyncStorageUtils.removeFavoriteHeadline(headLine.id)
         }
     }
