@@ -41,7 +41,7 @@ interface HeadLinePreviewProps {
 
 const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle = {} }: HeadLinePreviewProps): JSX.Element => {
     const dispatch = useAppDispatch()
-    const loggedInUser = useAppSelector(selectLoggedinUser)
+    const loggedinUser = useAppSelector(selectLoggedinUser)
 
     const onPressDispatch = () => {
         navigate('HeadlineDetails', { id: headLine.id })
@@ -60,8 +60,8 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
     }
 
     const isStarred = useMemo(
-        () => loggedInUser?.favoriteHeadLineIds?.includes(headLine.id),
-        [loggedInUser?.favoriteHeadLineIds, headLine.id]
+        () => loggedinUser?.favoriteHeadLineIds?.includes(headLine.id),
+        [loggedinUser?.favoriteHeadLineIds, headLine.id]
     )
 
     return (

@@ -1,30 +1,30 @@
+import { useState } from 'react'
 import { Heading1 } from 'components/common/Heading1'
 import { MainContainer } from 'components/common/MainContainer'
 import { MainTopBar } from 'components/common/MainTopBar'
 import { updateFavoriteHeadlineIds } from 'features/authentication/reducers/loggedinUserSlice'
 import { HeadLine } from 'models/headline'
-import { useEffect, useState } from 'react'
 import { StyleSheet, View, FlatList } from 'react-native'
 import { FavoriteHeadLinePreview } from './FavoriteHeadLinePreview'
 import { addFavoriteHeadline, removeFavoriteHeadline } from 'features/authentication/reducers/loggedinUserSlice'
 import { addNotification } from 'features/notifications/reducers/notificationsSlice'
 import { useAppDispatch } from 'state/hooks'
 import { asyncStorageUtils } from 'utils/asyncStorageUtils'
+import { useFocusEffect } from '@react-navigation/native'
 
-const FavoritesTab = (): JSX.Element => {
+const Favorites = (): JSX.Element => {
     const dispatch = useAppDispatch()
     const [favoriteHeadLines, setFavoriteHeadLines] = useState<HeadLine[] | []>([])
 
-    useEffect(() => {
+    useFocusEffect(() => {
         (async () => {
             const headLines = await asyncStorageUtils.getFavoriteHeadLines()
-            console.log('headLines:', headLines)
             if (headLines) {
                 setFavoriteHeadLines(headLines)
                 dispatch(updateFavoriteHeadlineIds(headLines.map((headLine: HeadLine) => headLine.id)))
             }
         })()
-    }, [dispatch])
+    })
 
     const onToggleFavorite = (headLine: HeadLine, isStarred: boolean) => {
         if (!isStarred) {
@@ -41,9 +41,7 @@ const FavoritesTab = (): JSX.Element => {
 
     const renderListHeader = () => {
         return (
-            <View style={styles.listHeaderContainer}>
-                <Heading1 >Saved Articles</Heading1>
-            </View>
+            <Heading1 >Saved Articles</Heading1>
         )
     }
 
@@ -79,8 +77,6 @@ const styles = StyleSheet.create({
     list: {
         flex: 1
     },
-    listHeaderContainer: {
-    },
 })
 
-export { FavoritesTab }
+export { Favorites }

@@ -5,7 +5,7 @@ import { TopBar } from 'components/common/TopBar'
 import { Colors, Strings } from 'constants'
 import { push } from 'navigation/RootNavigation'
 import { useState } from 'react'
-import { View, StyleSheet, Pressable } from "react-native"
+import { View, StyleSheet, Pressable } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import BackIcon from '../../../../assets/back.svg'
