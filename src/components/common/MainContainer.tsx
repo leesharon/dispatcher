@@ -1,8 +1,9 @@
 import { Layout } from 'constants'
-import { View, StyleSheet } from "react-native"
+import { ReactNode } from 'react'
+import { View, StyleSheet } from 'react-native'
 
 interface MainContainerProps {
-    children: JSX.Element | JSX.Element[]
+    children: ReactNode
 }
 
 const MainContainer = ({ children }: MainContainerProps): JSX.Element => {

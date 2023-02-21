@@ -19,7 +19,6 @@ const HomepageStack = (): JSX.Element => {
         (async () => {
             const headLines = await asyncStorageUtils.getFavoriteHeadLines()
             if (headLines) {
-                // setFavoriteHeadLines(headLines)
                 dispatch(updateFavoriteHeadlineIds(headLines.map((headLine: HeadLine) => headLine.id)))
                 dispatch(updateFavoritesFromStorage(headLines))
             }

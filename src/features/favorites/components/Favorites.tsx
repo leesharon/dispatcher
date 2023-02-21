@@ -9,6 +9,8 @@ import { addNotification } from 'features/notifications/reducers/notificationsSl
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { asyncStorageUtils } from 'utils/asyncStorageUtils'
 import { addFavoriteHeadLine, removeFavoriteHeadLine } from '../reducers/favoritesSlice'
+import { AppText } from 'components/common/AppText'
+import { Strings } from 'constants'
 
 const Favorites = (): JSX.Element => {
     const dispatch = useAppDispatch()
@@ -28,32 +30,25 @@ const Favorites = (): JSX.Element => {
         }
     }
 
-    const renderListHeader = () => {
-        return (
-            <Heading1 >Saved Articles</Heading1>
-        )
-    }
-
     return (
         <View style={styles.container}>
             <MainTopBar />
             <MainContainer>
-                <>
-                    {favoriteHeadLines && favoriteHeadLines.length > 0 &&
-                        <FlatList
-                            style={styles.list}
-                            data={favoriteHeadLines}
-                            renderItem={({ item }) => (
-                                <FavoriteHeadLinePreview
-                                    headLine={item}
-                                    onToggleFavorite={onToggleFavorite}
-                                />
-                            )}
-                            keyExtractor={item => item.id}
-                            ListHeaderComponent={renderListHeader()}
-                        />
-                    }
-                </>
+                {favoriteHeadLines.length === 0 && <AppText styleProps={styles.noArticles}>{Strings.NO_ARTICLES}</AppText>}
+                {favoriteHeadLines && favoriteHeadLines.length > 0 &&
+                    <FlatList
+                        style={styles.list}
+                        data={favoriteHeadLines}
+                        renderItem={({ item }) => (
+                            <FavoriteHeadLinePreview
+                                headLine={item}
+                                onToggleFavorite={onToggleFavorite}
+                            />
+                        )}
+                        keyExtractor={item => item.id}
+                        ListHeaderComponent={<Heading1 >Saved Articles</Heading1>}
+                    />
+                }
             </MainContainer>
         </View>
     )
@@ -62,6 +57,10 @@ const Favorites = (): JSX.Element => {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    noArticles: {
+        paddingTop: 20,
+        alignSelf: 'center',
     },
     list: {
         flex: 1

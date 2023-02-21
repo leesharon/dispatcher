@@ -1,5 +1,5 @@
 // GENERAL
-const HEADLINES_FEED_TITLE = 'Top Headlines in Israel'
+const HEADLINES_FEED_TITLE = 'Top Headlines in US'
 const LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem nam quis tincidunt nunc lobortis id imperdiet volutpat aliquam. Purus felis lacus, in at elit quis adipiscing urna, at. Libero risus, at ultrices metus eu quisque nibh dictum. Nunc enim feugiat mattis convallis vehicula. Mattis ullamcorper tempus, sem egestas varius dapibus tincidunt. Ullamcorper nisi eget fringilla in pellentesque urna, integer platea in. Auctor blandit tellus enim vel blandit dignissim magna dolor.Nec lorem amet risus elementum.Cursus eget sit id vitae elit non.Eleifend purus aliquam interdum leo nunc ultrices.Mattis dui nunc sed euismod quis mauris.Accumsan at nulla cras cursus sed.Pretium nunc vitae risus pulvinar augue leo nisl.Tristique ipsum imperdiet magna sit.Mattis enim tempor in varius elementum sagittis.Sit proin mi, ut id id ac nam.Dui tellus est ut purus leo id sed lectus et et.'
 
 // PLACEHOLDERS
@@ -42,6 +42,9 @@ const UPLOAD_PROFILE_PICTURE = 'Upload new image for your personal Icon'
 const RECENTS = 'RECENT SEARCHES'
 const NO_RECENTS = 'You have no recent searches.'
 
+// FAVORITES
+const NO_ARTICLES = 'You have no saved articles.'
+
 const LOADING_TEXT = 'Loading...'
 
 export {
@@ -75,4 +78,5 @@ export {
     UPLOAD_PROFILE_PICTURE,
     RECENTS,
     NO_RECENTS,
+    NO_ARTICLES
 }

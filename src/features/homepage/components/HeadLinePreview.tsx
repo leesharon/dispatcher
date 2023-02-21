@@ -98,8 +98,8 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
                     onPress={onPressDispatch}
                     innerContainerStyle={styles.buttonInnerContainer}
                     icon={<ArrowRightIcon />}
-                    iconStyle={{ position: 'absolute', end: 30 }}
-                    textStyle={{ position: 'relative', end: 15 }}
+                    iconStyle={styles.buttonIcon}
+                    textStyle={styles.buttonText}
                 >
                     NAVIGATE TO DISPATCH
                 </AppButton>}
@@ -110,7 +110,7 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
 
 const styles = StyleSheet.create({
     headLineContainer: {
-        backgroundColor: 'white',
+        backgroundColor: Colors.WHITE,
         paddingBottom: 12,
         flex: 1
     },
@@ -148,6 +148,14 @@ const styles = StyleSheet.create({
     buttonInnerContainer: {
         borderRadius: 20,
         backgroundColor: Colors.BLUE500
+    },
+    buttonIcon: {
+        position: 'absolute',
+        end: 30
+    },
+    buttonText: {
+        position: 'relative',
+        end: 15
     },
 })
 
