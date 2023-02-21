@@ -28,10 +28,10 @@ const userSlice = createSlice({
             state.loggedinUser && (state.loggedinUser.favoriteHeadLineIds =
                 [...action.payload, ...state.loggedinUser.favoriteHeadLineIds])
         },
-        addFavoriteHeadline: (state, action: PayloadAction<{ id: string }>) => {
+        addFavoriteHeadlineId: (state, action: PayloadAction<{ id: string }>) => {
             state.loggedinUser?.favoriteHeadLineIds.push(action.payload.id)
         },
-        removeFavoriteHeadline: (state, action: PayloadAction<{ id: string }>) => {
+        removeFavoriteHeadlineId: (state, action: PayloadAction<{ id: string }>) => {
             state.loggedinUser &&
                 (state.loggedinUser.favoriteHeadLineIds = state.loggedinUser.favoriteHeadLineIds.filter(
                     headLineId => headLineId !== action.payload.id
@@ -43,5 +43,5 @@ const userSlice = createSlice({
 export const selectLoggedinUser =
     (state: { loggedinUser: LoggedinUserState }) => state.loggedinUser.loggedinUser
 
-export const { login, logout, addFavoriteHeadline, updateFavoriteHeadlineIds, removeFavoriteHeadline, updateUser } = userSlice.actions
+export const { login, logout, addFavoriteHeadlineId, updateFavoriteHeadlineIds, removeFavoriteHeadlineId, updateUser } = userSlice.actions
 export default userSlice.reducer

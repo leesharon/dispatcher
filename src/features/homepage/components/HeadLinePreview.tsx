@@ -9,11 +9,12 @@ import FavoriteStarredIcon from '../../../../assets/favorite-starred.svg'
 import ArrowRightIcon from '../assets/arrow-right.svg'
 import { AppText } from 'components/common/AppText'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { addFavoriteHeadline, removeFavoriteHeadline, selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
+import { addFavoriteHeadlineId, removeFavoriteHeadlineId, selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
 import { useMemo } from 'react'
 import { navigate } from 'navigation/RootNavigation'
 import { addNotification } from 'features/notifications/reducers/notificationsSlice'
 import { asyncStorageUtils } from 'utils/asyncStorageUtils'
+import { addFavoriteHeadLine, removeFavoriteHeadLine } from 'features/favorites/reducers/favoritesSlice'
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
@@ -41,7 +42,7 @@ interface HeadLinePreviewProps {
 
 const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle = {} }: HeadLinePreviewProps): JSX.Element => {
     const dispatch = useAppDispatch()
-    const loggedInUser = useAppSelector(selectLoggedinUser)
+    const loggedinUser = useAppSelector(selectLoggedinUser)
 
     const onPressDispatch = () => {
         navigate('HeadlineDetails', { id: headLine.id })
@@ -49,19 +50,21 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
 
     const onToggleFavorite = () => {
         if (!isStarred) {
-            dispatch(addFavoriteHeadline({ id: headLine.id }))
+            dispatch(addFavoriteHeadlineId({ id: headLine.id }))
+            dispatch(addFavoriteHeadLine(headLine))
             dispatch(addNotification({ id: headLine.id }))
             asyncStorageUtils.addFavoriteHeadLine(headLine)
         }
         else {
-            dispatch(removeFavoriteHeadline({ id: headLine.id }))
+            dispatch(removeFavoriteHeadlineId({ id: headLine.id }))
+            dispatch(removeFavoriteHeadLine(headLine.id))
             asyncStorageUtils.removeFavoriteHeadline(headLine.id)
         }
     }
 
     const isStarred = useMemo(
-        () => loggedInUser?.favoriteHeadLineIds?.includes(headLine.id),
-        [loggedInUser?.favoriteHeadLineIds, headLine.id]
+        () => loggedinUser?.favoriteHeadLineIds?.includes(headLine.id),
+        [loggedinUser?.favoriteHeadLineIds, headLine.id]
     )
 
     return (
@@ -95,8 +98,8 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
                     onPress={onPressDispatch}
                     innerContainerStyle={styles.buttonInnerContainer}
                     icon={<ArrowRightIcon />}
-                    iconStyle={{ position: 'absolute', end: 30 }}
-                    textStyle={{ position: 'relative', end: 15 }}
+                    iconStyle={styles.buttonIcon}
+                    textStyle={styles.buttonText}
                 >
                     NAVIGATE TO DISPATCH
                 </AppButton>}
@@ -107,7 +110,7 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
 
 const styles = StyleSheet.create({
     headLineContainer: {
-        backgroundColor: 'white',
+        backgroundColor: Colors.WHITE,
         paddingBottom: 12,
         flex: 1
     },
@@ -145,6 +148,14 @@ const styles = StyleSheet.create({
     buttonInnerContainer: {
         borderRadius: 20,
         backgroundColor: Colors.BLUE500
+    },
+    buttonIcon: {
+        position: 'absolute',
+        end: 30
+    },
+    buttonText: {
+        position: 'relative',
+        end: 15
     },
 })
 

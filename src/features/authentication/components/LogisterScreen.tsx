@@ -55,7 +55,7 @@ const LogisterScreen = (): JSX.Element => {
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
-                behavior={Constants.IS_IOS ? 'position' : 'padding'}
+                behavior={Constants.IS_IOS ? 'position' : 'height'}
                 style={styles.container}
                 contentContainerStyle={styles.container}
             >
@@ -63,7 +63,7 @@ const LogisterScreen = (): JSX.Element => {
                     <Logo />
                 </View>
                 <View style={styles.mainContainer}>
-                    <View>
+                    <View style={styles.inputsContainer}>
                         <Text style={styles.formTitle}>{status}</Text>
                         <View>
                             <AppInput
@@ -98,7 +98,7 @@ const LogisterScreen = (): JSX.Element => {
                             />}
                         </View>
                     </View>
-                    <HorizontalLine />
+                    <HorizontalLine styleProps={styles.horizontalLine} />
                     <View style={styles.buttonsContainer}>
                         <AppButton
                             onPress={() => (status === Status.LOGIN) ? onLogin() : onSignup()}
@@ -123,6 +123,7 @@ const LogisterScreen = (): JSX.Element => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.BLUE100,
     },
     logoContainer: {
         height: '35%',
@@ -138,6 +139,9 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         justifyContent: 'space-between',
     },
+    inputsContainer: {
+        paddingBottom: 50,
+    },
     formTitle: {
         color: Colors.BLUE400,
         fontSize: 24,
@@ -147,6 +151,9 @@ const styles = StyleSheet.create({
     },
     formInput: {
         marginBottom: 24,
+    },
+    horizontalLine: {
+        marginBottom: 50,
     },
     buttonsContainer: {
         justifyContent: 'center',

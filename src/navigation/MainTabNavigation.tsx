@@ -8,9 +8,9 @@ import FavoritesIcon from 'navigation/assets/favorites.svg'
 import FavoritesFocusedIcon from 'navigation/assets/favorites-focused.svg'
 import { Colors, Constants } from 'constants'
 import { ProfileStack } from 'features/profile/components/ProfileStack'
-import { FavoritesTab } from 'features/favorites/components/FavoritesTab'
 import { HomepageStack } from 'features/homepage/components/HomepageStack'
 import { MainTabsParamsList } from 'constants/screens'
+import { FavoritesStack } from 'features/favorites/components/FavoritesStack'
 
 const MainTabNavigation = (): JSX.Element => {
     const Tab = createBottomTabNavigator<MainTabsParamsList>()
@@ -31,7 +31,7 @@ const MainTabNavigation = (): JSX.Element => {
                     tabBarIcon: ({ focused }) => {
                         return focused ? <ProfileFocusedIcon /> : <ProfileIcon />
                     },
-                    lazy: false
+                    lazy: true
                 }}
             />
             <Tab.Screen
@@ -44,8 +44,8 @@ const MainTabNavigation = (): JSX.Element => {
                 }}
             />
             <Tab.Screen
-                name={'Favorites'}
-                component={FavoritesTab}
+                name={'FavoritesStack'}
+                component={FavoritesStack}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return focused ? <FavoritesFocusedIcon /> : <FavoritesIcon />

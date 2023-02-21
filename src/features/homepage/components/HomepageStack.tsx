@@ -1,13 +1,29 @@
-import { StyleSheet } from "react-native"
 import { createStackNavigator } from '@react-navigation/stack'
 import { Homepage } from './Homepage'
 import { HeadLineDetails } from './HeadLineDetails'
 import { Notifications } from '../../notifications/components/Notifications'
 import { HomepageStackParamList } from 'constants/screens'
 import { Search } from 'features/search/components/Search'
+import { useEffect } from 'react'
+import { asyncStorageUtils } from 'utils/asyncStorageUtils'
+import { updateFavoriteHeadlineIds } from 'features/authentication/reducers/loggedinUserSlice'
+import { useAppDispatch } from 'state/hooks'
+import { HeadLine } from 'models/headline'
+import { updateFavoritesFromStorage } from 'features/favorites/reducers/favoritesSlice'
 
 const HomepageStack = (): JSX.Element => {
     const Stack = createStackNavigator<HomepageStackParamList>()
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        (async () => {
+            const headLines = await asyncStorageUtils.getFavoriteHeadLines()
+            if (headLines) {
+                dispatch(updateFavoriteHeadlineIds(headLines.map((headLine: HeadLine) => headLine.id)))
+                dispatch(updateFavoritesFromStorage(headLines))
+            }
+        })()
+    }, [dispatch])
 
     return (
         <Stack.Navigator
@@ -33,9 +49,5 @@ const HomepageStack = (): JSX.Element => {
         </Stack.Navigator>
     )
 }
-
-const styles = StyleSheet.create({
-
-})
 
 export { HomepageStack }

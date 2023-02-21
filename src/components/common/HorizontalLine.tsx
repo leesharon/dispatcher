@@ -1,10 +1,11 @@
 import { Colors } from 'constants/index'
-import { View, Text, StyleSheet } from "react-native"
+import { View, StyleSheet } from 'react-native'
 
 interface HorizontalLineProps {
     styleProps?: {
         marginBottom?: number
         backgroundColor?: string
+        paddingBottom?: number
     }
 }
 

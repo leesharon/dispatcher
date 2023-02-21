@@ -1,16 +1,16 @@
 
-type RootStack = 'Logister' | 'MainTab' | 'Onboarding' | null
+type RootStack = 'Logister' | 'MainTabNavigation' | 'Onboarding' | null
 
 type RootStackParamList = {
     Logister: undefined
-    MainTab: undefined
+    MainTabNavigation: undefined
     Onboarding: undefined
 }
 
 type MainTabsParamsList = {
     HomepageStack: undefined
     ProfileStack: undefined
-    Favorites: undefined
+    FavoritesStack: undefined
 }
 
 type HomepageStackParamList = {
@@ -18,6 +18,11 @@ type HomepageStackParamList = {
     HeadlineDetails: { id: string }
     Notifications: undefined
     Search: undefined
+}
+
+type FavoritesStackParamList = {
+    Favorites: undefined
+    HeadlineDetails: { id: string }
 }
 
 type ProfileStackParamList = {
@@ -32,5 +37,6 @@ export type {
     HomepageStackParamList,
     MainTabsParamsList,
     RootStackParamList,
-    ProfileStackParamList
+    ProfileStackParamList,
+    FavoritesStackParamList
 }

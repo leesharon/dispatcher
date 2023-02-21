@@ -12,11 +12,12 @@ import LogoutIcon from '../assets/logout.svg'
 import { HorizontalLine } from 'components/common/HorizontalLine'
 import { firebaseLogout } from 'utils/firebaseAuthUtils'
 import { push } from 'navigation/RootNavigation'
+import FastImage from 'react-native-fast-image'
 
 const menuItems = [
-    { id: '1aqads123', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { push('Settings') } },
-    { id: '2basdASA2', text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { push('Terms') } },
-    { id: '3casd@@!!!', text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
+    { id: '1a', text: Strings.SETTINGS, icon: <SettingsIcon />, onPress: () => { push('Settings') } },
+    { id: '2b', text: Strings.TERMS, icon: <TermsIcon />, onPress: () => { push('Terms') } },
+    { id: '3c', text: Strings.LOGOUT, icon: <LogoutIcon />, onPress: firebaseLogout },
 ]
 
 const Profile = (): JSX.Element => {
@@ -38,7 +39,12 @@ const Profile = (): JSX.Element => {
                     </Pressable>
                 </View>
                 <View style={styles.userIconContainer}>
-                    <UserIcon />
+                    {loggedinUser.photoURL
+                        ? <FastImage
+                            source={{ uri: loggedinUser.photoURL, priority: FastImage.priority.normal, }}
+                            style={styles.profilePicture}
+                        />
+                        : <UserIcon />}
                 </View>
             </Shadow>
             <View style={styles.menuContainer}>
@@ -46,6 +52,7 @@ const Profile = (): JSX.Element => {
                     <View key={item.id}>
                         <Pressable
                             key={item.id}
+                            // eslint-disable-next-line react-native/no-inline-styles
                             style={[styles.menuItem, (index === 0) && { paddingStart: 2 }]}
                             onPress={item.onPress}
                         >
@@ -63,10 +70,10 @@ const Profile = (): JSX.Element => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: Colors.WHITE,
     },
     shadowContainer: {
-        shadowColor: '#000',
+        shadowColor: Colors.BLACK,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.09,
         shadowRadius: 10,
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: Layout.PADDING_HORIZONTAL,
         paddingVertical: Layout.PADDING_HORIZONTAL,
-        backgroundColor: 'white',
+        backgroundColor: Colors.WHITE,
     },
     header: {
         flex: 1,
@@ -90,6 +97,11 @@ const styles = StyleSheet.create({
     },
     userIconContainer: {
         justifyContent: 'center',
+    },
+    profilePicture: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
     },
     menuContainer: {
         flex: 1,

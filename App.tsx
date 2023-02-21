@@ -10,7 +10,7 @@ import { LogisterScreen } from './src/features/authentication/components/Logiste
 import { Colors, Constants } from 'constants/index'
 import { login } from 'features/authentication/reducers/loggedinUserSlice'
 import { MainTabNavigation } from 'navigation/MainTabNavigation'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { useAppDispatch } from 'state/hooks'
 import { RootStack } from 'constants/screens'
 import { navigationRef } from 'navigation/RootNavigation'
 import { RootStackParamList } from 'constants/screens'
@@ -20,11 +20,9 @@ import { asyncStorageUtils } from 'utils/asyncStorageUtils'
 
 const App = () => {
     const Stack = createStackNavigator<RootStackParamList>()
-
-    const loggedinUser = useAppSelector(state => state.loggedinUser)
     const dispatch = useAppDispatch()
 
-    const [initialRouteName, setIntialRouteName] = useState<RootStack>(null)
+    const [initialRouteName, setInitialRouteName] = useState<RootStack>(null)
     const [initializing, setInitializing] = useState(true)
 
     const onAuthStateChanged = useCallback((loggedinUser: FirebaseAuthTypes.User | null) => {
@@ -43,21 +41,19 @@ const App = () => {
         (async () => {
             try {
                 const isBoarded = await asyncStorageUtils.isBoarding()
-                // split
-                if (!isBoarded) {
-                    setIntialRouteName('Onboarding')
-                }
-                else if (loggedinUser.loggedinUser) {
-                    // const user = await auth().currentUser
-                    setIntialRouteName('MainTab')
-                }
-                else if (loggedinUser.loggedinUser === null) setIntialRouteName('Logister')
+                const loggedinUser = auth().currentUser
+
+                if (!isBoarded)
+                    setInitialRouteName('Onboarding')
+                else if (loggedinUser)
+                    setInitialRouteName('MainTabNavigation')
+                else setInitialRouteName('Logister')
 
             } catch (err) {
                 console.log(err, 'Cannot get is boarding')
             }
         })()
-    }, [loggedinUser])
+    }, [])
 
     //hides the splash screen on app load
     useEffect(() => {
@@ -80,7 +76,7 @@ const App = () => {
                             component={LogisterScreen}
                         />
                         <Stack.Screen
-                            name={'MainTab'}
+                            name={'MainTabNavigation'}
                             component={MainTabNavigation}
                         />
                         <Stack.Screen
