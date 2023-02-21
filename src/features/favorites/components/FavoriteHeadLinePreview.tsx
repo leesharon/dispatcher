@@ -1,17 +1,39 @@
 import { AppText } from 'components/common/AppText'
 import { Colors } from 'constants'
 import { HeadLine } from 'models/headline'
+import { push } from 'navigation/RootNavigation'
 import { View, StyleSheet, Pressable } from 'react-native'
 import FastImage from 'react-native-fast-image'
 
+import FavoriteIcon from '../../../../assets/favorite.svg'
+import FavoriteStarredIcon from '../../../../assets/favorite-starred.svg'
+import { useMemo } from 'react'
+import { useAppSelector } from 'state/hooks'
+import { selectLoggedinUser } from 'features/authentication/reducers/loggedinUserSlice'
+
+
 interface FavoriteHeadLinePreviewProps {
     headLine: HeadLine
+    onToggleFavorite: (headLine: HeadLine, isStarred: boolean) => void
 }
 
-const FavoriteHeadLinePreview = ({ headLine }: FavoriteHeadLinePreviewProps): JSX.Element => {
+const FavoriteHeadLinePreview = ({ headLine, onToggleFavorite }: FavoriteHeadLinePreviewProps): JSX.Element => {
+
+    const loggedInUser = useAppSelector(selectLoggedinUser)
+
+    const isStarred = useMemo(
+        () => loggedInUser?.favoriteHeadLineIds?.includes(headLine.id),
+        [loggedInUser?.favoriteHeadLineIds, headLine.id]
+    )
 
     return (
-        <Pressable style={styles.headLineContainer}>
+        <Pressable
+            style={styles.headLineContainer}
+            onPress={() => { push('HeadlineDetails', { id: headLine.id }) }}
+        >
+            <Pressable style={styles.favoriteIcon} onPress={() => { onToggleFavorite(headLine, isStarred || false) }}>
+                {isStarred ? <FavoriteStarredIcon /> : <FavoriteIcon />}
+            </Pressable>
             <View style={styles.imageContainer}>
                 <FastImage
                     style={styles.image}
@@ -32,6 +54,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         paddingVertical: 5,
         marginBottom: 10
+    },
+    favoriteIcon: {
+        position: 'absolute',
+        top: 16,
+        start: 16,
+        zIndex: 1,
     },
     imageContainer: {
         paddingEnd: 8

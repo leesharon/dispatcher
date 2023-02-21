@@ -55,7 +55,7 @@ const LogisterScreen = (): JSX.Element => {
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
-                behavior={Constants.IS_IOS ? 'position' : 'height'}
+                behavior={Constants.IS_IOS ? 'position' : 'padding'}
                 style={styles.container}
                 contentContainerStyle={styles.container}
             >

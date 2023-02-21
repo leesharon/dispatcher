@@ -1,4 +1,4 @@
-import { navigate, resetTo } from './../navigation/RootNavigation'
+import { resetTo } from './../navigation/RootNavigation'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { authErrorHandler } from './errorHandlerUtils'
 

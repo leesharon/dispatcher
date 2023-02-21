@@ -43,11 +43,12 @@ const App = () => {
         (async () => {
             try {
                 const isBoarded = await asyncStorageUtils.isBoarding()
-
+                // split
                 if (!isBoarded) {
                     setIntialRouteName('Onboarding')
                 }
                 else if (loggedinUser.loggedinUser) {
+                    // const user = await auth().currentUser
                     setIntialRouteName('MainTab')
                 }
                 else if (loggedinUser.loggedinUser === null) setIntialRouteName('Logister')

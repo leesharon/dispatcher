@@ -1,22 +1,43 @@
 import { Heading1 } from 'components/common/Heading1'
 import { MainContainer } from 'components/common/MainContainer'
 import { MainTopBar } from 'components/common/MainTopBar'
+import { updateFavoriteHeadlineIds } from 'features/authentication/reducers/loggedinUserSlice'
 import { HeadLine } from 'models/headline'
 import { useEffect, useState } from 'react'
 import { StyleSheet, View, FlatList } from 'react-native'
-import { asyncStorageUtils } from 'utils/asyncStorageUtils'
 import { FavoriteHeadLinePreview } from './FavoriteHeadLinePreview'
+import { addFavoriteHeadline, removeFavoriteHeadline } from 'features/authentication/reducers/loggedinUserSlice'
+import { addNotification } from 'features/notifications/reducers/notificationsSlice'
+import { useAppDispatch } from 'state/hooks'
+import { asyncStorageUtils } from 'utils/asyncStorageUtils'
 
-const FavortiesTab = (): JSX.Element => {
-
+const FavoritesTab = (): JSX.Element => {
+    const dispatch = useAppDispatch()
     const [favoriteHeadLines, setFavoriteHeadLines] = useState<HeadLine[] | []>([])
 
     useEffect(() => {
         (async () => {
             const headLines = await asyncStorageUtils.getFavoriteHeadLines()
-            headLines && setFavoriteHeadLines(headLines)
+            console.log('headLines:', headLines)
+            if (headLines) {
+                setFavoriteHeadLines(headLines)
+                dispatch(updateFavoriteHeadlineIds(headLines.map((headLine: HeadLine) => headLine.id)))
+            }
         })()
-    }, [])
+    }, [dispatch])
+
+    const onToggleFavorite = (headLine: HeadLine, isStarred: boolean) => {
+        if (!isStarred) {
+            dispatch(addFavoriteHeadline({ id: headLine.id }))
+            dispatch(addNotification({ id: headLine.id }))
+            asyncStorageUtils.addFavoriteHeadLine(headLine)
+        }
+        else {
+            dispatch(removeFavoriteHeadline({ id: headLine.id }))
+            asyncStorageUtils.removeFavoriteHeadline(headLine.id)
+            setFavoriteHeadLines(favoriteHeadLines.filter((item: HeadLine) => item.id !== headLine.id))
+        }
+    }
 
     const renderListHeader = () => {
         return (
@@ -36,7 +57,10 @@ const FavortiesTab = (): JSX.Element => {
                             style={styles.list}
                             data={favoriteHeadLines}
                             renderItem={({ item }) => (
-                                <FavoriteHeadLinePreview headLine={item} />
+                                <FavoriteHeadLinePreview
+                                    headLine={item}
+                                    onToggleFavorite={onToggleFavorite}
+                                />
                             )}
                             keyExtractor={item => item.id}
                             ListHeaderComponent={renderListHeader()}
@@ -59,4 +83,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export { FavortiesTab }
+export { FavoritesTab }
