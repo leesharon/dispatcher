@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppInput, ContentType } from 'components/common/AppInput'
@@ -29,6 +29,15 @@ const LogisterScreen = (): JSX.Element => {
     const [confirmPassword, setConfirmPassword] = useState<string>('')
     const [confirmPasswordError, setConfirmPasswordError] = useState('')
 
+    useEffect(() => {
+        setEmail('')
+        setEmailError('')
+        setPassword('')
+        setPasswordError('')
+        setConfirmPassword('')
+        setConfirmPasswordError('')
+    }, [status])
+
     const onSignup = () => {
         if (!isFormValid())
             showAlertMessage(Strings.OH_OH, Strings.FORM_ERROR)
@@ -53,7 +62,7 @@ const LogisterScreen = (): JSX.Element => {
     const btnInnerContainerStyle = { backgroundColor: (isFormValid()) ? Colors.BLUE500 : Colors.BLUE300 }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
             <KeyboardAvoidingView
                 behavior={Constants.IS_IOS ? 'position' : 'height'}
                 style={styles.container}

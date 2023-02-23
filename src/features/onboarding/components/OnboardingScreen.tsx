@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
     nextButtonContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        padding: 10,
     },
     nextButton: {
         color: 'white',

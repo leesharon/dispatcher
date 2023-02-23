@@ -39,6 +39,7 @@ async function removeFavoriteHeadline(headLineId: string) {
 }
 
 async function isBoarding() {
+    AsyncStorage.clear() //!! for testing
     try {
         const isBoarded = await _getData(IS_BOARDED)
         if (isBoarded) return true

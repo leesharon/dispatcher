@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TextInput, StyleSheet, View, Pressable, Text } from 'react-native'
 import { Colors, Fonts } from 'constants/index'
 import Revealed from '../../../assets/revealed.svg'
@@ -41,6 +41,10 @@ const AppInput = ({
 
     const [borderColor, setBorderColor] = useState(Colors.GRAY600)
     const [isRevealed, setIsRevealed] = useState(false)
+
+    useEffect(() => {
+        if (!value) setBorderColor(Colors.GRAY600)
+    }, [value])
 
     const handleChange = (text: string) => {
         setValue(text)
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
         borderRadius: 4,
-        backgroundColor: 'white',
+        backgroundColor: Colors.WHITE,
         height: 44,
         width: '100%',
         fontFamily: Fonts.ROBOTO_REGULAR,
@@ -162,7 +166,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         fontSize: 16,
         lineHeight: 22,
-        shadowColor: '#000',
+        shadowColor: Colors.BLACK,
         shadowOffset: { width: 0, height: 32 },
         shadowOpacity: 0.05,
         shadowRadius: 64,
