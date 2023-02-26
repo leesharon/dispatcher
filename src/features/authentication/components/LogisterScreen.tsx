@@ -62,7 +62,7 @@ const LogisterScreen = (): JSX.Element => {
     const btnInnerContainerStyle = { backgroundColor: (isFormValid()) ? Colors.BLUE500 : Colors.BLUE300 }
 
     return (
-        <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
+        <SafeAreaView style={styles.container} >
             <KeyboardAvoidingView
                 behavior={Constants.IS_IOS ? 'position' : 'height'}
                 style={styles.container}

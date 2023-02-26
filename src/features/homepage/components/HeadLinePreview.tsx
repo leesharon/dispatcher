@@ -18,6 +18,7 @@ import { addFavoriteHeadLine, removeFavoriteHeadLine } from 'features/favorites/
 
 interface HeadLinePreviewProps {
     headLine: HeadLine
+    index: number
     isDetails?: boolean
     containerStyle?: {
         backgroundColor?: string
@@ -40,7 +41,7 @@ interface HeadLinePreviewProps {
     } | object
 }
 
-const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle = {} }: HeadLinePreviewProps): JSX.Element => {
+const HeadLinePreview = ({ headLine, index, isDetails, containerStyle = {}, imageStyle = {} }: HeadLinePreviewProps): JSX.Element => {
     const dispatch = useAppDispatch()
     const loggedinUser = useAppSelector(selectLoggedinUser)
 
@@ -74,7 +75,7 @@ const HeadLinePreview = ({ headLine, isDetails, containerStyle = {}, imageStyle 
             </Pressable>
             <FastImage
                 style={[styles.image, imageStyle]}
-                source={{ uri: headLine.urlToImage, priority: FastImage.priority.normal, }}
+                source={{ uri: headLine.urlToImage, priority: (index < 5) ? FastImage.priority.high : FastImage.priority.normal, }}
             />
             <View style={styles.headLineContent}>
 

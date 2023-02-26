@@ -19,7 +19,8 @@ const HeadLinesFeed = ({ headLines, loggedinUser, isSearch }: HeadLinesFeedProps
         <View style={styles.container}>
             <FlatList
                 data={headLines}
-                renderItem={({ item }) => <HeadLinePreview
+                renderItem={({ item, index }) => <HeadLinePreview
+                    index={index}
                     headLine={item}
                     containerStyle={styles.headLineContainer}
                     imageStyle={styles.headLineImage}

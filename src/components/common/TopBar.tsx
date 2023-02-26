@@ -1,9 +1,9 @@
 import { Colors, Layout } from 'constants'
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet } from 'react-native'
 
 interface TopBarProps {
     children: React.ReactNode
-    styleProps?: { backgroundColor?: string } | {}
+    styleProps?: { backgroundColor?: string } | object
 }
 
 const TopBar = ({ children, styleProps = {} }: TopBarProps): JSX.Element => {
